@@ -1,7 +1,7 @@
 {
-  "name": "engine-adapter",
+  "name": "engine-easydian",
   "version": "0.0.1",
-  "description": "Engine Adapter",
+  "description": "Engine Easydian",
   "main": "index.js",
   "dependencies": {
     "coffee-script": "1.3.3",
@@ -13,7 +13,8 @@
     "winston": "0.5.11",
     "request": "2.9.202",
     "jasmine-node": "1.0.26",
-    "eco": "*",
-    "uglify-js": "1.3.0"
+    "uglify-js": "1.3.0",
+    "nano": ">=3.3.0",
+    "ejs": "0.8.3"
   }
 }

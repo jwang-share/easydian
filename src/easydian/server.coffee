@@ -2,7 +2,7 @@
 
 express         = require 'express'
 querystring     = require 'querystring'
-MainController  = require('./controller')
+Controller  = require('./controller')
 
 class Server
   constructor: () ->
