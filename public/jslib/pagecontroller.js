@@ -1,4 +1,11 @@
 (function(){
  
+ $(function() {
+
+ 	
+
+   }
+ )
 
 }).call(this)
+
