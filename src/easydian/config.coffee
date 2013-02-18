@@ -9,3 +9,4 @@ global._            = require 'underscore'
 global.Async        = require 'async'
 global.Step         = require 'step'
 global.logger       = new (require './logger')("easydian")
+global.mongoose     = require 'mongoose'
