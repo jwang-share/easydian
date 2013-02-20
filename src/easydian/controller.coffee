@@ -1,4 +1,5 @@
 
+SchemaDesigner = require "./model/schemadesigner"
 
 class Controller
   constructor: () ->
@@ -9,11 +10,13 @@ class Controller
       {path: "/stats",    http_method: "get",   method: "stats" },
       {path: "/comment",    http_method: "post",   method: "comment"}
     ]
-
+    @sd = new SchemaDesigner()
     
+   
   #show the shops
-  index: (req, res) -> 
+  index: (req, res) ->    
     res.render 'index.ejs' 
+
   #get the info of the shop 
   stats: (req,res) ->
     return
