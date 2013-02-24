@@ -1,6 +1,13 @@
+#desc:
+###
+  put all the shops into one collection, which is called 'shops'
+  e.g:
+  @shop_model = Mongoose.model('shops',@shop_schema)
+###
+
 Mongoose = require "mongoose"
 Schema = Mongoose.Schema
-Mongoose.connect "mongodb://admin:admin@127.0.0.1:27017/shops"
+Mongoose.connect "mongodb://127.0.0.1:27017/shops"
 
 class SchemaDesigner
   
@@ -29,7 +36,7 @@ class SchemaDesigner
        },
        shopdaystats:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
        shopmonthstats:[0,0,0,0,0,0,0,0,0,0,0,0],      
-       shoplogo: {type:String, default: 'relative path'},
+       shoplogo: {type:String, default: './images/default.jpg'},
        shopgoodt: {type:Number, default:0},
        shopbadt: {type:Number, default:0},
        shopcover:[ {type:String, default: 'beijing'}],
@@ -46,21 +53,32 @@ class SchemaDesigner
          {type:String, default: 'full name 7'}
        ]
     })
-    
+    @shop_model = Mongoose.model('shops',@shop_schema)
+    @conn = Mongoose.connection
+    @conn.on 'error', console.error.bind console, 'connection error:'
+    @conn.once 'open', ()->
+      logger.info "success to open mongodb"
     return
 
-      
-  insert_to_db: () ->
-    kittyschema = Schema { name: 'string' }
-    Kitten = Mongoose.model 'kitty', kittyschema
-    Silence = new Kitten {name:"BeSilence"}
-    logger.info Silence.name
-    try
-      Silence.save (err) ->
-        logger.info "error coming" if err
-        logger.info "good"
-    catch e
-      logger.info e
+  insert_shop: (shop) ->
+    logger.info "begin to insert_shop"
+    shop_doc = new @shop_model shop
+    shop_doc.save (err,doc)->
+      logger.info "insert_shop: " + err  if err?
+      logger.info "insert_shop: " + doc
+
+  find: (condition, fields, callback) ->
+    if not callback?
+      @shop_model.find condition, fields, (err, docs)=>
+        logger.info "find: " + err if err?
+        @cachedata = docs
+    else  
+      @shop_model.find condition, fields, callback
+   
+
+
+
+
     
 
 
