@@ -22,7 +22,7 @@ describe("Schma Designer",function(){
     waits(500);
   });
   
-  xit("insert_shop: can insert shop to mongodb",function(){
+  it("insert_shop: can insert shop to mongodb",function(){
     logger.info ("begin: insert_shop");
      runs(function(){
        sd.insert_shop(doc)

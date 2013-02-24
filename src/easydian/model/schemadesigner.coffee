@@ -18,40 +18,30 @@ class SchemaDesigner
        shopvisit : {type:Number, default:1000},
        shoppriority : {type: Number, default:1000},
        shopwebsite: {type:String, default: 'fullurl'},
-       shopphone:[
-         {type:String, default: '000000000'}
-       ],
+       shopphone: {type:Array, default: ['010-22222222']},
        shoponbusiness: {type:Boolean, default: true},
        shopweekstats: {
-         monday:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-         tuesday:  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-         wednesday:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-         thurday:  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-         friday:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-         saturday: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-         sunday:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-         weekday:[0,0,0,0,0],
-         weekdaygood:[0,0,0,0,0],
-         weekdaybad:[0,0,0,0,0]
+         monday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+         tuesday:  {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+         wednesday:{type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+         thurday:  {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+         friday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+         saturday: {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+         sunday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+         weekday:{type:Array, default:[0,0,0,0,0]},
+         weekdaygood:{type:Array, default:[0,0,0,0,0]},
+         weekdaybad:{type:Array, default:[0,0,0,0,0]},
        },
-       shopdaystats:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       shopmonthstats:[0,0,0,0,0,0,0,0,0,0,0,0],      
+       shopdaystats:{type:Array,default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+       shopmonthstats: {type:Array,default:[0,0,0,0,0,0,0,0,0,0,0,0]},      
        shoplogo: {type:String, default: './images/default.jpg'},
        shopgoodt: {type:Number, default:0},
        shopbadt: {type:Number, default:0},
-       shopcover:[ {type:String, default: 'beijing'}],
+       shopcover:{type:Array, default: ['beijing','shanghai']},
        shopaccount: {type:Number, default:0}, 
        shopcreatetime: {type:Date, default: Date.now},
-       shopcomments: [ {body:String, date: Date}],
-       shopnews: [ 
-         {type:String, default: 'full name 1'},
-         {type:String, default: 'full name 2'},
-         {type:String, default: 'full name 3'},
-         {type:String, default: 'full name 4'},
-         {type:String, default: 'full name 5'},
-         {type:String, default: 'full name 6'},
-         {type:String, default: 'full name 7'}
-       ]
+       shopcomments: {type:Array, default: ['good commnets']},
+       shopnews: {type:Array, default: ['good news']},
     })
     @shop_model = Mongoose.model('shops',@shop_schema)
     @conn = Mongoose.connection
