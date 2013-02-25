@@ -10,7 +10,7 @@ describe("Schma Designer",function(){
   doc.shopalias = "KFC";
   doc.shopwebsite = "http://www.kfc.com.cn/kfccda/index.aspx";
   doc.shopphone.push("400-882-3823");
-  doc.shopweekstats.monday[0] = 10;
+  doc.monday[0] = 11;
   doc.shopdaystats[0] = 1000;
   doc.shoplogo = "./images/kfc_0.jpg";
   doc.shopcreatetime = new Date;
@@ -31,7 +31,15 @@ describe("Schma Designer",function(){
     
   });
 
-  xit("find: can find docs from db",function(){
+  it("find_shops: can find docs from db",function(){
+    runs(function(){
+      var callback = function(err,docs){
+        if(err) logger.info(err)
+        logger.info("------->"+docs);     
+      };
+      sd.find_shops(callback);
+    });
+    waits(500);
     
   });
 

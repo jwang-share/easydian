@@ -20,19 +20,17 @@ class SchemaDesigner
        shopwebsite: {type:String, default: 'fullurl'},
        shopphone: {type:Array, default: ['010-22222222']},
        shoponbusiness: {type:Boolean, default: true},
-       shopweekstats: {
-         monday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-         tuesday:  {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-         wednesday:{type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-         thurday:  {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-         friday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-         saturday: {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-         sunday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-         weekday:{type:Array, default:[0,0,0,0,0]},
-         weekdaygood:{type:Array, default:[0,0,0,0,0]},
-         weekdaybad:{type:Array, default:[0,0,0,0,0]},
-       },
-       shopdaystats:{type:Array,default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+       monday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+       tuesday:  {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+       wednesday:{type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+       thurday:  {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+       friday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+       saturday: {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+       sunday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+       weekday:  {type:Array, default:[0,0,0,0,0]},
+       weekdaygood:{type:Array, default:[0,0,0,0,0]},
+       weekdaybad:{type:Array, default:[0,0,0,0,0]},
+       shopdaystats:{type:Array,default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
        shopmonthstats: {type:Array,default:[0,0,0,0,0,0,0,0,0,0,0,0]},      
        shoplogo: {type:String, default: './images/default.jpg'},
        shopgoodt: {type:Number, default:0},
@@ -54,8 +52,19 @@ class SchemaDesigner
     logger.info "begin to insert_shop"
     shop_doc = new @shop_model shop
     shop_doc.save (err,doc)->
-      logger.info "insert_shop: " + err  if err?
-      logger.info "insert_shop: " + doc
+      #logger.info "insert_shop: " + err  if err?
+      #logger.info "insert_shop: " + doc
+
+
+  find_shops: (callback) ->
+    #@shop_model.find({},{'shoplogo shopname'},{sort:'-shoppriority'},callback)
+
+    @shop_model.find()
+    .sort('-shoppriority')
+    .select('shoplogo shopname')
+    .exec(callback)
+   
+   
 
   find: (condition, fields, callback) ->
     if not callback?
