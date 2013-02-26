@@ -11,7 +11,8 @@ Mongoose.connect "mongodb://127.0.0.1:27017/shops"
 
 class SchemaDesigner
   
-  constructor: () ->  
+  constructor: () -> 
+    @item_schema = new Schema({item:String});
 	  @shop_schema = new Schema({
        shopname : {type:String, default:'fullname'},
        shopalias : [{type:String, default:'short name'}],
@@ -20,16 +21,19 @@ class SchemaDesigner
        shopwebsite: {type:String, default: 'fullurl'},
        shopphone: {type:Array, default: ['010-22222222']},
        shoponbusiness: {type:Boolean, default: true},
-       monday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-       tuesday:  {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-       wednesday:{type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-       thurday:  {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-       friday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-       saturday: {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-       sunday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-       weekday:  {type:Array, default:[0,0,0,0,0]},
-       weekdaygood:{type:Array, default:[0,0,0,0,0]},
-       weekdaybad:{type:Array, default:[0,0,0,0,0]},
+       shoponadv: {type:Boolean, default: true},
+       shopweekstats:[
+         {monday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},
+         {tuesday:  {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},
+         {wednesday:{type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},
+         {thurday:  {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},
+         {friday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},
+         {saturday: {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},
+         {sunday:   {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}}
+       ]
+       weekday:     {type:Array, default:[0,0,0,0,0,0,0]},
+       weekdaygood: {type:Array, default:[0,0,0,0,0,0,0]},
+       weekdaybad:  {type:Array, default:[0,0,0,0,0,0,0]},
        shopdaystats:{type:Array,default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
        shopmonthstats: {type:Array,default:[0,0,0,0,0,0,0,0,0,0,0,0]},      
        shoplogo: {type:String, default: './images/default.jpg'},
@@ -38,8 +42,8 @@ class SchemaDesigner
        shopcover:{type:Array, default: ['beijing','shanghai']},
        shopaccount: {type:Number, default:0}, 
        shopcreatetime: {type:Date, default: Date.now},
-       shopcomments: {type:Array, default: ['good commnets']},
-       shopnews: {type:Array, default: ['good news']},
+       shopcomments: [@item_schema],
+       shopnews: [@item_schema],
     })
     @shop_model = Mongoose.model('shops',@shop_schema)
     @conn = Mongoose.connection
@@ -52,27 +56,58 @@ class SchemaDesigner
     logger.info "begin to insert_shop"
     shop_doc = new @shop_model shop
     shop_doc.save (err,doc)->
-      #logger.info "insert_shop: " + err  if err?
-      #logger.info "insert_shop: " + doc
+      logger.info "insert_shop: " + err  if err?
 
 
   find_shops: (callback) ->
-    #@shop_model.find({},{'shoplogo shopname'},{sort:'-shoppriority'},callback)
-
     @shop_model.find()
     .sort('-shoppriority')
     .select('shoplogo shopname')
     .exec(callback)
    
-   
+  update_visit: (id) -> 
+    @shop_model.findById id, (err,doc) ->
+      logger.info "update_visit.findbyIDd: "+err if err?
+      doc.shopvisit = doc.shopvisit + 1
+      curtime = new Date()
+      day = curtime.getDay()
+      hour = curtime.getHour()
+      month = curtime.getMonth()
+      doc.shopweekstats[day]][hour] = doc.shopweekstats[day][hour] + 1
+      doc.weekday[day] = doc.weekday[day] + 1
+      doc.shopdaystats[hour] = doc.shopdaystats[hour] + 1
+      doc.shoppriority = doc.shoppriority + 1
+      doc.shopmonthstats[month] = doc.shopmonthstats[month] + 1
+      doc.save (err)->
+        logger.info "update_visit.save: "+err if err?
 
-  find: (condition, fields, callback) ->
-    if not callback?
-      @shop_model.find condition, fields, (err, docs)=>
-        logger.info "find: " + err if err?
-        @cachedata = docs
-    else  
-      @shop_model.find condition, fields, callback
+  update_badgood: (id) ->
+    @shop_model.findById id, (err,doc) ->
+      logger.info "update_visit.findbyIDd: "+err if err?
+  
+  #get all shops' information
+  #id, shopname, shoplogo, weekdaygood, shopbadt, shopwebaddress,shoponbusiness,shopwithnew
+  get_shops: (callback) ->
+
+  #get the shop's detail
+  #weekday, shopcover, shopnews(only the newest 10 items) 
+  get_shop_info: (id,callback) ->
+
+  insert_comment:(id,comment)->
+   
+  #get the shop's detail
+  #weekday, shopcover, shopnews(only the newest 10 items), with comments
+  get_shop_info_comment: (id) ->
+
+  get_news: (id,num) ->
+
+  get_comments: (id,num) ->
+
+
+
+
+
+
    
 
 
