@@ -3,17 +3,19 @@
   put all the shops into one collection, which is called 'shops'
   e.g:
   @shop_model = Mongoose.model('shops',@shop_schema)
+  name->index, id->index
 ###
 
 Mongoose = require "mongoose"
 Schema = Mongoose.Schema
-Mongoose.connect "mongodb://127.0.0.1:27017/shops"
+#be more graceful here
+#Mongoose.connect "mongodb://127.0.0.1:27017/shops"
 
 class SchemaDesigner
   
   constructor: () -> 
-    @item_schema = new Schema({item:String});
-	  @shop_schema = new Schema({
+    @item_schema = new Schema({item:String})
+    @shop_schema = new Schema({
        shopname : {type:String, default:'fullname'},
        shopalias : [{type:String, default:'short name'}],
        shopvisit : {type:Number, default:1000},
@@ -43,7 +45,7 @@ class SchemaDesigner
        shopaccount: {type:Number, default:0}, 
        shopcreatetime: {type:Date, default: Date.now},
        shopcomments: [@item_schema],
-       shopnews: [@item_schema],
+       shopnews: [@item_schema]
     })
     @shop_model = Mongoose.model('shops',@shop_schema)
     @conn = Mongoose.connection
@@ -73,7 +75,7 @@ class SchemaDesigner
       day = curtime.getDay()
       hour = curtime.getHour()
       month = curtime.getMonth()
-      doc.shopweekstats[day]][hour] = doc.shopweekstats[day][hour] + 1
+      doc.shopweekstats[day][hour] = doc.shopweekstats[day][hour] + 1
       doc.weekday[day] = doc.weekday[day] + 1
       doc.shopdaystats[hour] = doc.shopdaystats[hour] + 1
       doc.shoppriority = doc.shoppriority + 1
@@ -88,20 +90,26 @@ class SchemaDesigner
   #get all shops' information
   #id, shopname, shoplogo, weekdaygood, shopbadt, shopwebaddress,shoponbusiness,shopwithnew
   get_shops: (callback) ->
+    return
 
   #get the shop's detail
   #weekday, shopcover, shopnews(only the newest 10 items) 
   get_shop_info: (id,callback) ->
+    return
 
   insert_comment:(id,comment)->
+    return
    
   #get the shop's detail
   #weekday, shopcover, shopnews(only the newest 10 items), with comments
   get_shop_info_comment: (id) ->
+    return
 
   get_news: (id,num) ->
+    return
 
   get_comments: (id,num) ->
+    return
 
 
 
@@ -109,14 +117,5 @@ class SchemaDesigner
 
 
    
-
-
-
-
-    
-
-
-
-
 
 module.exports = SchemaDesigner
