@@ -18,6 +18,7 @@ class SchemaDesigner
     @shop_schema = new Schema({
        shopname : {type:String, default:'fullname'},
        shopalias : [{type:String, default:'short name'}],
+       shoptype : {type:String, default:'Dining'},
        shopvisit : {type:Number, default:1000},
        shoppriority : {type: Number, default:1000},
        shopwebsite: {type:String, default: 'fullurl'},
@@ -61,11 +62,17 @@ class SchemaDesigner
       logger.info "insert_shop: " + err  if err?
 
 
-  find_shops: (callback) ->
-    @shop_model.find()
-    .sort('-shoppriority')
-    .select('shoplogo shopname')
-    .exec(callback)
+  find_shops: (category, start, end, limit, callback) ->
+    if typeof category is 'function'
+      @shop_model.find()
+      .sort('-shoppriority')
+      .select('shoplogo shopname')
+      .exec(callback)
+    else
+      @shop_model.find({shoptype:type})
+      .sort('-shoppriority')
+      .select('shoplogo shopname')
+      .exec(callback)
    
   update_visit: (id) -> 
     @shop_model.findById id, (err,doc) ->

@@ -36,6 +36,17 @@ class Controller
     res.render 'index.ejs' 
 
   get_shops: (req, res) ->
+    category = req.params.category
+    start = req.params.start
+    end = req.params.end
+    limit = req.params.limit
+    #add validaton here
+    @sd.get_shops category, start, end, limit, (err, docs)=>
+      if err?
+        res.json 400, {"error":"error when reading data from DB"}
+      else
+        res.json docs
+
 
   insert_comment: (req, res) ->
 
