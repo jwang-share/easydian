@@ -157,10 +157,7 @@ jQuery(document).ready(function(){
 prettyPhoto
 ============================================================ */
 jQuery(document).ready(function(){
-    jQuery("a[rel^='prettyPhoto']").prettyPhoto({
-		show_title: false,
-		deeplinking:false
-	}).mouseenter(function(){
+    jQuery("a[rel^='prettyPhoto']").mouseenter(function(){
         jQuery(this).find('img').fadeTo(500, 0.6);
     }).mouseleave(function(){
         jQuery(this).find('img').fadeTo(400, 1);
@@ -212,5 +209,82 @@ jQuery(document).ready(function() {
 		jQuery(activeTab).fadeIn(); //Fade in the active content
 		return false;
 		
+	});
+});
+
+ /* =========================================================
+ChartView-Div
+============================================================ */
+jQuery(document).ready(function() {
+      $('article.one-forth').mouseenter(function(){ 
+		$('#highChart').slideDown("fast",function(){
+				//$('#highChart').css({position:'absolute', left:'40px', top:'38px'});
+				//$('section.feature-services').css({position:'absolute', left:'40px', top:'238px'});
+		});
+		$('#highChartH').show();		
+	  });
+      $('article.one-forth').mouseleave(function(){ 
+		$('#highChart').slideUp("fast",function(){
+				//$('#highChart').css({position:'absolute', left:'40px', top:'38px'});
+				//$('section.feature-services').css({position:'absolute', left:'40px', top:'238px'});
+		});
+		$('#highChartH').hide();		
+	  });
+});
+
+ /* =========================================================
+ChartView
+============================================================ */
+jQuery(document).ready(function() {
+	var chart = new Highcharts.Chart({
+		chart: {
+			renderTo: 'highChart',
+			type: 'line',
+			marginRight: 130,
+			marginBottom: 25
+		},
+		title: {
+			text: 'Attention & Comment',
+			x: -20 //center
+		},
+		subtitle: {
+			text: 'Easydian show statistics',
+			x: -20
+		},
+		xAxis: {
+			categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+				'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+		},
+		yAxis: {
+			title: {
+				text: 'Attention'
+			},
+			plotLines: [{
+				value: 10,
+				width: 1,
+				color: '#808080'
+			}]
+		},
+		tooltip: {
+			formatter: function() {
+					return '<b>'+ this.series.name +'</b><br/>'+
+					this.x +': '+ this.y;
+			}
+		},
+		legend: {
+			layout: 'vertical',
+			align: 'right',
+			verticalAlign: 'top',
+			x: -10,
+			y: 100,
+			borderWidth: 0
+		},
+		series: [{
+			name: 'Attention',
+			data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
+		}, {
+			name: 'Comment',
+			data: [15, 25, 35, 45, 55, 65, 75, 85, 95, 105, 115, 125]
+		}]
 	});
 });
