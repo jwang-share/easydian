@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Easy Dian</title>
+	<title><%= title %></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />	
 	<!-- Grid styles for IE -->
 	<!--[if lt IE 9]><link rel="stylesheet" href="/stylesheets/ie.css" type="text/css" media="all" />
@@ -16,14 +16,16 @@
     <!-- script
 	================================================== -->
     <script type="text/javascript" src="/jslib/jquery-1.8.3.js"></script>
-    <script type="text/javascript" src="/jslib/jflickrfeed.min.js"></script>
+    <script type="text/javascript" src="/jslib/jquery.tmpl.min.js"></script>
     <script type="text/javascript" src="/jslib/jquery.cslider.js"></script>
-    <script type="text/javascript" src="/jslib/modernizr.custom.28468.js"></script>	
     <script type="text/javascript" src="/jslib/jquery.carouFredSel-5.6.2.js"></script>
 	<script type="text/javascript" src="/jslib/jquery.flexslider.js"></script>
-    <script type="text/javascript" src="/jslib/custom.js"></script>
+	<script type="text/javascript" src="/jslib/jflickrfeed.min.js"></script>
+	<script type="text/javascript" src="/jslib/modernizr.custom.28468.js"></script>	
 	<script type="text/javascript" src="/jslib/css3-mediaqueries.js"></script>
 	<script type="text/javascript" src="/jslib/kendo.all.min.js"></script>
+    <script type="text/javascript" src="/jslib/custom.highcharts.js"></script>	
+    <script type="text/javascript" src="/jslib/custom.js"></script>    
 	<script src="/jslib/highcharts.js"></script>
 	<script src="/jslib/exporting.js"></script>
 	<!--[if lt IE 9]>
@@ -112,16 +114,15 @@
 							<a class="expression-icon" href="#"><img src="images/icons/expression-icon.png" alt="" /></a>
 							<h3 class="entry-title"><a href="#">Expression</a></h3>
 							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</p>
-						</article><!--end:one-forth-->			
+						</article><!--end:one-forth-->	
+						<div class="clear"></div>
+						<article class="one-second clearfix" id="attentionChart" style="display:none">
+						</article>	
+						<article class="one-second last clearfix" id="commentChart" style="display:none">
+						</article>			
 						<div class="clear"></div>
 					</section><!--end:feature-services-->
-					<hr />
-					
-					<div id="highChart" style="display:none" class="container">
-						<!--<span id="spanX"> <img src="images/icons/drupal-icon.png" alt="" /></span>-->
-						<div class="clear"></div>
-					</div>									
-					<hr id="highChartH" style="display:none" />
+					<hr />				
 					
 					<section class="feature-services container">
 						<article class="one-forth clearfix">
@@ -146,30 +147,7 @@
 						</article><!--end:one-forth-->			
 						<div class="clear"></div>
 					</section><!--end:feature-services-->
-					<hr />
-					<section class="feature-services container">
-						<article class="one-forth clearfix">
-							<a class="wp-icon" href="#"><img src="images/icons/wp-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Wordpress</a></h3>
-							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</p>
-						</article><!--end:one-forth-->
-						<article class="one-forth one-column clearfix">
-							<a class="joomla-icon" href="#"><img src="images/icons/joomla-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Joomla</a></h3>
-							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</p>
-						</article><!--end:one-forth-->
-						<article class="one-forth clearfix">
-							<a class="drupal-icon" href="#"><img src="images/icons/drupal-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Drupal</a></h3>
-							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</p>
-						</article><!--end:one-forth-->
-						<article class="one-forth last clearfix">
-							<a class="expression-icon" href="#"><img src="images/icons/expression-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Expression</a></h3>
-							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</p>
-						</article><!--end:one-forth-->			
-						<div class="clear"></div>
-					</section><!--end:feature-services-->					
+					<hr />				
 			</div><!--end:wrapper-->
 		</div><!--end:outter-->
 	</div><!--bottom-bg-->
