@@ -11,4 +11,11 @@ global._            = require 'underscore'
 global.Async        = require 'async'
 global.Step         = require 'step'
 global.logger       = new (require './logger')("easydian")
-global.mongoose     = require 'mongoose'
+global.Mongoose = require "mongoose"
+global.Schema = Mongoose.Schema
+#be more graceful here
+Mongoose.connect config.DB_SHOPS_URL
+global.conn = Mongoose.connection
+conn.on 'error', console.error.bind console, 'connection error:'
+conn.once 'open', ()->
+   logger.info "success to open mongodb"

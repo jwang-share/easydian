@@ -42,10 +42,10 @@ class Shop_Schema
        shopcreatetime: {type:Date, default: Date.now},
        shopcommentsnum: {type:Number, default:0}
     })
+    @shop_model = Mongoose.model "shops", @shop_schema
     return
 
   insert_shop: (shop) ->
-    logger.info "begin to insert_shop"
     shop_doc = new @shop_model shop
     shop_doc.save (err,doc)->
       logger.info "failed to insert_shop: " + err  if err?
