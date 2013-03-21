@@ -89,25 +89,27 @@
 				</div><!--end:da-slider-->    	
 			</section><!--end:wrapper-->
 			<div class="wrapper">
-				<% for(var id=0; id<shops.length; id++)	{ %>
+				<% for(var id = 0; id < (parseInt(shops.length / 4) * 4); id = id + 4)	{ %>
 					<section class="feature-services container">
 						<article class="one-forth clearfix">
-							<% link_to(img_tag('/images/logoes/' + shops[id].shoplogo, shops[id].shopwebsite), shops[id].shopwebsite, {class: 'wp-icon'}) %>
+							<% link_to(img_tag("/images/logoes/" + shops[id].shoplogo, shops[id].shopwebsite), shops[id].shopwebsite, {class: "wp-icon"}) %>
 							<h3 class="entry-title"><% link_to(shops[id].shopname, shops[id].shopwebsite) %></h3>
 						</article><!--end:one-forth-->
 						<article class="one-forth one-column clearfix">
-							<a class="joomla-icon" href="#"><img src="images/icons/joomla-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Joomla</a></h3>
+							<% link_to(img_tag("/images/logoes/" + shops[id+1].shoplogo, shops[id+1].shopwebsite), shops[id+1].shopwebsite, {class: "wp-icon"}) %>
+							<h3 class="entry-title"><% link_to(shops[id+1].shopname, shops[id+1].shopwebsite) %></h3>
 						</article><!--end:one-forth-->
 						<article class="one-forth clearfix">
-							<a class="drupal-icon" href="#"><img src="images/icons/drupal-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Drupal</a></h3>
+							<% link_to(img_tag("/images/logoes/" + shops[id+2].shoplogo, shops[id+2].shopwebsite), shops[id+2].shopwebsite, {class: "wp-icon"}) %>
+							<h3 class="entry-title"><% link_to(shops[id+2].shopname, shops[id+2].shopwebsite) %></h3>
 						</article><!--end:one-forth-->
 						<article class="one-forth last clearfix">
-							<a class="drupal-icon" href="#"><img src="images/icons/drupal-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Drupal</a></h3>
+							<% link_to(img_tag("/images/logoes/" + shops[id+3].shoplogo, shops[id+3].shopwebsite), shops[id+3].shopwebsite, {class: "wp-icon"}) %>
+							<h3 class="entry-title"><% link_to(shops[id+3].shopname, shops[id+3].shopwebsite) %></h3>
 						</article><!--end:one-forth-->
 						<div class="clear"></div>
+					</section><!--end:feature-services-->
+					<section class="feature-services container" id="group" >
 						<article class="one-second clearfix" id="commentChart">
 						</article>	
 						<article class="one-second last clearfix" id="commentBoard">
@@ -131,55 +133,11 @@
 								</div><!--end:flexslider-->
 								<span class="testimonial-triangle">&nbsp;</span>
 							</div><!--end:testimonials-->
-						</article>			
-						<div class="clear"></div>
-					</section><!--end:feature-services-->						
-				<% } %>		
-					<section class="feature-services container">
-						<article class="one-forth clearfix">
-							<a class="wp-icon" href="#"><img src="images/icons/wp-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Wordpress</a></h3>
-						</article><!--end:one-forth-->
-						<article class="one-forth one-column clearfix">
-							<a class="joomla-icon" href="#"><img src="images/icons/joomla-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Joomla</a></h3>
-						</article><!--end:one-forth-->
-						<article class="one-forth clearfix">
-							<a class="drupal-icon" href="#"><img src="images/icons/drupal-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Drupal</a></h3>
-						</article><!--end:one-forth-->
-						<article class="one-forth last clearfix">
-							<a class="drupal-icon" href="#"><img src="images/icons/drupal-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Drupal</a></h3>
-						</article><!--end:one-forth-->
-						<div class="clear"></div>
-						<article class="one-second clearfix" id="commentChart">
 						</article>	
-						<article class="one-second last clearfix" id="commentBoard">
-							<h3 class="testimonials-title">What's people saying?</h3>
-							<div class="testimonials">
-								<div class="flexslider">
-									<ul class="slides">
-										<li class="clearfix">
-											<p>"1. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu"</p>
-											<span>--- John Doe | Web Develper</span>
-										</li>
-										<li class="clearfix">
-											<p>"2. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu"</p>
-											<span>--- John Doe | Web Develper</span>
-										</li>
-										<li class="clearfix">
-											<p>"3. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu"</p>
-											<span>--- John Doe | Web Develper</span>
-										</li>	
-									</ul><!--end:slides-->   
-								</div><!--end:flexslider-->
-								<span class="testimonial-triangle">&nbsp;</span>
-							</div><!--end:testimonials-->
-						</article>			
 						<div class="clear"></div>
 					</section><!--end:feature-services-->							
-					<hr />				
+					<hr />	
+				<% } %>				
 			</div><!--end:wrapper-->
 		</div><!--end:outter-->
 	</div><!--bottom-bg-->
