@@ -16,15 +16,14 @@
     <!-- script
 	================================================== -->
     <script type="text/javascript" src="/jslib/jquery-1.8.3.js"></script>
-    <script type="text/javascript" src="/jslib/jquery.tmpl.min.js"></script>
+    <!--<script type="text/javascript" src="/jslib/jquery.tmpl.min.js"></script>-->
     <script type="text/javascript" src="/jslib/jquery.cslider.js"></script>
     <script type="text/javascript" src="/jslib/jquery.carouFredSel-5.6.2.js"></script>
 	<script type="text/javascript" src="/jslib/jquery.flexslider.js"></script>
-	<script type="text/javascript" src="/jslib/jflickrfeed.min.js"></script>
 	<script type="text/javascript" src="/jslib/modernizr.custom.28468.js"></script>	
 	<script type="text/javascript" src="/jslib/css3-mediaqueries.js"></script>
 	<script type="text/javascript" src="/jslib/kendo.all.min.js"></script>
-    <script type="text/javascript" src="/jslib/custom.highcharts.js"></script>	
+    <script type="text/javascript" src="/jslib/comment.js"></script>	
     <script type="text/javascript" src="/jslib/custom.js"></script>    
 	<script src="/jslib/highcharts.js"></script>
 	<script src="/jslib/exporting.js"></script>
@@ -44,7 +43,7 @@
 					<li class="current-menu-item">
 						<a href="index.html">Easy Order</a>
 						<ul>
-							<li><a href="element.html">Elements</a></li>                            				
+							<li><a href="element.html">Elements</a></li>
 						</ul>
 					</li>
 					<li>
@@ -73,9 +72,7 @@
 							<a href="#">What is Lorem Ipsum?</a>
 							<span>Lorem ipsum dolor sit amet</span>
 						</h1>
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-						<a href="#" class="da-link big-button"><span>Learn more</span></a>
-						
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
 					</div>
 					<div class="da-slide">
 						<div class="da-img"><img src="/images/slider/slide-4.jpg" alt="" /></div>
@@ -83,9 +80,7 @@
 							<a href="#">What is Lorem Ipsum?</a>
 							<span>Lorem ipsum dolor sit amet</span>
 						</h1>
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-						<a href="#" class="da-link big-button"><span>Learn more</span></a>
-						
+						<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
 					</div>				
 					<nav class="da-arrows">
 						<span class="da-arrows-prev"></span>
@@ -93,60 +88,97 @@
 					</nav>
 				</div><!--end:da-slider-->    	
 			</section><!--end:wrapper-->
-			<div class="wrapper">			
+			<div class="wrapper">
+				<% for(var id=0; id<shops.length; id++)	{ %>
 					<section class="feature-services container">
 						<article class="one-forth clearfix">
-							<a class="wp-icon" href="#"><img src="images/icons/wp-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Wordpress</a></h3>
-							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</p>
+							<% link_to(img_tag('/images/logoes/' + shops[id].shoplogo, shops[id].shopwebsite), shops[id].shopwebsite, {class: 'wp-icon'}) %>
+							<h3 class="entry-title"><% link_to(shops[id].shopname, shops[id].shopwebsite) %></h3>
 						</article><!--end:one-forth-->
 						<article class="one-forth one-column clearfix">
 							<a class="joomla-icon" href="#"><img src="images/icons/joomla-icon.png" alt="" /></a>
 							<h3 class="entry-title"><a href="#">Joomla</a></h3>
-							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</p>
 						</article><!--end:one-forth-->
 						<article class="one-forth clearfix">
 							<a class="drupal-icon" href="#"><img src="images/icons/drupal-icon.png" alt="" /></a>
 							<h3 class="entry-title"><a href="#">Drupal</a></h3>
-							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</p>
 						</article><!--end:one-forth-->
 						<article class="one-forth last clearfix">
-							<a class="expression-icon" href="#"><img src="images/icons/expression-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Expression</a></h3>
-							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</p>
-						</article><!--end:one-forth-->	
+							<a class="drupal-icon" href="#"><img src="images/icons/drupal-icon.png" alt="" /></a>
+							<h3 class="entry-title"><a href="#">Drupal</a></h3>
+						</article><!--end:one-forth-->
 						<div class="clear"></div>
-						<article class="one-second clearfix" id="attentionChart" style="display:none">
+						<article class="one-second clearfix" id="commentChart">
 						</article>	
-						<article class="one-second last clearfix" id="commentChart" style="display:none">
+						<article class="one-second last clearfix" id="commentBoard">
+							<h3 class="testimonials-title">What's people saying?</h3>
+							<div class="testimonials">
+								<div class="flexslider">
+									<ul class="slides">
+										<li class="clearfix">
+											<p>"1. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu"</p>
+											<span>--- John Doe | Web Develper</span>
+										</li>
+										<li class="clearfix">
+											<p>"2. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu"</p>
+											<span>--- John Doe | Web Develper</span>
+										</li>
+										<li class="clearfix">
+											<p>"3. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu"</p>
+											<span>--- John Doe | Web Develper</span>
+										</li>	
+									</ul><!--end:slides-->   
+								</div><!--end:flexslider-->
+								<span class="testimonial-triangle">&nbsp;</span>
+							</div><!--end:testimonials-->
 						</article>			
 						<div class="clear"></div>
-					</section><!--end:feature-services-->
-					<hr />				
-					
+					</section><!--end:feature-services-->						
+				<% } %>		
 					<section class="feature-services container">
 						<article class="one-forth clearfix">
 							<a class="wp-icon" href="#"><img src="images/icons/wp-icon.png" alt="" /></a>
 							<h3 class="entry-title"><a href="#">Wordpress</a></h3>
-							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</p>
 						</article><!--end:one-forth-->
 						<article class="one-forth one-column clearfix">
 							<a class="joomla-icon" href="#"><img src="images/icons/joomla-icon.png" alt="" /></a>
 							<h3 class="entry-title"><a href="#">Joomla</a></h3>
-							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</p>
 						</article><!--end:one-forth-->
 						<article class="one-forth clearfix">
 							<a class="drupal-icon" href="#"><img src="images/icons/drupal-icon.png" alt="" /></a>
 							<h3 class="entry-title"><a href="#">Drupal</a></h3>
-							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</p>
 						</article><!--end:one-forth-->
 						<article class="one-forth last clearfix">
-							<a class="expression-icon" href="#"><img src="images/icons/expression-icon.png" alt="" /></a>
-							<h3 class="entry-title"><a href="#">Expression</a></h3>
-							<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</p>
-						</article><!--end:one-forth-->			
+							<a class="drupal-icon" href="#"><img src="images/icons/drupal-icon.png" alt="" /></a>
+							<h3 class="entry-title"><a href="#">Drupal</a></h3>
+						</article><!--end:one-forth-->
 						<div class="clear"></div>
-					</section><!--end:feature-services-->
+						<article class="one-second clearfix" id="commentChart">
+						</article>	
+						<article class="one-second last clearfix" id="commentBoard">
+							<h3 class="testimonials-title">What's people saying?</h3>
+							<div class="testimonials">
+								<div class="flexslider">
+									<ul class="slides">
+										<li class="clearfix">
+											<p>"1. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu"</p>
+											<span>--- John Doe | Web Develper</span>
+										</li>
+										<li class="clearfix">
+											<p>"2. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu"</p>
+											<span>--- John Doe | Web Develper</span>
+										</li>
+										<li class="clearfix">
+											<p>"3. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu"</p>
+											<span>--- John Doe | Web Develper</span>
+										</li>	
+									</ul><!--end:slides-->   
+								</div><!--end:flexslider-->
+								<span class="testimonial-triangle">&nbsp;</span>
+							</div><!--end:testimonials-->
+						</article>			
+						<div class="clear"></div>
+					</section><!--end:feature-services-->							
 					<hr />				
 			</div><!--end:wrapper-->
 		</div><!--end:outter-->

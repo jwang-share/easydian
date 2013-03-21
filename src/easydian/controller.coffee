@@ -9,6 +9,7 @@ class Controller
       {path: "/stats",    http_method: "get",   method: "stats" },
       {path: "/comment",    http_method: "post",   method: "comment"}, 
       {path: "/contact",    http_method: "get",   method: "contact"},
+      {path: "/shops",    http_method: "get",   method: "api_shops"},
       {path: "/shop/:id",    http_method: "get",   method: "api_shop"}
     ]
 
@@ -30,10 +31,10 @@ class Controller
   
   api_shop: (req, res) ->
     res.json {
+      categories: ['3/1/13', '3/2/13', '3/3/13', '3/4/13', '3/5/13', '3/6/13'],
       attentionData: [10,20,30,40,50,60],
       commentGood: [10,20,30,40,50,60],
-      commentBad: [15,25,35,45,55,65],
-      categories: ['3/1/13', '3/2/13', '3/3/13', '3/4/13', '3/5/13', '3/6/13']
+      commentBad: [15,25,35,45,55,65]      
     }  
 
 module.exports = Controller
