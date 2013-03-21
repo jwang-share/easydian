@@ -114,5 +114,9 @@ describe("shop schema",function(){
    waits(300);
   });
 
+  it("update_visit: visit, priority, stats will be updated",function(){
+
+  });
+
 
 })
