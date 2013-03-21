@@ -4,43 +4,43 @@
   e.g:
   @shop_model = Mongoose.model('shops',@shop_schema)
   name->index, id->index
+  shopweekstats prototype
+  shopweekstats:[
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ]
 ###
 
-class Shop_Schema
-  
+class Shop_Schema 
   constructor: () -> 
     @shop_schema = new Schema({
-       id : {type:String, default:'id'}, #id
-       shopname : {type:String, default:'fullname'},
-       shopalias : [{type:String, default:'short name'}],
-       shoptype : {type:String, default:'Dining'},
-       shopvisit : {type:Number, default:1000},
-       shoppriority : {type: Number, default:1000},
-       shopwebsite: {type:String, default: 'fullurl'},
-       shopphone: {type:Array, default: ['010-22222222']},
-       shoponbusiness: {type:Boolean, default: true},
-       shoponadv: {type:Boolean, default: true},
-       shopweekstats:[
-         {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},#mon
-         {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},#tues
-         {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},#wesdn
-         {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},#thur
-         {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},#fri
-         {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},#sat
-         {type:Array, default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]} #sun
-       ]
-       weekday:     {type:Array, default:[0,0,0,0,0,0,0]},#visit
-       weekdaygood: {type:Array, default:[0,0,0,0,0,0,0]},
-       weekdaybad:  {type:Array, default:[0,0,0,0,0,0,0]},
-       shopgoodt: {type:Number, default:0},
-       shopbadt: {type:Number, default:0},
-       shopdaystats:{type:Array,default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},#visit
-       shopmonthstats: {type:Array,default:[0,0,0,0,0,0,0,0,0,0,0,0]}, #visit     
-       shoplogo: {type:String, default: './images/default.jpg'}, 
-       shopcover:{type:Array, default: ['beijing','shanghai']},
-       shopaccount: {type:Number, default:0}, 
-       shopcreatetime: {type:Date, default: Date.now},
-       shopcommentsnum: {type:Number, default:0}
+      shopname : {type:String, default:'fullname'},
+      shopalias : {type:Array, default: ['short name']},
+      shoptype : {type:String, default:'Dining'},
+      shopvisit : {type:Number, default:1000},
+      shoppriority : {type: Number, default:1000},
+      shopwebsite: {type:String, default: 'fullurl'},
+      shopphone: {type:Array, default: ['010-22222222']},
+      shoponbusiness: {type:Boolean, default: true},
+      shoponadv: {type:Boolean, default: true},
+      shopweekstats:[],
+      weekday:     {type:Array, default:[0,0,0,0,0,0,0]},#visit
+      weekdaygood: {type:Array, default:[0,0,0,0,0,0,0]},
+      weekdaybad:  {type:Array, default:[0,0,0,0,0,0,0]},
+      shopgoodt: {type:Number, default:0},
+      shopbadt: {type:Number, default:0},
+      shopdaystats:{type:Array,default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},#visit
+      shopmonthstats: {type:Array,default:[0,0,0,0,0,0,0,0,0,0,0,0]}, #visit     
+      shoplogo: {type:String, default: './images/default.jpg'}, 
+      shopcover:{type:Array, default: ['beijing','shanghai']},
+      shopaccount: {type:Number, default:0}, 
+      shopcreatetime: {type:Date, default: Date.now},
+      shopcommentsnum: {type:Number, default:0}
     })
     @shop_model = Mongoose.model "shops", @shop_schema
     return
@@ -59,9 +59,9 @@ class Shop_Schema
       .exec(callback)
     else
       @shop_model.find({shoptype:category})
+      .sort('-shoppriority')
       .skip(start)
       .limit(limit)
-      .sort('-shoppriority')
       .select(fields)
       .exec(callback)
    
@@ -96,21 +96,21 @@ class Shop_Schema
         doc.weekdaybad[day] = doc.weekdaybad[day] + 1
         doc.shoppriority = doc.shoppriority - 2
         doc.shopbadt = doc.shopbadt + 1
-      doc.save: (err) ->
+      doc.save (err) ->
         logger.info "failed to update_badgood.save: "+err if err?
   
   #get all shops' 
   #id, shopname, shoplogo, weekdaygood, shopbadt, shopwebaddress,shoponbusiness,shopwithnew
-  get_shop_by_id: (id,callback) ->
-    @shop_model.findById id, (err,doc) ->
+  get_shop_by_id: (id,fields, callback) ->
+    @shop_model.findById id,fields,(err,doc) ->
       logger.info "failed to get_shop_by_id.findById: "  + err if err?
       callback(doc)  
 
   update_shop_account: (id,num) ->
-    @shop_model.findbyId id, (err,doc) ->
+    @shop_model.findById id, "shopaccount", (err,doc) ->
       logger.info "failed to update_shop_account.findById: "  + err if err?
-      doc.shopaccount = doc.shopaccount + 1
-      doc.save: (err) ->
+      doc.shopaccount = doc.shopaccount + num
+      doc.save (err) ->
         logger.info "failed to update_shop_account.save: "+err if err?
 
   get_shop_field: (id, fields, callback) ->
@@ -122,7 +122,7 @@ class Shop_Schema
     @shop_model.findbyId id, (err,doc) ->
       logger.info "failed to update_comments_num.findById: "  + err if err?
       doc.shopcommentsnum = doc.shopcommentsnum + 1
-      doc.save: (err) ->
+      doc.save (err) ->
         logger.info "failed to update_comments_num.save: "+err if err?
 
 

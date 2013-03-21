@@ -1,18 +1,20 @@
 
 
+
+
 class Userinfo_Schema
   constructor : () ->
-  	@user_schema = new Schema({
-      username: {type:String, default:’fullname’}, #email #phone num
+    @user_schema = new Schema({
+      username: {type:String, default:’fullname’},
       useraddress: [{address:String, usetime:Date}],
       userpassword: {type:String, default:’md5’}
       usertargetaddress: [{address:String, usetime:Date}],
-      useraddressgps: {“x”:0,”y”:0 },
-      usertargetaddressgps: {“x”:0,”y”:0 },
-      userphone: {type:Array, default: [‘010-22222222’]},
+      useraddressgps: {x:0,y:0 },
+      usertargetaddressgps: {x:0,y:0 },
+      userphone: {type:Array, default: ['010-22222222']},
       logintime: [{type:Date, default: Date.now}],
       belogin: {type:Boolean, default: true}
-  	})
+    })
     @user_model = Mongoose.model 'user_info', @user_schema
     return
 

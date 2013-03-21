@@ -2,26 +2,23 @@
 
 
 class Sys_Schema
+
   constructor: () ->
   	@sys_schema = new Schema({
-      categories:[
-        {canyin:{shopnum:Number,column:Number,createtime:Date}},
-        {banjia:{shopnum:Number,column:Number,createtime:Date}},
-        {zhuangxiu:{shopnum:Number,column:Number,createtime:Date}}
-      ]
-    }
-  	})
+      canyin:{shopnum:Number,column:Number,createtime:Date},
+      banjia:{shopnum:Number,column:Number,createtime:Date},
+      zhuangxiu:{shopnum:Number,column:Number,createtime:Date}
+    })
     @sys_model = Mongoose.model "sys_manager", @sys_schema
     return
-  create_sys_manager: (manager) ->
     
+  create_sys_manager: (manager) ->
     sys_doc = new @sys_model manager
     sys_doc.save (err) ->
       logger.info "failed to create_sys_manager: " + err  if err?
 
   get_categories: (callback) ->
     @sys_model.findOne()
-    .select('categories')
     .exec(callback)
 
   update_categories: (newitem) ->
