@@ -3,7 +3,8 @@
 <head>
 	<meta charset="utf-8" />
 	<title><%= title %></title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>	
 	<!-- Grid styles for IE -->
 	<!--[if lt IE 9]><link rel="stylesheet" href="/stylesheets/ie.css" type="text/css" media="all" />
 	<![endif]-->
@@ -16,21 +17,18 @@
     <!-- script
 	================================================== -->
     <script type="text/javascript" src="/jslib/jquery-1.8.3.js"></script>
-    <!--<script type="text/javascript" src="/jslib/jquery.tmpl.min.js"></script>-->
     <script type="text/javascript" src="/jslib/jquery.cslider.js"></script>
     <script type="text/javascript" src="/jslib/jquery.carouFredSel-5.6.2.js"></script>
 	<script type="text/javascript" src="/jslib/jquery.flexslider.js"></script>
 	<script type="text/javascript" src="/jslib/modernizr.custom.28468.js"></script>	
-	<script type="text/javascript" src="/jslib/css3-mediaqueries.js"></script>
 	<script type="text/javascript" src="/jslib/kendo.all.min.js"></script>
-    <script type="text/javascript" src="/jslib/comment.js"></script>	
+	<script type="text/javascript" src="/jslib/comment.js"></script>  
     <script type="text/javascript" src="/jslib/custom.js"></script>    
 	<script src="/jslib/highcharts.js"></script>
 	<script src="/jslib/exporting.js"></script>
 	<!--[if lt IE 9]>
 		<script src="/jslib/html5.js"></script>
 	<![endif]-->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body id="home-page">
 <header id="header">
 	<div id="header-outer">
@@ -88,46 +86,53 @@
 					</nav>
 				</div><!--end:da-slider-->    	
 			</section><!--end:wrapper-->
-			<div class="wrapper">
-				<% for(var id = 0; id < (parseInt(shops.length / 4) * 4); id = id + 4)	{ %>
-					<section class="feature-services container">
-						<article class="one-forth clearfix">
-							<% link_to(img_tag("/images/logoes/" + shops[id].shoplogo, shops[id].shopwebsite), shops[id].shopwebsite, {class: "wp-icon"}) %>
-							<h3 class="entry-title"><% link_to(shops[id].shopname, shops[id].shopwebsite) %></h3>
+			<div class="wrapper" id="shopsBody">
+				<% for(id = 0; id < (shops.length >= 20 ? 20 : shops.length); id = id + 4)	{ %>
+					<section class="feature-services container" id="shopGroup<%= id %>" >
+						<article class="one-forth clearfix" id="<%= shops[id].id %>" >
+							<a class="wp-icon" href="<%= shops[id].shopwebsite %>" ><img src="images/icons/<%= shops[id].shoplogo %>" alt="<%= shops[id].shopwebsite %>" /></a>
+							<h3 class="entry-title"><a href="<%= shops[id].shopwebsite %>"><%= shops[id].shopname %></a></h3>
 						</article><!--end:one-forth-->
-						<article class="one-forth one-column clearfix">
-							<% link_to(img_tag("/images/logoes/" + shops[id+1].shoplogo, shops[id+1].shopwebsite), shops[id+1].shopwebsite, {class: "wp-icon"}) %>
-							<h3 class="entry-title"><% link_to(shops[id+1].shopname, shops[id+1].shopwebsite) %></h3>
+						<% if((shops.length - id) > 1) { %>
+						<article class="one-forth one-column clearfix" id="<%= shops[id + 1].id %>" >
+							<a class="wp-icon" href="<%= shops[id + 1].shopwebsite %>" ><img src="images/icons/<%= shops[id].shoplogo %>" alt="<%= shops[id + 1].shopwebsite %>" /></a>
+							<h3 class="entry-title"><a href="<%= shops[id + 1].shopwebsite %>"><%= shops[id + 1].shopname %></a></h3>
 						</article><!--end:one-forth-->
-						<article class="one-forth clearfix">
-							<% link_to(img_tag("/images/logoes/" + shops[id+2].shoplogo, shops[id+2].shopwebsite), shops[id+2].shopwebsite, {class: "wp-icon"}) %>
-							<h3 class="entry-title"><% link_to(shops[id+2].shopname, shops[id+2].shopwebsite) %></h3>
+						<% } 
+						if((shops.length - id) > 2) { %>
+						<article class="one-forth clearfix" id="<%= shops[id + 2].id %>" >
+							<a class="wp-icon" href="<%= shops[id + 2].shopwebsite %>" ><img src="images/icons/<%= shops[id].shoplogo %>" alt="<%= shops[id + 2].shopwebsite %>" /></a>
+							<h3 class="entry-title"><a href="<%= shops[id + 2].shopwebsite %>"><%= shops[id + 2].shopname %></a></h3>
 						</article><!--end:one-forth-->
-						<article class="one-forth last clearfix">
-							<% link_to(img_tag("/images/logoes/" + shops[id+3].shoplogo, shops[id+3].shopwebsite), shops[id+3].shopwebsite, {class: "wp-icon"}) %>
-							<h3 class="entry-title"><% link_to(shops[id+3].shopname, shops[id+3].shopwebsite) %></h3>
+						<% } 
+						if((shops.length - id) > 3) { %>
+						<article class="one-forth last clearfix" id="<%= shops[id + 3].id %>" >
+							<a class="wp-icon" href="<%= shops[id + 3].shopwebsite %>" ><img src="images/icons/<%= shops[id].shoplogo %>" alt="<%= shops[id + 3].shopwebsite %>" /></a>
+							<h3 class="entry-title"><a href="<%= shops[id + 3].shopwebsite %>"><%= shops[id + 3].shopname %></a></h3>
 						</article><!--end:one-forth-->
+						<% } %>
 						<div class="clear"></div>
 					</section><!--end:feature-services-->
-					<section class="feature-services container" id="group" >
-						<article class="one-second clearfix" id="commentChart">
+					<hr />
+					<section class="feature-services container" id="commentGroup<%= id %>" >
+						<article class="one-second clearfix" id="commentChart<%= id %>" >
 						</article>	
-						<article class="one-second last clearfix" id="commentBoard">
+						<article class="one-second last clearfix" id="commentBoard<%= id %>" >
 							<h3 class="testimonials-title">What's people saying?</h3>
 							<div class="testimonials">
 								<div class="flexslider">
 									<ul class="slides">
 										<li class="clearfix">
 											<p>"1. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu"</p>
-											<span>--- John Doe | Web Develper</span>
+											<span>more...</span>
 										</li>
 										<li class="clearfix">
 											<p>"2. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu"</p>
-											<span>--- John Doe | Web Develper</span>
+											<span>more...</span>
 										</li>
 										<li class="clearfix">
 											<p>"3. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu"</p>
-											<span>--- John Doe | Web Develper</span>
+											<span>more...</span>
 										</li>	
 									</ul><!--end:slides-->   
 								</div><!--end:flexslider-->

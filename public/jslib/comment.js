@@ -2,9 +2,9 @@
 ChartView-Events
 ============================================================ */
 jQuery(document).ready(function() {
-  var commentChartOption = {
+  commentChartOption = {
       chart: {
-          renderTo: 'commentChart',
+          renderTo: 'commentChart0',
           defaultSeriesType: 'line',
           marginRight: 10,
           backgroundColor:'transparent',          
@@ -68,37 +68,20 @@ jQuery(document).ready(function() {
         }        
       ]
   };
-  $('#commentChart').slideUp('fast',function(){});
-  $('#commentBoard').slideUp('fast',function(){});
+  $('section[id^=commentGroup]').slideUp("fast", function (){});
+  //$('section[id^=commentGroup]').hide();
 	$('article.one-forth').mouseenter(function(){
-    //alert($('div section article.one-forth').css("height"));
-    $('#commentChart').css('height', 168);
-    $('#commentBoard').css('height', 168); 
-		commentTimeId = $('#commentChart').slideDown("fast",function(){	
+    $('#commentChart0').css('height', 168);
+    $('#commentBoard0').css('height', 168); 
+		$('#commentGroup0').slideDown("fast",function(){	
 			commentChart = new Highcharts.Chart(commentChartOption);
-			renderCommentChart(commentChart);
-			setInterval(function() {
-				renderCommentChart(commentChart);
-			}, 1*60*1000);					
-		})
-    commentBoardTimeId = $('#commentBoard').slideDown("fast",function(){  
-      setInterval(function(){}, 1*60*1000);
-	})
+			renderCommentChart(commentChart);		
+		});
   });
 
 	$('section.feature-services').mouseleave(function(){
-		$('#commentChart').slideUp("fast",function(){
-			//clearTimeout(commentTimeId);
-		});	
-    $('#commentBoard').slideUp("fast",function(){
-      //clearTimeout(commentTimeId);
-    });		
-	});
-
-  //$('article.one-forth').mouseenter(function(){ 
-  //    commentChart = new Highcharts.Chart(commentChartOption);
-  //    renderCommentChart(commentChart);
-  //});
+    $('section[id^=commentGroup]').hide();
+	});		
 
 	renderCommentChart = function(commentChart) {
 	  $.get("/shop/0", function(data) {   	   
