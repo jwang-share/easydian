@@ -72,7 +72,7 @@ describe("shop schema",function(){
       var callback = function(err,docs){
         if(err) logger.info(err)
           for (var one in docs){
-            logger.info(docs[one]); 
+            //logger.info(docs[one]); 
             index = index + 1;
           }      
       }; 
@@ -101,12 +101,12 @@ describe("shop schema",function(){
 
   it("update_shop_account: update shop account", function(){
    runs(function(){
-    sd.update_shop_account(ExistID, 500);
+    sd.update_shop_account(ExistID, 1900);
    });
    waits(200);
    runs(function(){
     var callback = function(doc){
-      expect(doc.shopaccount).toEqual(500);
+      expect(doc.shopaccount).toEqual(1900);
     };
     var fields = "shopaccount";
     sd.get_shop_by_id(ExistID, fields, callback);
@@ -115,7 +115,70 @@ describe("shop schema",function(){
   });
 
   it("update_visit: visit, priority, stats will be updated",function(){
+    var visit, prio, wd, sds, sms,sws;
+    var visit1, prio1, wd1, sds1, sms1,sws1;
+    var curtime = new Date();
+    var day = curtime.getDay();
+    var hour = curtime.getHours() - 1; //0->23
+    var month = curtime.getMonth();
+    var fields = "shopvisit shopweekstats weekday shopdaystats shoppriority shopmonthstats"
+    runs(function(){
+      var callback = function(doc){
+        visit = doc.shopvisit;
+        sws = doc.shopweekstats[day][hour];
+        wd = doc.weekday[day];
+        sds = doc.shopdaystats[hour];
+        prio = doc.shoppriority;
+        sms = doc.shopmonthstats[month];       
+      };
+      sd.get_shop_by_id(ExistID, fields, callback);
+    })
+    waits(300);
+    runs(function(){
+      sd.update_visit(ExistID);
+    });
+    waits(500);
+    runs(function(){
+      var callback = function(doc){
+        sws1 = doc.shopweekstats[day][hour];
+        wd1 = doc.weekday[day];
+        sds1 = doc.shopdaystats[hour];
+        prio1 = doc.shoppriority;
+        sms1 = doc.shopmonthstats[month];
+        visit1 = doc.shopvisit;
+      };
+      sd.get_shop_by_id(ExistID, fields, callback);
+    })
+    waits(300);
+    runs(function(){
+      expect(sws).toEqual(sws1-1);
+      expect(wd).toEqual(wd1-1);
+      expect(sds).toEqual(sds1-1);
+      expect(prio).toEqual(prio1-1);
+      expect(sms).toEqual(sms1-1);
+      expect(visit).toEqual(visit1-1);
+    });
 
+  });
+
+  it("update_badgood",function(){
+    var curtime = new Date();
+    var day = curtime.getDay();
+    var fields = "weekdaygood shoppriority shopgoodt shopbadt weekdaybad";
+    runs(function(){
+      var callback = function(){
+        
+      };
+      sd.get_shop_by_id(ExistID, fields, callback);
+    });
+    waits(300);
+    runs(function(){
+
+    });
+    waits(300);
+    runs(function(){
+
+    });
   });
 
 

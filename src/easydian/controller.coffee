@@ -1,5 +1,4 @@
 
-SchemaDesigner = require "./model/schemadesigner"
 
 class Controller
   constructor: () ->
@@ -28,7 +27,7 @@ class Controller
       {path: "/header",         http_method: "put",   method: "update_header"},
       {path: "/header",         http_method: "get",   method: "get_header"}
     ]
-    @sd = new SchemaDesigner()
+    @sd = {}
     
    
   #show the shops

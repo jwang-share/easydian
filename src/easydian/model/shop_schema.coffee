@@ -45,10 +45,13 @@ class Shop_Schema
     @shop_model = Mongoose.model "shops", @shop_schema
     return
 
-  insert_shop: (shop) ->
+  insert_shop: (shop,callback) ->
     shop_doc = new @shop_model shop
-    shop_doc.save (err,doc)->
-      logger.info "failed to insert_shop: " + err  if err?
+    if not callback?
+      shop_doc.save (err,doc)->
+        logger.info "failed to insert_shop: " + err  if err?
+    else
+      shop_doc.save callback
 
   #callback: (err,docs)
   get_shops: (category, fields, start, limit, callback) ->
@@ -65,37 +68,44 @@ class Shop_Schema
       .select(fields)
       .exec(callback)
    
-  update_visit: (id) -> 
-    @shop_model.findById id, (err,doc) ->
+  update_visit: (id) ->
+    fields = "shopvisit shopweekstats weekday shopdaystats shoppriority shopmonthstats"
+    s = @shop_model.findById id, fields, (err,doc) =>
       logger.info "update_visit.findbyIDd: "+err if err?
-      doc.shopvisit = doc.shopvisit + 1
       curtime = new Date()
       day = curtime.getDay()
-      hour = curtime.getHour()
+      hour = curtime.getHours() - 1  #hour: 0-->23
       month = curtime.getMonth()
+      doc.shopvisit = doc.shopvisit + 1
       doc.shopweekstats[day][hour] = doc.shopweekstats[day][hour] + 1
       doc.weekday[day] = doc.weekday[day] + 1
       doc.shopdaystats[hour] = doc.shopdaystats[hour] + 1
       doc.shoppriority = doc.shoppriority + 1
       doc.shopmonthstats[month] = doc.shopmonthstats[month] + 1
+      doc.markModified("shopweekstats")
+      doc.markModified("weekday")
+      doc.markModified("shopdaystats")
+      doc.markModified("shopmonthstats")
       doc.save (err)->
         logger.info "failed to update_visit.save: "+err if err?
 
   update_badgood: (id,type) ->
     @shop_model.findById id, (err,doc) ->
-      logger.info "update_visit.findbyID: "+err if err?
+      logger.info "update_badgood.findbyID: "+err if err?
       curtime = new Date()
       day = curtime.getDay()
-      hour = curtime.getHour()
+      hour = curtime.getHours() -1
       month = curtime.getMonth()
       if type is 'good'
         doc.weekdaygood[day] = doc.weekdaygood[day] + 1
-        doc.shoppriority = doc.shoppriority + 1
+        doc.shoppriority = doc.shoppriority + 2
         doc.shopgoodt = doc.shopgoodt + 1
+        doc.markModified("weekdaygood")
       else
         doc.weekdaybad[day] = doc.weekdaybad[day] + 1
         doc.shoppriority = doc.shoppriority - 2
         doc.shopbadt = doc.shopbadt + 1
+        doc.markModified("weekdaybad")
       doc.save (err) ->
         logger.info "failed to update_badgood.save: "+err if err?
   
@@ -107,11 +117,19 @@ class Shop_Schema
       callback(doc)  
 
   update_shop_account: (id,num) ->
+    @shop_model.update {_id:id},{"shopaccount":num}, {upsert: false}, (err,num,doc) ->
+      logger.info "failed to update_shop_account: "+err if err?
+    ###
     @shop_model.findById id, "shopaccount", (err,doc) ->
       logger.info "failed to update_shop_account.findById: "  + err if err?
-      doc.shopaccount = doc.shopaccount + num
+      doc.shopaccount = num
       doc.save (err) ->
         logger.info "failed to update_shop_account.save: "+err if err?
+    ###
+
+  update_shop_logo: (id, logo) ->
+    @shop_model.update {_id:id},{"shoplogo":logo}, {upsert: false}, (err,num,doc) ->
+      logger.info "failed to update_shop_logo: "+err if err?
 
   get_shop_field: (id, fields, callback) ->
     @shop_model.findById id, fields, (err,doc) ->
@@ -124,6 +142,10 @@ class Shop_Schema
       doc.shopcommentsnum = doc.shopcommentsnum + 1
       doc.save (err) ->
         logger.info "failed to update_comments_num.save: "+err if err?
+
+  remove_shop_by_id: (id) ->
+    @shop_model.remove {_id:id}, (err) ->
+      logger.info "failed to remove_shop_by_id: "+err if err?
 
 
 module.exports = Shop_Schema
