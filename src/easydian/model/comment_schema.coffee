@@ -6,20 +6,30 @@ class Comment_Schema
       comment: {type:String, default:'context'},
       createtime: {type:Date, default: Date.now}
     })
-  insert_comment: (comment,category) ->
-    @comm_model = Mongoose.model "comments", @comm_schema, category
-    comment_doc = new @comm_model comment
-    comment_doc.save (err,doc) ->
-      logger.info "failed to insert_comment: " + err  if err?
 
-  get_comments: (id,category,start,limit,callback) ->
-    conn.db.collection category, (err, collec) ->
-      collec.find({shopid:id})
-      .skip(start)
-      .limit(limit)
-      .sort('-createtime')
-      .select('news newsurl')
-      .exec(callback)
+  insert_comment: (comment,category,callback) ->
+    comm_model = Mongoose.model "comments", @comm_schema, category
+    comment_doc = new comm_model comment
+    if not callback?
+      comment_doc.save (err) ->
+        logger.info "failed to insert_comment: " + err  if err?
+    else
+      comment_doc.save callback
+    
+    
+  get_comments: (shopid,category,start,limit,callback) ->
+    cur_model = Mongoose.model "comments", @comm_schema, category
+    cur_model.find({shopid:shopid})
+    .sort('-createtime')
+    .skip(start)
+    .limit(limit)
+    .select("comment")
+    .exec(callback)
+
+  remove_comment_by_id: (id,category) ->
+    cur_model = Mongoose.model "comments", @comm_schema, category
+    cur_model.remove {_id:id}, (err) ->
+      logger.info "failed to remove_shop_by_id: "+err if err?
 
 
 module.exports = Comment_Schema
