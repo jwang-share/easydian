@@ -70,10 +70,10 @@ class Shop_Schema
    
   update_visit: (id) ->
     fields = "shopvisit shopweekstats weekday shopdaystats shoppriority shopmonthstats"
-    s = @shop_model.findById id, fields, (err,doc) =>
+    @shop_model.findById id, fields, (err,doc) ->
       logger.info "update_visit.findbyIDd: "+err if err?
       curtime = new Date()
-      day = curtime.getDay()
+      day = curtime.getDay() - 1
       hour = curtime.getHours() - 1  #hour: 0-->23
       month = curtime.getMonth()
       doc.shopvisit = doc.shopvisit + 1
@@ -90,11 +90,12 @@ class Shop_Schema
         logger.info "failed to update_visit.save: "+err if err?
 
   update_badgood: (id,type) ->
+    fields = "weekdaygood shoppriority shopgoodt shopbadt weekdaybad"
     @shop_model.findById id, (err,doc) ->
       logger.info "update_badgood.findbyID: "+err if err?
       curtime = new Date()
-      day = curtime.getDay()
-      hour = curtime.getHours() -1
+      day = curtime.getDay() - 1 # 1 base -> 0 base
+      hour = curtime.getHours() - 1 #1 base -> 0 base
       month = curtime.getMonth()
       if type is 'good'
         doc.weekdaygood[day] = doc.weekdaygood[day] + 1
@@ -109,35 +110,26 @@ class Shop_Schema
       doc.save (err) ->
         logger.info "failed to update_badgood.save: "+err if err?
   
-  #get all shops' 
-  #id, shopname, shoplogo, weekdaygood, shopbadt, shopwebaddress,shoponbusiness,shopwithnew
   get_shop_by_id: (id,fields, callback) ->
     @shop_model.findById id,fields,(err,doc) ->
-      logger.info "failed to get_shop_by_id.findById: "  + err if err?
+      return logger.info "failed to get_shop_by_id.findById: "  + err if err?
       callback(doc)  
 
   update_shop_account: (id,num) ->
     @shop_model.update {_id:id},{"shopaccount":num}, {upsert: false}, (err,num,doc) ->
       logger.info "failed to update_shop_account: "+err if err?
-    ###
-    @shop_model.findById id, "shopaccount", (err,doc) ->
-      logger.info "failed to update_shop_account.findById: "  + err if err?
-      doc.shopaccount = num
-      doc.save (err) ->
-        logger.info "failed to update_shop_account.save: "+err if err?
-    ###
-
+  ### 
+  update_field_by_id: (id, field, newvalue) ->
+    @shop_model.update {_id:id},{field:newvalue}, {upsert: false}, (err,num,doc) ->
+      logger.info "failed to update_field_by_id: "+err if err?
+  ###
   update_shop_logo: (id, logo) ->
     @shop_model.update {_id:id},{"shoplogo":logo}, {upsert: false}, (err,num,doc) ->
       logger.info "failed to update_shop_logo: "+err if err?
 
-  get_shop_field: (id, fields, callback) ->
-    @shop_model.findById id, fields, (err,doc) ->
-      logger.info "failed to get_shop_field.findById: "  + err if err?
-      callback(doc)
-
   update_comments_num: (id) ->
-    @shop_model.findbyId id, (err,doc) ->
+    fields = "shopcommentsnum"
+    @shop_model.findById id, fields, (err,doc) ->
       logger.info "failed to update_comments_num.findById: "  + err if err?
       doc.shopcommentsnum = doc.shopcommentsnum + 1
       doc.save (err) ->

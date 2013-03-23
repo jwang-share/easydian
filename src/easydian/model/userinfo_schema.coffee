@@ -5,9 +5,9 @@
 class Userinfo_Schema
   constructor : () ->
     @user_schema = new Schema({
-      username: {type:String, default:’fullname’},
+      username: {type:String, default:"fullname"},
       useraddress: [{address:String, usetime:Date}],
-      userpassword: {type:String, default:’md5’}
+      userpassword: {type:String, default:"md5"}
       usertargetaddress: [{address:String, usetime:Date}],
       useraddressgps: {x:0,y:0 },
       usertargetaddressgps: {x:0,y:0 },
