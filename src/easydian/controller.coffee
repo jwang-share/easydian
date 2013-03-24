@@ -36,10 +36,15 @@ class Controller
   
   api_shop: (req, res) ->
     res.json {
-      categories: ['3/1/13', '3/2/13', '3/3/13', '3/4/13', '3/5/13', '3/6/13'],
-      attentionData: [10,20,30,40,50,60],
-      commentGood: [10,20,30,40,50,60],
-      commentBad: [15,25,35,45,55,65]      
-    }  
+      commentGood: [10, 120, 230, 340, 350, 360],
+      commentBad: [115, 25, 135, 245, 255, 365]    
+    };  
+
+  api_shops: (req, res) ->
+    res.json { title: 'Easy Sou', shops: [{shoplogo: 'wp-icon.png', shopwebsite: '#', shopname: 'EasySou', id: 'shop1'}, 
+      {shoplogo: 'wp-icon.png', shopwebsite: '#', shopname: 'EasySou', id: 'shop2'},
+      {shoplogo: 'wp-icon.png', shopwebsite: '#', shopname: 'EasySou', id: 'shop3'},
+      {shoplogo: 'wp-icon.png', shopwebsite: '#', shopname: 'EasySou', id: 'shop4'}
+      {shoplogo: 'wp-icon.png', shopwebsite: '#', shopname: 'EasySou', id: 'shop5'}] };  
 
 module.exports = Controller

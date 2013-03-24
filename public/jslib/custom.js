@@ -8,28 +8,7 @@ jQuery(document).ready(function(){
     }).mouseleave(function(){
         jQuery(this).find('img').fadeTo(300, 1);
     });	
-});
-/* =========================================================
-Featured news slider
-============================================================ */
-jQuery(window).load(function(){
-	jQuery('#feature-news').carouFredSel({
-		responsive: true,
-		prev: '#prev-1',
-		next: '#next-1',
-		width: 268,
-		scroll: 1,
-		auto: false,
-		items: {
-			width: 268,
-			height: 'auto',
-			visible: {
-				min: 1,
-				max: 4
-			}
-		}
-	});
-});				
+});		
 /* =========================================================
 Create mobile menu
 ============================================================ */
@@ -96,27 +75,6 @@ jQuery(function() {
 	$('#da-slider').cslider({
 		autoplay: true,
 		bgincrement : 0
-	});
-});
-
-/* =========================================================
-Related articles slider
-============================================================ */
-jQuery(window).load(function(){
-	jQuery('#related-posts').carouFredSel({
-		responsive: true,		
-		prev: '#prev-2',
-		next: '#next-2',
-		width: '100%',
-		scroll: 1,
-		auto: false,
-		items: {
-			width: 139,			
-			visible: {
-				min: 1,
-				max: 5
-			}
-		}
 	});
 });
 /* =========================================================

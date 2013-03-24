@@ -1,10 +1,22 @@
- /* =========================================================
+/* =========================================================
 ChartView-Events
 ============================================================ */
 jQuery(document).ready(function() {
-  commentChartOption = {
+  var shopCommentPars = { id: 0,  shopId: 0};
+  $('section[id^=commentGroup]').slideUp("fast", function (){});
+	$('section[id^=shopGroup]').mouseenter(function(){
+    shopCommentPars.id = ($(this).attr('id')).substring(9);
+    $('#commentChart' + shopCommentPars.id).css('height', 200);
+    $('#commentBoard' + shopCommentPars.id).css('height', 200); 
+  });
+
+  $('article.one-forth').hover(function() {
+    if($(this).attr('id') != 'undefined') {
+      shopCommentPars.shopId = $(this).attr('id');
+      $('#commentGroup' + shopCommentPars.id).slideDown("fast",function(){  
+      commentChart = new Highcharts.Chart({
       chart: {
-          renderTo: 'commentChart0',
+          renderTo: 'commentChart' + shopCommentPars.id,
           defaultSeriesType: 'line',
           marginRight: 10,
           backgroundColor:'transparent',          
@@ -16,15 +28,15 @@ jQuery(document).ready(function() {
           }
       },
       credits: {
-  			style: {
-  				top: '20px',
-  				right: '30px',
-  				height: '1px'
-  			},
-  			text: "Easy Sou",
-  			target: "_blank",
-  			href: "http://www.easysou.com"
-  		},
+        style: {
+          top: '20px',
+          right: '30px',
+          height: '1px'
+        },
+        text: "Easy Sou",
+        target: "_blank",
+        href: "http://www.easysou.com"
+      },
       xAxis: {
           categories: ['Mon', 'Tus', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
       },
@@ -59,34 +71,30 @@ jQuery(document).ready(function() {
       },
       series: [
         { 
-        	name: 'Good', 
-        	data: []
+          name: 'Good', 
+          data: []
         },
         { 
-        	name: 'Bad', 
-        	data: []
+          name: 'Bad', 
+          data: []
         }        
       ]
-  };
-  $('section[id^=commentGroup]').slideUp("fast", function (){});
-  //$('section[id^=commentGroup]').hide();
-	$('article.one-forth').mouseenter(function(){
-    $('#commentChart0').css('height', 168);
-    $('#commentBoard0').css('height', 168); 
-		$('#commentGroup0').slideDown("fast",function(){	
-			commentChart = new Highcharts.Chart(commentChartOption);
-			renderCommentChart(commentChart);		
-		});
   });
+      renderCommentChart(commentChart, shopCommentPars.shopId);   
+    });
+}
+});
 
-	$('section.feature-services').mouseleave(function(){
-    $('section[id^=commentGroup]').hide();
+	$('section[id=shopGroup' + shopCommentPars.id + ']').mouseleave(function(){
+    $('section[id=commentGroup' + shopCommentPars.id + ']').slideUp('fast', function(){
+      delete commentChart;
+    });
 	});		
 
-	renderCommentChart = function(commentChart) {
-	  $.get("/shop/0", function(data) {   	   
+	renderCommentChart = function(commentChart, shopId) {
+	  $.get("/shop/" + shopId, function(data) {      
 	    commentChart.series[0].setData(data.commentGood, true);	    	   
 	    commentChart.series[1].setData(data.commentBad, true);	    	   
 	  });
-	};	
+	};  	 
 });
