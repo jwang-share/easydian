@@ -7,7 +7,7 @@ class Controller
       {path: "/",     http_method: "get",   method: "index" },
       {path: "/index",     http_method: "get",   method: "index" },
       {path: "/stats",    http_method: "get",   method: "stats" },
-      {path: "/comment",    http_method: "post",   method: "comment"}, 
+      {path: "/comment/:id",    http_method: "get",   method: "comment"}, 
       {path: "/contact",    http_method: "get",   method: "contact"},
       {path: "/shops",    http_method: "get",   method: "api_shops"},
       {path: "/shop/:id",    http_method: "get",   method: "api_shop"}
@@ -28,7 +28,9 @@ class Controller
 
   #req: bad, good
   comment: (req, res) ->
-  	return
+  	res.json {
+      comments: ['comment1', 'comment2', 'comment3', 'comment4', 'comment5', 'comment6', 'comment7']   
+    }; 
 
   #show the contact information
   contact: (req, res) ->

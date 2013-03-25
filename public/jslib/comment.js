@@ -3,9 +3,10 @@ ChartView-Events
 ============================================================ */
 jQuery(document).ready(function() {
   var shopCommentPars = { 
-    d: 0,  
+    id: 0,  
     shopId: 0,
     timeId: 0,
+    commentChart: null,
     context: this   
   };
 
@@ -17,6 +18,7 @@ jQuery(document).ready(function() {
     var id = shopCommentPars.id;
     shopCommentPars.id = ($(this).attr('id')).substring(9);
     hidePreviousCommentGroup(id);
+    removeCommentBoardData(id);
   });
 
   $('article.one-forth').mouseenter(function(){
@@ -26,9 +28,11 @@ jQuery(document).ready(function() {
       if($(shopCommentPars.context).attr('id') != undefined) {           
         shopCommentPars.id = ($('section').has('#' + $(shopCommentPars.context).attr('id')).attr('id')).substring(9);
         hidePreviousCommentGroup(id);
+        removeCommentBoardData(id);
         shopCommentPars.shopId = $(shopCommentPars.context).attr('id');
+        $('#commentGroup' + shopCommentPars.id).attr('display', 'block');
         $('#commentGroup' + shopCommentPars.id).slideDown("fast",function(){  
-          commentChart = new Highcharts.Chart({
+          shopCommentPars.commentChart = new Highcharts.Chart({
           chart: {
               renderTo: 'commentChart' + shopCommentPars.id,
               defaultSeriesType: 'line',
@@ -94,7 +98,9 @@ jQuery(document).ready(function() {
             }        
           ]
         });
-        renderCommentChart(commentChart, shopCommentPars.shopId);   
+        renderCommentChart(shopCommentPars.commentChart, shopCommentPars.shopId); 
+        renderCommentBoard(shopCommentPars.shopId);  
+        alert($('#commentBoard' + shopCommentPars.id + ' ul.slides').html());
         });
       }
     }, 2000);}).mouseleave(function(){
@@ -103,6 +109,7 @@ jQuery(document).ready(function() {
 
 	$('section[id=shopGroup' + shopCommentPars.id + ']').mouseleave(function(){
     hidePreviousCommentGroup(shopCommentPars.id);
+    removeCommentBoardData(shopCommentPars.id);
 	});		
 
 	renderCommentChart = function(commentChart, shopId) {
@@ -112,11 +119,27 @@ jQuery(document).ready(function() {
 	  });    
 	}; 
 
+  renderCommentBoard = function(shopId) {    
+    $.get("/comment/" + shopId, function(data) {      
+      for (var index = 0; index < data.comments.length; index++) {        
+        $('#commentBoard' + shopCommentPars.id + ' ul.slides').append('<li class="clearfix"><p>' + data.comments[index] + '</p><span><a href="#">Good</a> | <a href="#">Bad</a> | <a href="#">Detail</a></span></li>');        
+      }                   
+    });    
+  };
+
   hidePreviousCommentGroup =  function(id) {
     if (id != shopCommentPars.id) {
       $('section[id=commentGroup' + id + ']').slideUp('fast', function(){
-        delete commentChart;
+        if (shopCommentPars.commentChart != null)
+          delete shopCommentPars.commentChart;
+          shopCommentPars.commentChart = null;
       });
+    }
+  }
+
+  removeCommentBoardData =  function(id) {
+    if (id != shopCommentPars.id) {
+      $('#commentBoard' + shopCommentPars.id + ' ul.slides').empty();
     }
   }
 });
