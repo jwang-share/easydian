@@ -1,7 +1,7 @@
 var Comment_Schema = require("../lib/easydian/model/comment_schema")
 require('../lib/easydian/config')
 
-describe("Comment Schema", function(){
+xdescribe("Comment Schema", function(){
   //var ExistID = '514ace690a16f3140c000001';
   var ExistID = '514b0e2c8b4309c20a000001';
   var cs = new Comment_Schema();

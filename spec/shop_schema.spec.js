@@ -1,7 +1,7 @@
 var Shop_Schema = require("../lib/easydian/model/shop_schema")
 require('../lib/easydian/config')
 
-describe("shop schema",function(){
+xdescribe("shop schema",function(){
   
   var sd, doc;
   //var ExistID = '514ace690a16f3140c000001';
@@ -54,11 +54,10 @@ describe("shop schema",function(){
   it("constructor: can create an instance",function(){
     expect(typeof sd.shop_schema).toEqual("object");
     expect(typeof sd.shop_model).toEqual("function");
-    waits(500);
   });
   
   it("insert_shop: can insert shop to mongodb",function(){
-      var thisid;
+    var thisid;
      runs(function(){
       var callback = function(err,doc){
         thisid = doc._id;
@@ -106,7 +105,7 @@ describe("shop schema",function(){
   });
 
   it("update_shop_account: update shop account", function(){
-    var num = Math.ceil(Math.random()*1000)
+    var num = Math.ceil(Math.random()*1000);
     runs(function(){
       sd.update_shop_account(ExistID, num);
     });
