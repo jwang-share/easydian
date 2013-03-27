@@ -39,17 +39,29 @@ class Userinfo_Schema
       return  logger.info "failed to get_user: " + err  if err?
       callback(doc)
 
-  add_address_to_user: (id,field, addrinfo) -> #address should be a json
-    @user_model.findById id , field, (err,doc) ->
+  add_address_to_user: (id, addrinfo) -> #address should be a json
+    @user_model.findById id,"useraddress", (err,doc) ->
       doc.useraddress.push addrinfo
-      doc.markModified(field)
+      doc.markModified("useraddress")
       doc.save (err) ->
         logger.info "failed to add_address_to_user: " + err  if err?
 
-  remove_user_address: (id,field,address) -> #if "address" is "all", remove all
-    @user_model.findById id , "useraddress", (err,doc) ->
-      doc.useraddress.remove {address:address}, (err)->
-        logger.info "failed to remove_user_address: " + err  if err?
+  add_address_to_target: (id,addrinfo) ->
+    @user_model.findById id, "usertargetaddress", (err,doc) ->
+      doc.useraddress.push addrinfo
+      doc.markModified("usertargetaddress")
+      doc.save (err) ->
+        logger.info "failed to add_address_to_target: " + err  if err?
+
+  remove_user_address: (id,address) -> #FIXme if "address" is "all", remove all
+    condition = {_id:id}
+    update = {$pull:{useraddress:{address:address}}}
+    @user_model.update condition, update, false, false
+
+  remove_target_address: (id,address) ->
+    condition = {_id:id}
+    update = {$pull:{usertargetaddress:{address:address}}}
+    @user_model.update condition, update, false, false
 
   add_phone_to_user: (id,phoneinfo) ->
     @user_model.findById id, "userphone", (err,doc)->
@@ -59,15 +71,9 @@ class Userinfo_Schema
         logger.info "failed to add_phone_to_user: " + err  if err?
 
   remove_user_phone: (id,phonenum) ->
-    try
-      @user_model.findById id , "userphone", (err,doc) ->
-        doc.userphone.remove {phone:phonenum}, (err)->
-          logger.info "failed to remove_user_phone: " + err  if err?
-        doc.markModified("userphone")
-        doc.save (err)->
-          logger.info "failed to remove_phone_to_user.save: " + err  if err?
-    catch e
-      logger.info "======> " +e
+    condition = {_id:id}
+    update = {$pull:{userphone:{phone:phonenum}}}
+    @user_model.update condition, update, false, false
 
   remove_user: (id) ->
    @user_model.remove {_id:id}, (err) ->

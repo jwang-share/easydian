@@ -2,7 +2,7 @@ var Userinfo_Schema = require("../lib/easydian/model/userinfo_schema")
 require('../lib/easydian/config')
 
 describe("Userinfo Schema",function(){
-  var us, doc, addrinfo, phoneinfo;
+  var us, doc, addrinfo, addrinfo1, phoneinfo;
   var ExistID = "5150170e1541c17b0c000005";
   us = new Userinfo_Schema();
   doc = {
@@ -32,6 +32,11 @@ describe("Userinfo Schema",function(){
     gps:{x:10.01, y:20.01},
   };
 
+  addrinfo1 = {
+    address: "nanjing 102 haidian beijing",
+    gps:{x:10.01, y:20.01},
+  };
+
   phoneinfo = {
     phone: "020-110101010",
     usetime: new Date
@@ -58,10 +63,92 @@ describe("Userinfo Schema",function(){
     waits(80);
   });
 
-  xit("add_address_to_user: can insert a user address",function(){
+  it("add_address_to_user: can insert a user address",function(){
   	runs(function(){
-      //us.add_address_to_user(ExistID,)
+      us.add_address_to_user(ExistID,addrinfo)
   	});
+    waits(50);
+    runs(function(){
+      var index = 0;
+      var callback = function(doc){
+        uas = doc.useraddress;
+        for (one in uas){
+          if("jingshuyuan 102 haidian beijing" == uas[one].address){
+            index = 1;
+            break;
+          }
+        }
+        expect(index).toEqual(1);
+      };
+      us.get_user(ExistID,"useraddress",callback);
+    });
+    waits(50);
+  });
+
+  it("add_address_to_target: can insert a target address",function(){
+    runs(function(){
+      us.add_address_to_user(ExistID,addrinfo1)
+    });
+    waits(50);
+    runs(function(){
+      var index = 0;
+      var callback = function(doc){
+        uas = doc.usertargetaddress;
+        for (one in uas){
+          if("nanjing 102 haidian beijing" == uas[one].address){
+            index = 1;
+            break;
+          }
+        }
+        expect(index).toEqual(1);
+      };
+      us.get_user(ExistID,"usertargetaddress",callback);
+    });
+    waits(50);
+  });
+
+  it("remove_user_address: can remove a user address",function(){
+    runs(function(){
+      us.remove_user_address(ExistID,"jingshuyuan 102 haidian beijing");
+    });
+    waits(50);
+    runs(function(){
+      var index = 0;
+      var callback = function(doc){
+        uas = doc.useraddress;
+        for (one in uas){
+          if("jingshuyuan 102 haidian beijing" == uas[one].useraddress){
+            index = 1;
+            break;
+          }
+        }
+        expect(index).toEqual(0);
+      };
+      us.get_user(ExistID,"useraddress",callback)
+    });
+    waits(50);
+  });
+
+  it("remove_target_address: can remove a target address",function(){
+    runs(function(){
+      us.remove_user_address(ExistID,"nanjing 102 haidian beijing");
+    });
+    waits(50);
+    runs(function(){
+      var index = 0;
+      var callback = function(doc){
+        uas = doc.useraddress;
+        for (one in uas){
+          if("nanjing 102 haidian beijing" == uas[one].useraddress){
+            index = 1;
+            break;
+          }
+        }
+        expect(index).toEqual(0);
+      };
+      us.get_user(ExistID,"usertargetaddress",callback)
+    });
+    waits(50);
   });
 
   it("add_phone_to_user: can add a phone number to user",function(){
@@ -81,7 +168,7 @@ describe("Userinfo Schema",function(){
         }
         expect(index).toEqual(1);
   	  };
-  	  us.get_user(ExistID,"userphone",callback)
+  	  us.get_user(ExistID,"userphone",callback);
   	})
   	waits(50);
   });
@@ -107,10 +194,16 @@ describe("Userinfo Schema",function(){
   	});
   	waits(50);
   });
+  
+  it("remove_user: can remove a user", function(){
+    runs(function(){
+      
+    });
+  });
 
   it("update_logintime: can update login time",function(){
   	runs(function(){
-
+      
   	});
   });
 
@@ -121,18 +214,6 @@ describe("Userinfo Schema",function(){
   });
 
   it("update_user_alias: can update user alias",function(){
-  	runs(function(){
-
-  	});
-  });
-
-  it("remove_user_address: can remove user address",function(){
-  	runs(function(){
-
-  	});
-  });
-
-  it("remove_phone_user: can remove user phone",function(){
   	runs(function(){
 
   	});
