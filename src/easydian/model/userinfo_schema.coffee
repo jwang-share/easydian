@@ -48,7 +48,7 @@ class Userinfo_Schema
 
   add_address_to_target: (id,addrinfo) ->
     @user_model.findById id, "usertargetaddress", (err,doc) ->
-      doc.useraddress.push addrinfo
+      doc.usertargetaddress.push addrinfo
       doc.markModified("usertargetaddress")
       doc.save (err) ->
         logger.info "failed to add_address_to_target: " + err  if err?

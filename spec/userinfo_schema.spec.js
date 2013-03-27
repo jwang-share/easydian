@@ -87,7 +87,7 @@ describe("Userinfo Schema",function(){
 
   it("add_address_to_target: can insert a target address",function(){
     runs(function(){
-      us.add_address_to_user(ExistID,addrinfo1)
+      us.add_address_to_target(ExistID,addrinfo1)
     });
     waits(50);
     runs(function(){
@@ -131,7 +131,7 @@ describe("Userinfo Schema",function(){
 
   it("remove_target_address: can remove a target address",function(){
     runs(function(){
-      us.remove_user_address(ExistID,"nanjing 102 haidian beijing");
+      us.remove_target_address(ExistID,"nanjing 102 haidian beijing");
     });
     waits(50);
     runs(function(){
@@ -195,11 +195,6 @@ describe("Userinfo Schema",function(){
   	waits(50);
   });
   
-  it("remove_user: can remove a user", function(){
-    runs(function(){
-      
-    });
-  });
 
   it("update_logintime: can update login time",function(){
   	runs(function(){
