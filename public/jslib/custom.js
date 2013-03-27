@@ -8,28 +8,7 @@ jQuery(document).ready(function(){
     }).mouseleave(function(){
         jQuery(this).find('img').fadeTo(300, 1);
     });	
-});
-/* =========================================================
-Featured news slider
-============================================================ */
-jQuery(window).load(function(){
-	jQuery('#feature-news').carouFredSel({
-		responsive: true,
-		prev: '#prev-1',
-		next: '#next-1',
-		width: 268,
-		scroll: 1,
-		auto: false,
-		items: {
-			width: 268,
-			height: 'auto',
-			visible: {
-				min: 1,
-				max: 4
-			}
-		}
-	});
-});				
+});		
 /* =========================================================
 Create mobile menu
 ============================================================ */
@@ -98,27 +77,6 @@ jQuery(function() {
 		bgincrement : 0
 	});
 });
-
-/* =========================================================
-Related articles slider
-============================================================ */
-jQuery(window).load(function(){
-	jQuery('#related-posts').carouFredSel({
-		responsive: true,		
-		prev: '#prev-2',
-		next: '#next-2',
-		width: '100%',
-		scroll: 1,
-		auto: false,
-		items: {
-			width: 139,			
-			visible: {
-				min: 1,
-				max: 5
-			}
-		}
-	});
-});
 /* =========================================================
 CMS icons hover
 ============================================================ */
@@ -134,9 +92,13 @@ Testimonials
 ============================================================ */		
 jQuery(function() {
 	jQuery('.flexslider').flexslider({
+	  slideshowSpeed: 5000,
+	  slideDirection: "vertical",
+	  prevText: "Up",
+	  nextText: "Down",
 	  animation: "slide",
 	  slideshow: true, 
-	  controlsContainer: ".flexslider-container"
+	  controlsContainer: ".flexslider"
   });
 });
 
@@ -212,79 +174,3 @@ jQuery(document).ready(function() {
 	});
 });
 
- /* =========================================================
-ChartView-Div
-============================================================ */
-jQuery(document).ready(function() {
-      $('article.one-forth').mouseenter(function(){ 
-		$('#highChart').slideDown("fast",function(){
-				//$('#highChart').css({position:'absolute', left:'40px', top:'38px'});
-				//$('section.feature-services').css({position:'absolute', left:'40px', top:'238px'});
-		});
-		$('#highChartH').show();		
-	  });
-      $('article.one-forth').mouseleave(function(){ 
-		$('#highChart').slideUp("fast",function(){
-				//$('#highChart').css({position:'absolute', left:'40px', top:'38px'});
-				//$('section.feature-services').css({position:'absolute', left:'40px', top:'238px'});
-		});
-		$('#highChartH').hide();		
-	  });
-});
-
- /* =========================================================
-ChartView
-============================================================ */
-jQuery(document).ready(function() {
-	var chart = new Highcharts.Chart({
-		chart: {
-			renderTo: 'highChart',
-			type: 'line',
-			marginRight: 130,
-			marginBottom: 25
-		},
-		title: {
-			text: 'Attention & Comment',
-			x: -20 //center
-		},
-		subtitle: {
-			text: 'Easydian show statistics',
-			x: -20
-		},
-		xAxis: {
-			categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-				'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-		},
-		yAxis: {
-			title: {
-				text: 'Attention'
-			},
-			plotLines: [{
-				value: 10,
-				width: 1,
-				color: '#808080'
-			}]
-		},
-		tooltip: {
-			formatter: function() {
-					return '<b>'+ this.series.name +'</b><br/>'+
-					this.x +': '+ this.y;
-			}
-		},
-		legend: {
-			layout: 'vertical',
-			align: 'right',
-			verticalAlign: 'top',
-			x: -10,
-			y: 100,
-			borderWidth: 0
-		},
-		series: [{
-			name: 'Attention',
-			data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
-		}, {
-			name: 'Comment',
-			data: [15, 25, 35, 45, 55, 65, 75, 85, 95, 105, 115, 125]
-		}]
-	});
-});
