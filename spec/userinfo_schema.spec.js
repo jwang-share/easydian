@@ -86,7 +86,7 @@ describe("Userinfo Schema",function(){
   	waits(50);
   });
 
-  it("remove_phone_to_user: can remove a phone number",function(){
+  it("remove_user_phone: can remove a phone number",function(){
   	runs(function(){
       us.remove_user_phone(ExistID,"020-110101010");
   	});

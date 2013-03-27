@@ -59,11 +59,15 @@ class Userinfo_Schema
         logger.info "failed to add_phone_to_user: " + err  if err?
 
   remove_user_phone: (id,phonenum) ->
-    @user_model.findById id , "userphone", (err,doc) ->
-      doc.userphone.remove {phone:phonenum}, (err)->
-        logger.info "failed to remove_phone_to_user: " + err  if err?
-      doc.save (err)->
-        logger.info "failed to remove_phone_to_user.save: " + err  if err?
+    try
+      @user_model.findById id , "userphone", (err,doc) ->
+        doc.userphone.remove {phone:phonenum}, (err)->
+          logger.info "failed to remove_user_phone: " + err  if err?
+        doc.markModified("userphone")
+        doc.save (err)->
+          logger.info "failed to remove_phone_to_user.save: " + err  if err?
+    catch e
+      logger.info "======> " +e
 
   remove_user: (id) ->
    @user_model.remove {_id:id}, (err) ->
