@@ -7,7 +7,8 @@ class Controller
       {path: "/",     http_method: "get",   method: "index" },
       {path: "/index",     http_method: "get",   method: "index" },
       {path: "/stats",    http_method: "get",   method: "stats" },
-      {path: "/comment/:id",    http_method: "get",   method: "comment"}, 
+      {path: "/comment/:id",    http_method: "get",   method: "comment"},
+      {path: "/commentview/:id",    http_method: "get",   method: "api_commentview"}, 
       {path: "/contact",    http_method: "get",   method: "contact"},
       {path: "/shops",    http_method: "get",   method: "api_shops"},
       {path: "/shop/:id",    http_method: "get",   method: "api_shop"}
@@ -32,6 +33,10 @@ class Controller
       comments: ['comment1', 'comment2', 'comment3', 'comment4', 'comment5', 'comment6', 'comment7']   
     }; 
 
+  #req: bad, good
+  api_commentview: (req, res) ->
+    res.render('commentview', { title: 'Comment View' }); 
+
   #show the contact information
   contact: (req, res) ->
     res.render('contact', { title: 'Contact information' });
@@ -43,10 +48,11 @@ class Controller
     };  
 
   api_shops: (req, res) ->
-    res.json { title: 'Easy Sou', shops: [{shoplogo: 'wp-icon.png', shopwebsite: '#', shopname: 'EasySou', id: 'shop1'}, 
+    data = { title: 'Easy Sou', shops: [{shoplogo: 'wp-icon.png', shopwebsite: '#', shopname: 'EasySou', id: 'shop1'}, 
       {shoplogo: 'wp-icon.png', shopwebsite: '#', shopname: 'EasySou', id: 'shop2'},
       {shoplogo: 'wp-icon.png', shopwebsite: '#', shopname: 'EasySou', id: 'shop3'},
       {shoplogo: 'wp-icon.png', shopwebsite: '#', shopname: 'EasySou', id: 'shop4'}
-      {shoplogo: 'wp-icon.png', shopwebsite: '#', shopname: 'EasySou', id: 'shop5'}] };  
+      {shoplogo: 'wp-icon.png', shopwebsite: '#', shopname: 'EasySou', id: 'shop5'}] };
+    res.render('shops', data); 
 
 module.exports = Controller

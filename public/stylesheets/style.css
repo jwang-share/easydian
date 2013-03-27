@@ -1644,3 +1644,16 @@ Clear Floated Elements
 .table-5col .pricing-column {
 	width:229px;
 }
+
+.ajaxtooltip{
+position: absolute; /*leave this alone*/
+display: none; /*leave this alone*/
+width: 500px;
+height: 200px;
+left: 0; /*leave this alone*/
+top: 0; /*leave this alone*/
+background: lightyellow;
+border: 2px solid gray;
+border-width: 1px 2px 2px 1px;
+padding: 5px;
+}
