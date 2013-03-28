@@ -5,19 +5,10 @@
 	<title><%= title %></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>	
-	<!-- Grid styles for IE -->
-	<!--[if lt IE 9]><link rel="stylesheet" href="/stylesheets/ie.css" type="text/css" media="all" />
-	<![endif]-->
-	<link rel="stylesheet" href="/stylesheets/reset.css" type="text/css" media="all" />
-	<link rel="stylesheet" href="/stylesheets/style.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="/stylesheets/responsive.css" type="text/css" media="all" />
     
     <!-- script
 	================================================== -->
     <script type="text/javascript" src="/jslib/jquery-1.8.3.js"></script>
-    <script type="text/javascript" src="/jslib/css3-mediaqueries.js"></script>
-	<script type="text/javascript" src="/jslib/modernizr.custom.28468.js"></script>	
-	<script type="text/javascript" src="/jslib/kendo.all.min.js"></script>  
 	<script type="text/javascript" src="/jslib/highcharts.js"></script>
 	<script type="text/javascript" src="/jslib/exporting.js"></script>
 	<!--[if lt IE 9]>
@@ -31,17 +22,13 @@
             chart: {
                 renderTo: 'highChart',
                 type: 'line',
-                height: 200,
+                height: 150,
                 marginRight: 130,
                 marginBottom: 25
             },
             title: {
                 text: 'Attention & Comment',
                 x: -20 //center
-            },
-            subtitle: {
-                text: 'Easydian show statistics',
-                x: -20
             },
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -85,6 +72,5 @@
 <body>
 <div id="highChart">
 </div><!--end:main-content-->     
-<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
 </body>
 </html>
