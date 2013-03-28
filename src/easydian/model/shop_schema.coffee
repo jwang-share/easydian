@@ -48,8 +48,10 @@ class Shop_Schema
   insert_shop: (shop,callback) ->
     shop_doc = new @shop_model shop
     if not callback?
-      shop_doc.save (err,doc)->
-        logger.info "failed to insert_shop: " + err  if err?
+      shop_doc.save (err)->
+        if err?
+          return logger.info "failed to insert_shop: " + err  
+        true
     else
       shop_doc.save callback
 
@@ -71,7 +73,9 @@ class Shop_Schema
   update_visit: (id) ->
     fields = "shopvisit shopweekstats weekday shopdaystats shoppriority shopmonthstats"
     @shop_model.findById id, fields, (err,doc) ->
-      logger.info "update_visit.findbyIDd: "+err if err?
+      if err?
+        logger.info "update_visit.findbyIDd: "+err 
+        return -1
       curtime = new Date()
       day = curtime.getDay() - 1
       hour = curtime.getHours() - 1  #hour: 0-->23
@@ -87,7 +91,11 @@ class Shop_Schema
       doc.markModified("shopdaystats")
       doc.markModified("shopmonthstats")
       doc.save (err)->
-        logger.info "failed to update_visit.save: "+err if err?
+        if err?
+          logger.info "failed to update_visit.save: "+err
+          return -1
+        return doc.shopvisit 
+        
 
   update_badgood: (id,type) ->
     fields = "weekdaygood shoppriority shopgoodt shopbadt weekdaybad"
