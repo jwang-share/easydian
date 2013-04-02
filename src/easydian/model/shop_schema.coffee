@@ -50,7 +50,8 @@ class Shop_Schema
     if not callback?
       shop_doc.save (err)->
         if err?
-          return logger.info "failed to insert_shop: " + err  
+          logger.info "failed to insert_shop: " + err 
+          return false 
         true
     else
       shop_doc.save callback
@@ -96,10 +97,10 @@ class Shop_Schema
           return -1
         return doc.shopvisit 
         
-
   update_badgood: (id,type) ->
     fields = "weekdaygood shoppriority shopgoodt shopbadt weekdaybad"
-    @shop_model.findById id, (err,doc) ->
+    num = 0
+    @shop_model.findById id, fields,(err,doc) ->
       logger.info "update_badgood.findbyID: "+err if err?
       curtime = new Date()
       day = curtime.getDay() - 1 # 1 base -> 0 base
@@ -110,17 +111,31 @@ class Shop_Schema
         doc.shoppriority = doc.shoppriority + 2
         doc.shopgoodt = doc.shopgoodt + 1
         doc.markModified("weekdaygood")
+        num = doc.shopgoodt
       else
         doc.weekdaybad[day] = doc.weekdaybad[day] + 1
         doc.shoppriority = doc.shoppriority - 2
         doc.shopbadt = doc.shopbadt + 1
         doc.markModified("weekdaybad")
+        num = doc.shopbadt
       doc.save (err) ->
-        logger.info "failed to update_badgood.save: "+err if err?
-  
+        if err?
+          logger.info "failed to update_badgood.save: "+err 
+          return -1
+        num
+ 
   get_shop_by_id: (id,fields, callback) ->
     @shop_model.findById id,fields,(err,doc) ->
-      return logger.info "failed to get_shop_by_id.findById: "  + err if err?
+      if err?
+        logger.info "failed to get_shop_by_id.findById: "  + err 
+        return false
+      callback(doc) 
+
+  get_shop_by_name: (name,fields, callback) ->
+    @shop_model.find {shopname:name},fields,(err,doc) ->
+      if err?
+        logger.info "failed to get_shop_by_name.find: "  + err
+        return false 
       callback(doc)  
 
   update_shop_account: (id,num) ->

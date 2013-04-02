@@ -30,13 +30,27 @@ class Userinfo_Schema
     user_doc = new @user_model user
     if not callback?
       user_doc.save (err) ->
-        logger.info "failed to insert_shop: " + err  if err?
+        if err?
+          logger.info "failed to insert_shop: " + err 
+          return false 
+        true
     else
       user_doc.save callback
 
   get_user: (id,fields,callback) ->
     @user_model.findById id, fields, (err,doc)->
-      return  logger.info "failed to get_user: " + err  if err?
+      if err?
+        logger.info "failed to get_user: " + err 
+        return false
+      true 
+      callback(doc)
+
+  get_user_by_name: (name, fields, callback) ->
+    @user_model.find {username: name}, fields, (err,doc)->
+      if err?
+        logger.info "failed to get_user_by_name: " + err
+        return false
+      true  
       callback(doc)
 
   add_address_to_user: (id, addrinfo) -> #address should be a json

@@ -1,7 +1,7 @@
 
 Shop_Schema = require "model/shop_schema"
 Userinfo_Schema = require "model/userinfo_schema"
-Comment_Schema = require "model/userinfo_schema"
+Comment_Schema = require "model/comment_schema"
 Controller_Assisstant = require "controller_assisstant"
 
 class Controller
@@ -17,17 +17,9 @@ class Controller
       {path: "/field",          http_method: "put",   method: "update_field"},
       {path: "/validate_field", http_method: "get",   method: "validate_field"},
       {path: "/goodbad/:id",    http_method: "put",   method: "update_goodbad_value"},
-      {path: "/gps/:id",        http_method: "get",   method: "get_gps"},
       {path: "/register",       http_method: "post",  method: "register_user"},
       {path: "/login/:id",      http_method: "get",   method: "login_user"},
-      {path: "/logout/:id",     http_method: "get",   method: "logout_user"},
-      {path: "/new_category",   http_method: "post",  method: "insert_category"},
-      {path: "/category",       http_method: "get",   method: "get_categories"},
-      {path: "/category",       http_method: "put",   method: "update_category"},
-      {path: "/col_num",        http_method: "put",   method: "update_col_num"},
-      {path: "/col_num",        http_method: "get",   method: "get_col_num"},
-      {path: "/item_visit/:id", http_method: "put",   method: "update_item_visit"},
-      {path: "/item_visit",     http_method: "get",   method: "get_item_visit"},
+      {path: "/logout/:id",     http_method: "get",   method: "logout_user"}
     ]
     @ss = Shop_Schema();
     @us = Userinfo_Schema();
@@ -72,7 +64,6 @@ class Controller
     else
       res.json 400, {"error":"Please try again"}
 
-
   update_visit_num: (req,res) ->
     id = req.params.id
     visit = @ss.update_visit id
@@ -87,41 +78,58 @@ class Controller
       if @ss.insert_shop shopinfo
         res.json {"insert":"success"}
       else
-        res.json {"insert":"failed"}
+        res.json 400, {"insert":"failed"}
     else
-      res.json 400, {"error": "Invalid shop information"}
-      
-  update_field: (req, res) ->
+      res.json {"error": "Invalid shop information"}
 
   validate_field: (req, res) ->
-
+    table = req.params.table #shop / user
+    field = req.params.field
+    value = req.params.value
+    if table? and field? and value?
+      result = @ca.validate_field table, field, value
+      res.json result
+    else
+      res.json 400, {"error":"bad request"}
+  
   update_goodbad_value: (req, res) ->
+    id = req.params.id
+    category = req.params.category 
+    type = req.params.type
+    if @ca.validate_category category 
+      num = @ss.update_badgood id, type
+      if num is -1
+        res.json 400, {"error": "failed to update"}
+      else
+        res.json {"value", num}
+    else
+     res.json 400, {"error":"Invalid category"}
 
+  #should be supported
   get_gps: (req,res) ->
-
+    id = req.params.id
+    category = req.params.category 
+    if @ca.validate_category category 
+      
+    else
+      res.json 400, {"error":"Invalid category"}
+   
   register_user: (req, res) ->
-
+    userinfo = req.body
+    if @ca.validate_username userinfo.username
+      if @us.insert_user userinfo is true
+         res.json {"info":"ok"}
+      else
+        res.json 400, {"error":"failed to register"}
+    else
+      res.json 400, {"error":"This name is already exist"}
+   
+   #next
   login_user: (req, res) ->
-
+   #next 
   logout_user: (req, res) ->
 
-  insert_category: (req, res) ->
 
-  get_categories: (req, res) ->
-
-  update_category: (req, res) ->
-
-  update_col_num: (req, res) ->
-
-  get_col_num: (req, res) ->
-
-  get_item_visit: (req, res) ->
-
-  update_item_visit: (req, res) ->
-
-  update_header: (req, res) ->
-
-  get_header: (req, res) ->
 
 
 
