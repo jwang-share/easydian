@@ -1,17 +1,21 @@
-Shop_Schema = require "model/shop_schema"
-Userinfo_Schema = require "model/userinfo_schema"
+
 
 class Controller_Assisstant
-  constructor: ()->
-  	@ss = Shop_Schema();
-    @cs = Comment_Schema();
+  constructor: (ss,us)->
+    @ss = ss
+    @us = us
 
   validate_category: (category) ->
     return true if category in ShopCategory 
     return false
 
   validate_username: (name) ->
-    @cs.get_user_by_name name, "username", (doc) ->
+    @us.get_user_by_name name, "username", (doc) ->
+      return true if not doc?
+      return false
+
+  validate_shopname: (name) ->
+    @ss.get_shop_by_name name, "shopname", (doc) ->
       return true if not doc?
       return false
 
@@ -20,7 +24,11 @@ class Controller_Assisstant
     return false
 
   validate_shop: (shop) ->	
-    return true if shop.shopname? and shop.shoptype? and shop.shoplogo?
+    if shop.shopname? and shop.shoptype? and shop.shoplogo?
+      if @validate_username shop.shopname
+        return true
+      else
+        return false
     return false
   
   validate_field: (table, field, value) ->
@@ -28,11 +36,10 @@ class Controller_Assisstant
       when "shop"
         switch field
           when "shopname"
-            @ss.get_shop_by_name value, "shopname", (doc) ->
-              if doc?
-                return {validation:"failed", "description":"This name is already exist"}
-              else
-                return {validation:"success", "description":"Cong! This name is valid"}
+            if not (@validate_shopname value)
+              return {validation:"failed", "description":"This name is already exist"}
+            else
+              return {validation:"success", "description":"Cong! This name is valid"}
           when "shoptype"
               if not (@validate_category value)
                 return {validation:"failed", "description":"It is invalid shop type"}
@@ -47,7 +54,7 @@ class Controller_Assisstant
             return {validation:"failed", "description":"We can not verify this Field"}
       when "user"
         switch field
-          when "username", 
+          when "username"
             if not @validate_username value
               return {validation:"failed", "description":"This name is already exist"}
             else

@@ -1,6 +1,7 @@
 
 Shop_Schema = require './model/shop_schema'
 Userinfo_Schema = require './model/userinfo_schema'
+News_Schema = require './model/news_schema'
 Comment_Schema = require './model/comment_schema'
 Controller_Assisstant = require './controller_assisstant'
 
@@ -33,6 +34,7 @@ class Controller
     ]
     @ss = new Shop_Schema()
     @us = new Userinfo_Schema()
+    @ns = new News_Schema()
     @cs = new Comment_Schema()
     @ca = new Controller_Assisstant @ss, @us
     return
@@ -59,6 +61,85 @@ class Controller
       res.json 400, {"error":"Invalid category"}
 
   get_shop_info: (req, res) ->
+    id = req.params.id
+    start = req.params.start
+    limit = req.params.limit
+    type = req.params.type
+    news = req.params.news
+    comments = req.params.comments
+    fields = req.params.fields
+    shopinfo = undefined
+
+    if fields is 0 and news is 0 and comments is 0
+      return  #don't do any response
+
+    if fields isnt 0 
+      @ss.get_shop_by_id id, fields, (doc)->
+        shopinfo = {"fields":doc}
+    ncom = @get_comments_news id, type, news, comments, start, limit
+    
+    if ncom is false and shopinfo is false
+      res.json 400, {"error":"Did not get anything from server."}
+      return
+    if shopinfo is false
+      ncom.fields = ""
+      res.json ncom
+      return
+    if ncom is false
+      shopinfo.news = ""
+      shopinfo.comments = ""
+      res.json shopinfo
+      return
+    
+    message.fields = shopinfo.fields
+    message.news = ncom.news
+    message.commments = ncom.comments
+    
+    res.json message
+
+  get_comments_news: (id,type, news,comments,start,limit) ->
+    message = undefined
+    if news is 0 and comments is 0
+      return false
+    if news is 0
+      comments = @get_comments_inner id, type, start, limit
+      if comments is false
+        return false
+      else
+        message.comments = comments
+        return message
+    if comments is 0
+      news = @get_news_inner id, type, start, limit, -1
+      if news is false
+        return false
+      else
+        message.news = news
+        return message
+
+    comments = @get_comments_inner id, type, start, limit
+    news = @get_news_inner id, type, start, limit
+
+    if comments is false and news is false
+      return false
+
+    message.comments = if (comments is false) then "" else comments
+    message.news = if (news is false) then "" else news
+
+    return message      
+
+  get_comments_inner: (id, type, start,limit,level) ->
+    @cs.get_comments id, type, start, limit, level, (err, docs) ->
+      if err?
+        logger.info "get_comments_inner.get_comments: " + err
+        return false
+      return docs 
+
+  get_news_inner: (id, type, start,limit) ->
+    @ns.get_news_by_id id, type, start, limit, (err, docs)->
+      if err?
+        logger.info "get_news_inner.get_news_by_id: "+err
+        return false
+      return docs
 
   update_visit_num: (req,res) ->
     id = req.params.id
@@ -138,13 +219,35 @@ class Controller
       res.json 400, {"error":"Please try again"}
 
   get_comments: (req, res) ->
-
-  delete_comments: (req, res) ->
-
-  delete_comment: (req, res) ->
+    id = req.params.id
+    category = req.params.category
+    start = req.params.start
+    limit = req.params.limit
+    level = req.params.level || -1
+    docs = @get_comments_inner id, category,start,limit,level
+    if docs is false
+      res.json 404, {"error":"did not find any comment"}
+    else
+      res.json docs
 
   get_news: (req, res) ->
+    id = req.params.id
+    category = req.params.category
+    start = req.params.start
+    limit = req.params.limit
+    news = @get_news_inner id, category,start,limit
+    if news is false
+      res.json 404, {"error":"did not find any news"}
+    else
+      res.json news
 
+  #supports later 
+  delete_comments: (req, res) ->
+  
+  #supports later 
+  delete_comment: (req, res) ->
+
+  #supports later  
   delete_news: (req, res) ->
 
 

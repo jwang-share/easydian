@@ -1,7 +1,8 @@
 
 
 
-#a crawler will insert news to mongodb, node.js does not support this feature
+#a crawler will insert news to mongodb, 
+#node.js just get news from db
 class News_Schema
   constructor : () ->
     @news_schema = new Schema({

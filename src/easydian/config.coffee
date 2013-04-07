@@ -21,3 +21,4 @@ global.conn = Mongoose.connection
 conn.on 'error', console.error.bind console, 'connection error:'
 conn.once 'open', ()->
    logger.info "success to open mongodb"
+

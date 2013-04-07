@@ -148,19 +148,31 @@ class Shop_Schema
   ###
   update_shop_logo: (id, logo) ->
     @shop_model.update {_id:id},{"shoplogo":logo}, {upsert: false}, (err,num,doc) ->
-      logger.info "failed to update_shop_logo: "+err if err?
+      if err?
+        logger.info "failed to update_shop_logo: "+err 
+        false
+      true
 
   update_comments_num: (id) ->
     fields = "shopcommentsnum"
     @shop_model.findById id, fields, (err,doc) ->
-      logger.info "failed to update_comments_num.findById: "  + err if err?
-      doc.shopcommentsnum = doc.shopcommentsnum + 1
-      doc.save (err) ->
-        logger.info "failed to update_comments_num.save: "+err if err?
+      if err?
+        logger.info "failed to update_comments_num.findById: "  + err 
+        false
+      else
+        doc.shopcommentsnum = doc.shopcommentsnum + 1
+        doc.save (err) ->
+          if err?
+            logger.info "failed to update_comments_num.save: "+err 
+            false
+          true
 
   remove_shop_by_id: (id) ->
     @shop_model.remove {_id:id}, (err) ->
-      logger.info "failed to remove_shop_by_id: "+err if err?
+      if err?
+        logger.info "failed to remove_shop_by_id: "+err
+        false
+      true
 
 
 module.exports = Shop_Schema

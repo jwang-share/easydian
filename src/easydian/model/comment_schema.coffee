@@ -3,6 +3,7 @@ class Comment_Schema
   constructor: () ->
     @comm_schema = new Schema({
       shopid : {type:String, default:'shopid'}, 
+      level: {type:Number,default: 4}
       comment: {type:String, default:'context'},
       createtime: {type:Date, default: Date.now}
     })
@@ -17,14 +18,22 @@ class Comment_Schema
       comment_doc.save callback
     
     
-  get_comments: (shopid,category,start,limit,callback) ->
+  get_comments: (shopid,category,start,limit,level,callback) ->
     cur_model = Mongoose.model "comments", @comm_schema, category
-    cur_model.find({shopid:shopid})
-    .sort('-createtime')
-    .skip(start)
-    .limit(limit)
-    .select("comment")
-    .exec(callback)
+    if level is -1
+      cur_model.find({shopid:shopid})
+      .sort('-createtime')
+      .skip(start)
+      .limit(limit)
+      .select("comment")
+      .exec(callback)
+    else
+      cur_model.find({shopid:shopid,level:level})
+      .sort('-createtime')
+      .skip(start)
+      .limit(limit)
+      .select("comment")
+      .exec(callback)
 
   remove_comment_by_id: (id,category) ->
     cur_model = Mongoose.model "comments", @comm_schema, category
