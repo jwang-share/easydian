@@ -1387,7 +1387,7 @@ Clear Floated Elements
 #contact-form .input-block label span, #contact-form .contact-verify label span {
 	font-style:italic;
 }
-#contact-form #contact-name, #contact-form #contact-email, #contact-form #contact-url {
+#contact-form #contact-name, #contact-form #contact-email, #contact-form #contact-url, #contact-form #contact-pwd {
 	background-color:#f9f9f9;
 	border:1px solid #cccccc;
 	height:28px;
@@ -1645,15 +1645,43 @@ Clear Floated Elements
 	width:229px;
 }
 
-.ajaxtooltip{
-	position: absolute; /*leave this alone*/
-	display: none; /*leave this alone*/
-	width: 500px;
-	height: 150px;
-	left: 0; /*leave this alone*/
-	top: 0; /*leave this alone*/
-	background: lightyellow;
-	border: 2px solid gray;
-	border-width: 1px 2px 2px 1px;
-	padding: 5px;
+.ajaxtooltip {
+   position: absolute;
+   width: 500px;
+   height: 150px;
+   padding: 5px;
+    display: none;
+   background: #333;
+    text-shadow: 0 -1px 0 #666;
+    color: #fff;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+    -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
+	-webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
+}
+.ajaxtooltip:before { 
+    content: "";
+    border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent; 
+	border-right:10px solid #333; 
+    display: block;
+    height: 0;
+    width: 0;
+    position: absolute;
+	top: 5px;
+	left: -10px;
+}
+.xajaxtooltip:after { 
+    content: "";
+    border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent; 
+	border-left:10px solid #333; 
+    display: block;
+    height: 0;
+    width: 0;
+    position: absolute;
+	top: 5px;
+	right: -10px;
 }

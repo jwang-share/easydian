@@ -16,44 +16,42 @@
     
     <!-- script
 	================================================== -->
-    <script type="text/javascript" src="/jslib/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="/jslib/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="/jslib/jquery.cslider.js"></script>
     <script type="text/javascript" src="/jslib/css3-mediaqueries.js"></script>
 	<script type="text/javascript" src="/jslib/jquery.flexslider.js"></script>
-	<script type="text/javascript" src="/jslib/modernizr.custom.28468.js"></script>	
-	<script type="text/javascript" src="/jslib/kendo.all.min.js"></script>
-	<script type="text/javascript" src="/jslib/comment.js"></script>  
+	<script type="text/javascript" src="/jslib/modernizr.custom.28468.js"></script>
+	<script type="text/javascript" src="/jslib/jquery.carouFredSel-5.6.2.js"></script>	
+	<script type="text/javascript" src="/jslib/kendo.all.min.js"></script> 
     <script type="text/javascript" src="/jslib/custom.js"></script>    
 	<script type="text/javascript" src="/jslib/highcharts.js"></script>
 	<script type="text/javascript" src="/jslib/exporting.js"></script>
+	<script type="text/javascript" src="/jslib/ajaxtooltip.js"></script>
 	<!--[if lt IE 9]>
 		<script src="/jslib/html5.js"></script>
 	<![endif]-->
+
 <body id="home-page">
 <header id="header">
 	<div id="header-outer">
 		<div class="wrapper clearfix">
 			<div id="logo-image">
-				<a href="index.html"><img src="/images/slider/logo.png" alt="logo" /></a>
+				<a href="index"><img src="/images/slider/logo.png" alt="logo" /></a>
 			</div><!--end:logo-image-->		       
 			<nav id="main-menu" class="clearfix">			
 				<ul class="clearfix" id="main-nav">
 					<li class="current-menu-item">
-						<a href="index.html">Easy Order</a>
-						<ul>
-							<li><a href="element.html">Elements</a></li>
-						</ul>
+						<a href="index">Home</a>
+					</li>					
+					<li>
+						<a href="shops">Easy Order</a>
 					</li>
 					<li>
-						<a href="index.html">Easy Move</a>
-						<ul>
-							<li><a href="element.html">Elements</a></li> 
-						</ul>
+						<a href="moves">Easy Move</a>
 					</li>
 					<li>
-						<a href="index.html">Profile</a>
+						<a href="welcome">Welcome(Login)</a>
 					</li>
-					<li><a href="contact.html">Contact</a></li>
 				</ul><!--end:main-nav-->
 			</nav><!--end:main-menu-->
 		</div><!--end:wrapper-->
@@ -67,18 +65,20 @@
 					<div class="da-slide">
 						<div class="da-img"><img src="/images/slider/slide-2.jpg" alt="" /></div>
 						<h1>
-							<a href="#">What is Lorem Ipsum?</a>
+							<a href="shops">What is Lorem Ipsum?</a>
 							<span>Lorem ipsum dolor sit amet</span>
 						</h1>
 						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+						<a href="shops" class="da-link big-button"><span>Learn more</span></a>
 					</div>
 					<div class="da-slide">
 						<div class="da-img"><img src="/images/slider/slide-4.jpg" alt="" /></div>
 						<h1>
-							<a href="#">What is Lorem Ipsum?</a>
+							<a href="moves">What is Lorem Ipsum?</a>
 							<span>Lorem ipsum dolor sit amet</span>
 						</h1>
 						<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+						<a href="moves" class="da-link big-button"><span>Learn more</span></a>
 					</div>				
 					<nav class="da-arrows">
 						<span class="da-arrows-prev"></span>
@@ -86,51 +86,6 @@
 					</nav>
 				</div><!--end:da-slider-->    	
 			</section><!--end:wrapper-->
-			<div class="wrapper" id="shopsBody">
-				<% for(id = 0; id < (shops.length >= 20 ? 20 : shops.length); id = id + 4)	{ %>
-					<section class="feature-services container" id="shopGroup<%= id %>" >
-						<article class="one-forth clearfix" id="<%= shops[id].id %>" >
-							<a class="wp-icon" href="<%= shops[id].shopwebsite %>" ><img src="images/icons/<%= shops[id].shoplogo %>" alt="<%= shops[id].shopwebsite %>" /></a>
-							<h3 class="entry-title"><a href="<%= shops[id].shopwebsite %>"><%= shops[id].shopname %></a></h3>
-						</article><!--end:one-forth-->
-						<% if((shops.length - id) > 1) { %>
-						<article class="one-forth one-column clearfix" id="<%= shops[id + 1].id %>" >
-							<a class="wp-icon" href="<%= shops[id + 1].shopwebsite %>" ><img src="images/icons/<%= shops[id].shoplogo %>" alt="<%= shops[id + 1].shopwebsite %>" /></a>
-							<h3 class="entry-title"><a href="<%= shops[id + 1].shopwebsite %>"><%= shops[id + 1].shopname %></a></h3>
-						</article><!--end:one-forth-->
-						<% } 
-						if((shops.length - id) > 2) { %>
-						<article class="one-forth clearfix" id="<%= shops[id + 2].id %>" >
-							<a class="wp-icon" href="<%= shops[id + 2].shopwebsite %>" ><img src="images/icons/<%= shops[id].shoplogo %>" alt="<%= shops[id + 2].shopwebsite %>" /></a>
-							<h3 class="entry-title"><a href="<%= shops[id + 2].shopwebsite %>"><%= shops[id + 2].shopname %></a></h3>
-						</article><!--end:one-forth-->
-						<% } 
-						if((shops.length - id) > 3) { %>
-						<article class="one-forth last clearfix" id="<%= shops[id + 3].id %>" >
-							<a class="wp-icon" href="<%= shops[id + 3].shopwebsite %>" ><img src="images/icons/<%= shops[id].shoplogo %>" alt="<%= shops[id + 3].shopwebsite %>" /></a>
-							<h3 class="entry-title"><a href="<%= shops[id + 3].shopwebsite %>"><%= shops[id + 3].shopname %></a></h3>
-						</article><!--end:one-forth-->
-						<% } %>
-						<div class="clear"></div>
-						<section class="feature-services container" id="commentGroup<%= id %>" >
-							<article class="one-second clearfix" id="commentChart<%= id %>" >
-							</article>	
-							<article class="one-second last clearfix" id="commentBoard<%= id %>" >
-								<h3 class="testimonials-title">What's people saying?</h3>
-								<div class="testimonials">
-									<div class="flexslider">
-										<ul class="slides">
-										</ul><!--end:slides-->   
-									</div><!--end:flexslider-->
-									<span class="testimonial-triangle">&nbsp;</span>
-								</div><!--end:testimonials-->
-							</article>	
-						</section><!--end:feature-services-->	
-						<div class="clear"></div>
-					</section><!--end:feature-services-->
-					<hr />	
-				<% } %>	
-			</div><!--end:wrapper-->
 		</div><!--end:outter-->
 	</div><!--bottom-bg-->
 </div><!--end:main-content-->     
@@ -140,7 +95,7 @@
 			<div id="footer-sidebar">
 				<div class="one-forth">
 					<aside class="widget">
-						<h3 class="widget-title">About</h3>
+						<h3 class="widget-title">About Us</h3>
 						<div class="text-widget">
 							<p>Easydian is a tool site to save your time and money to order the dinner and move your house.</p>
 						</div><!--end:text-widget-->
@@ -148,22 +103,17 @@
 				</div><!--one-forth-->
 				<div class="one-forth">	
 					<aside class="widget">
-						<h3 class="widget-title">Our offers</h3>
-						<ul>
-							<li><a href="#">Specials</a></li>
-							<li><a href="#">Suppliers</a></li>
-						</ul>
+						<h3 class="widget-title">Contact Us</h3>
+						<div class="text-widget">
+							<p>Here you can get the <a href="contact">contact</a> information of us and leave a <a href="contact">comment</a> for us.</p>
+						</div><!--end:text-widget-->
 					</aside><!--end:widget-->
 				</div><!--one-forth-->
 				<div class="one-forth">	
 					<aside class=" widget">
-						<h3 class="widget-title">Newsletter</h3>
+						<h3 class="widget-title">Profile Information</h3>
 						<div class="newsletter">
-							<p>Enter your email address below to receive updates each time we publish</p>
-							<form />
-								<input type="text" value="Your email" name="email" class="email" maxlength="100" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;" />
-								<input type="submit" value="Submit" class="submit-newsletter" />
-							</form>    
+							<p>Here you can <a href="contact">manage</a> and add <a href="contact">additional information</a> into your account.</p> 
 						</div><!--end:newsletter-->
 					</aside><!--end:widget-->
 				</div><!--one-forth-->			

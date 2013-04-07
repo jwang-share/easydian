@@ -4,7 +4,7 @@ jQuery(document).ready(function(){
 	var ajaxtooltip={
 		fadeeffect: [true, 300], //enable Fade? [true/false, duration_milliseconds]
 		useroffset: [10, 10], //additional x and y offset of tooltip from mouse cursor, respectively
-		loadingHTML: '<div style="font-style:italic"><img src="/images/slider/logo.png" /> Fetching Tooltip...</div>',
+		loadingHTML: '<div style="font-style:italic">Fetching Comment Chart View...</div>',
 
 		positiontip:function($tooltip, e){
 			var docwidth=(window.innerWidth)? window.innerWidth-15 : ajaxtooltip.iebody.clientWidth-15
