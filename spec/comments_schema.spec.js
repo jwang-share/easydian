@@ -41,7 +41,7 @@ xdescribe("Comment Schema", function(){
       	}
       	expect(num).toEqual(4);
       };
-      cs.get_comments(ExistID,"Dining",1,4,callback);
+      cs.get_comments(ExistID,"Dining",1,4,1,callback);
     });
     waits(100);
   });

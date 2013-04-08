@@ -11,7 +11,7 @@ global.Async        = require 'async'
 global.Step         = require 'step'
 global.logger       = new (require './logger')("easydian")
 
-global.ShopCategory = ["Canyin", "Banjia", "Zhuangxiu"]
+global.ShopCategory = ["Dining", "Banjia", "Zhuangxiu"]
 
 global.Mongoose = require "mongoose"
 global.Schema = Mongoose.Schema

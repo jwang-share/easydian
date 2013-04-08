@@ -47,12 +47,14 @@ class Controller
     category = req.params.category
     start = req.params.start || 0
     limit = req.params.limit || 0
+    fields = req.params.fields
     
     if @ca.validate_category category 
-      @ss.get_shops category, start, limit, (err, docs)=>
+      @ss.get_shops category, fields, start, limit, (err, docs)=>
         if not err?
           if docs?.length > 0
-            res.json docs
+            #console.log docs
+            res.json(docs)
           else
             res.json 404, {"error": "Did not find any shops"}
         else   
@@ -64,54 +66,49 @@ class Controller
     id = req.params.id
     start = req.params.start
     limit = req.params.limit
-    type = req.params.type
+    type = req.params.category
     news = req.params.news
     comments = req.params.comments
     fields = req.params.fields
-    shopinfo = undefined
+    fieldinfo = ""
+    newsinfo = ""
+    comminfo = ""
 
     if fields is 0 and news is 0 and comments is 0
       return  #don't do any response
 
     if fields isnt 0 
       @ss.get_shop_by_id id, fields, (doc)->
-        shopinfo = {"fields":doc}
-    ncom = @get_comments_news id, type, news, comments, start, limit
+        fieldinfo = doc
     
-    if ncom is false and shopinfo is false
-      res.json 400, {"error":"Did not get anything from server."}
-      return
-    if shopinfo is false
-      ncom.fields = ""
-      res.json ncom
-      return
-    if ncom is false
-      shopinfo.news = ""
-      shopinfo.comments = ""
-      res.json shopinfo
-      return
-    
-    message.fields = shopinfo.fields
-    message.news = ncom.news
-    message.commments = ncom.comments
-    
-    res.json message
+    if news isnt 0
+      newsinfo = @get_comments_news id, type, 1, 0, start, limit
+
+    if comments isnt 0
+       newsinfo = @get_comments_news id, type, 0, 1, start, limit
+
+    shopinfo = {
+      "fields": fieldinfo,
+      "comments": comminfo,
+      "news": newsinfo
+    }
+    res.json shopinfo
 
   get_comments_news: (id,type, news,comments,start,limit) ->
     message = undefined
     if news is 0 and comments is 0
-      return false
+      return ""
     if news is 0
       comments = @get_comments_inner id, type, start, limit
       if comments is false
-        return false
+        return ""
       else
         message.comments = comments
         return message
     if comments is 0
       news = @get_news_inner id, type, start, limit, -1
       if news is false
-        return false
+        return ""
       else
         message.news = news
         return message
@@ -249,11 +246,6 @@ class Controller
 
   #supports later  
   delete_news: (req, res) ->
-
-
-
-
-
 
 
 
