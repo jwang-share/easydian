@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 var ejs = require('ejs');
 var fs = require('fs')
@@ -8,3 +9,6 @@ var ret = ejs.render(str, {shops: [{shoplogo: 'wp-icon.png', shopwebsite: '#', s
 
 console.log(ret);
 require('./lib/main.js');
+=======
+require('./lib/main.js')
+>>>>>>> master
