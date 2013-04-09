@@ -67,76 +67,54 @@ class Controller
     start = req.params.start
     limit = req.params.limit
     type = req.params.category
-    news = req.params.news
-    comments = req.params.comments
-    fields = req.params.fields
+    news = req.params.news || 0
+    comments = req.params.comments || 0
+    fields = req.params.fields || 0
     fieldinfo = ""
     newsinfo = ""
     comminfo = ""
-
+    
     if fields is 0 and news is 0 and comments is 0
       return  #don't do any response
 
     if fields isnt 0 
       @ss.get_shop_by_id id, fields, (doc)->
         fieldinfo = doc
-    
-    if news isnt 0
-      newsinfo = @get_comments_news id, type, 1, 0, start, limit
-
-    if comments isnt 0
-       newsinfo = @get_comments_news id, type, 0, 1, start, limit
-
-    shopinfo = {
-      "fields": fieldinfo,
-      "comments": comminfo,
-      "news": newsinfo
-    }
-    res.json shopinfo
-
-  get_comments_news: (id,type, news,comments,start,limit) ->
-    message = undefined
-    if news is 0 and comments is 0
-      return ""
-    if news is 0
-      comments = @get_comments_inner id, type, start, limit
-      if comments is false
-        return ""
-      else
-        message.comments = comments
-        return message
-    if comments is 0
-      news = @get_news_inner id, type, start, limit, -1
-      if news is false
-        return ""
-      else
-        message.news = news
-        return message
-
-    comments = @get_comments_inner id, type, start, limit
-    news = @get_news_inner id, type, start, limit
-
-    if comments is false and news is false
-      return false
-
-    message.comments = if (comments is false) then "" else comments
-    message.news = if (news is false) then "" else news
-
-    return message      
-
-  get_comments_inner: (id, type, start,limit,level) ->
-    @cs.get_comments id, type, start, limit, level, (err, docs) ->
-      if err?
-        logger.info "get_comments_inner.get_comments: " + err
-        return false
-      return docs 
-
-  get_news_inner: (id, type, start,limit) ->
-    @ns.get_news_by_id id, type, start, limit, (err, docs)->
-      if err?
-        logger.info "get_news_inner.get_news_by_id: "+err
-        return false
-      return docs
+        if news isnt 0
+          @ns.get_news_by_id id, type, start, limit, (err, docs)->
+            if not err?
+              newsinfo = docs
+            if comments isnt 0
+              @cs.get_comments id, type, start, limit, -1, (err,docs)->
+                if not err?
+                newsinfo = docs
+        else
+          if comments isnt 0
+              @cs.get_comments id, type, start, limit, -1, (err,docs)->
+                if not err?
+                newsinfo = docs           
+    else
+      if news isnt 0
+          @ns.get_news_by_id id, type, start, limit, (err, docs)->
+            if not err?
+              newsinfo = docs
+            if comments isnt 0
+              @cs.get_comments id, type, start, limit, -1, (err,docs)->
+                if not err?
+                newsinfo = docs
+        else
+          if comments isnt 0
+              @cs.get_comments id, type, start, limit, -1, (err,docs)->
+                if not err?
+                newsinfo = docs    
+                console.log fieldinfo
+                shopinfo = {
+                  "fields": fieldinfo,
+                  "comments": comminfo,
+                  "news": newsinfo
+                }
+                res.json shopinfo
+                #fix it here
 
   update_visit_num: (req,res) ->
     id = req.params.id

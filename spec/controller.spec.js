@@ -25,11 +25,10 @@ describe("Controller",function(){
        params.category = "Dining";
        params.fields = "shopname shoplogo";
        req.params = params;
-       res.json = function(docs)
-       {
+       res.json = function(docs){
         //console.log(docs);
         expect(docs.length).toEqual(4);
-       }
+       };
        cs.get_shops(req, res);       
      });
      waits(100);
@@ -45,9 +44,13 @@ describe("Controller",function(){
     params.comments = 0;
     params.fields = "shopname shoplogo shopwebsite";
     runs(function(){
-      res.json = function(){
-        
+      res.json = function(shopinfo){
+        //console.log(shopinfo);
+        expect(shopinfo.fields.shopname).toBeDefined();
+        expect(shopinfo.fields.shoplogo).toBeDefined();
+        expect(shopinfo.fields.shopwebsite).toBeDefined();      
       };
+      cs.get_shop_info(req, res);
     });
     waits(100);
 
