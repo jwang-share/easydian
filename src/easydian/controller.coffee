@@ -52,7 +52,8 @@ class Controller
       @ss.get_shops category, start, limit, (err, docs)=>
         if not err?
           if docs?.length > 0
-            res.json docs
+            #res.json docs
+            res.render('shopviewtmpl.ejs', {"shops": docs, "page": start / 20}
           else
             res.json 404, {"error": "Did not find any shops"}
         else   
