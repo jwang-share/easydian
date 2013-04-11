@@ -29,7 +29,7 @@ class Controller
       {path: "/comment/:id",    http_method: "delete",method: "delete_comment"},
 
       {path: "/news/:id",       http_method: "get",   method: "get_news"},
-      {path: "/news/:id",       http_method: "delete",   method: "delete_news"},
+      {path: "/news/:id",       http_method: "delete",method: "delete_news"},
 
     ]
     @ss = new Shop_Schema()
@@ -67,55 +67,94 @@ class Controller
     start = req.params.start
     limit = req.params.limit
     type = req.params.category
-    news = req.params.news || 0
-    comments = req.params.comments || 0
+    nf = req.params.news || 0
+    cf = req.params.comments || 0
     fields = req.params.fields || 0
-    fieldinfo = ""
-    newsinfo = ""
-    comminfo = ""
-    
+
     if fields is 0 and news is 0 and comments is 0
       return  #don't do any response
 
     if fields isnt 0 
-      @ss.get_shop_by_id id, fields, (doc)->
-        fieldinfo = doc
-        if news isnt 0
-          @ns.get_news_by_id id, type, start, limit, (err, docs)->
-            if not err?
-              newsinfo = docs
-            if comments isnt 0
-              @cs.get_comments id, type, start, limit, -1, (err,docs)->
-                if not err?
-                newsinfo = docs
-        else
-          if comments isnt 0
-              @cs.get_comments id, type, start, limit, -1, (err,docs)->
-                if not err?
-                newsinfo = docs           
+      @ss.get_shop_by_id id, fields, (err, doc)=>
+        if err?
+          doc = ""
+        @send_shop_info res, doc, id, type, nf, cf, start, limit
     else
-      if news isnt 0
-          @ns.get_news_by_id id, type, start, limit, (err, docs)->
-            if not err?
-              newsinfo = docs
-            if comments isnt 0
-              @cs.get_comments id, type, start, limit, -1, (err,docs)->
-                if not err?
-                newsinfo = docs
-        else
-          if comments isnt 0
-              @cs.get_comments id, type, start, limit, -1, (err,docs)->
-                if not err?
-                newsinfo = docs    
-                console.log fieldinfo
-                shopinfo = {
-                  "fields": fieldinfo,
-                  "comments": comminfo,
-                  "news": newsinfo
+      @send_shop_info res, "", id, type, nf, cf, start, limit
+        
+  send_shop_info: (res, fieldinfo, id, type, news_t, comm_t, start, limit) ->
+    news = ""
+    comments = ""
+    if news_t is 0 and comm_t is 0
+      res.json {
+        "news": news,
+        "comments": comments,
+        "fields":fieldinfo
+      } 
+      return    
+    if comm_t isnt 0
+      @cs.get_comments id, type, start, limit, -1, (err,docs)=>
+        if not err?
+          comments = docs
+          if news_t isnt 0
+            @ns.get_news_by_id id, type, start, limit, (err, docs)->
+              if not err?
+                news = docs
+                res.json {
+                  "news": news,
+                  "comments": comments,
+                  "fields":fieldinfo
                 }
-                res.json shopinfo
-                #fix it here
-
+              else
+                res.json {
+                  "news": news,
+                  "comments": comments,
+                  "fields":fieldinfo
+                }
+          else
+            res.json {
+              "news": news,
+              "comments": comments,
+              "fields":fieldinfo
+            }
+        else
+          if news_t isnt 0
+            @ns.get_news_by_id id, type, start, limit, (err, docs)=>
+              if not err?
+                news = docs
+                res.json {
+                  "news": news,
+                  "comments": comments,
+                  "fields":fieldinfo
+                }
+              else
+                res.json {
+                  "news": news,
+                  "comments": comments,
+                  "fields":fieldinfo
+                }
+          else
+            res.json {
+              "news": news,
+              "comments": comments,
+              "fields":fieldinfo
+            }
+    else
+      @ns.get_news_by_id id, type, start, limit, (err, docs)->
+        if not err?
+          news = docs
+          res.json {
+            "news": news,
+            "comments": comments,
+            "fields":fieldinfo
+          }
+        else
+          res.json {
+            "news": news,
+            "comments": comments,
+            "fields":fieldinfo
+          }
+      
   update_visit_num: (req,res) ->
     id = req.params.id
     visit = @ss.update_visit id
@@ -199,22 +238,22 @@ class Controller
     start = req.params.start
     limit = req.params.limit
     level = req.params.level || -1
-    docs = @get_comments_inner id, category,start,limit,level
-    if docs is false
-      res.json 404, {"error":"did not find any comment"}
-    else
-      res.json docs
+    @cs.get_comments id, type, start, limit, level, (err,docs)->
+      if err?
+        res.json 404, {"error":"did not find any comment"}
+      else
+        res.json docs
 
   get_news: (req, res) ->
     id = req.params.id
     category = req.params.category
     start = req.params.start
     limit = req.params.limit
-    news = @get_news_inner id, category,start,limit
-    if news is false
-      res.json 404, {"error":"did not find any news"}
-    else
-      res.json news
+    @ns.get_news_by_id id, type, start, limit, (err, docs)->
+      if err?
+        res.json 404, {"error":"did not find any news"}
+      else
+        res.json docs
 
   #supports later 
   delete_comments: (req, res) ->

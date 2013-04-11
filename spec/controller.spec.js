@@ -40,9 +40,10 @@ describe("Controller",function(){
     params.start = 0;
     params.limit = 5;
     params.category = "Dining";
-    params.news = 0;
+    params.news = 0;  //news schema did not tested
     params.comments = 0;
     params.fields = "shopname shoplogo shopwebsite";
+    req.params = params;
     runs(function(){
       res.json = function(shopinfo){
         //console.log(shopinfo);
@@ -56,12 +57,30 @@ describe("Controller",function(){
 
   });
 
-  it("",function(){
-
+  it("update_visit_num: can update visit num",function(){
+    params.id = ExistID;
+    req.params = params;
+    runs(function(){
+      res.json = function(info){
+       expect(info.visit).toBeDefined();
+      };
+      cs.update_visit_num(req, res);
+    });
+    waits(100);
   });
 
-  it("",function(){
-
+  it("update_goodbad_value: can update bg value",function(){
+    params.id = ExistID;
+    params.category = "Dining";
+    params.type = "good";
+    req.params = params;
+    runs(function(){
+      res.json = function(info){
+       expect(info.value).toBeDefined();
+      };
+      cs.update_goodbad_value(req, res);
+    });
+    waits(100);
   });
 
   it("",function(){

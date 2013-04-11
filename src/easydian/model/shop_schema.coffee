@@ -125,11 +125,7 @@ class Shop_Schema
         num
  
   get_shop_by_id: (id,fields, callback) ->
-    @shop_model.findById id,fields,(err,doc) ->
-      if err?
-        logger.info "failed to get_shop_by_id.findById: "  + err 
-        return false
-      callback(doc) 
+    @shop_model.findById id,fields,callback
 
   get_shop_by_name: (name,fields, callback) ->
     @shop_model.find {shopname:name},fields,(err,doc) ->
