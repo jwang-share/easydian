@@ -90,7 +90,7 @@ xdescribe("shop schema",function(){
 
   });
 
-  it("get_shop_by_id: get a shop by id", function(){
+  xit("get_shop_by_id: get a shop by id", function(){
     runs(function(){
       var callback = function(doc){
         expect(doc._id).toEqual(Mongoose.Types.ObjectId(ExistID));
@@ -104,7 +104,7 @@ xdescribe("shop schema",function(){
     waits(50);
   });
 
-  it("update_shop_account: update shop account", function(){
+  xit("update_shop_account: update shop account", function(){
     var num = Math.ceil(Math.random()*1000);
     runs(function(){
       sd.update_shop_account(ExistID, num);
@@ -120,7 +120,7 @@ xdescribe("shop schema",function(){
     waits(50);
   });
 
-  it("update_visit: visit, priority, stats will be updated",function(){
+  xit("update_visit: visit, priority, stats will be updated",function(){
     var visit, prio, wd, sds, sms,sws;
     var visit1, prio1, wd1, sds1, sms1,sws1;
     var curtime = new Date();

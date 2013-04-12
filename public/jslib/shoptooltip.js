@@ -88,9 +88,9 @@ jQuery(document).ready(function(){
 	});
 
 	getShopsNextPage = function() {
-		$.get("/shopviewtmpl/" + shopPars.id, function(data) { 
+		$.get("/shops", {"category":"Dining","fields": "shopwebsite shopname shoplogo", "start": shopPars.id * 20, "limit": (shopPars.id + 2) * 20}, function(data) { 
         	$('#shopsBody').append(data);
-        	shopPars.id++;
+        	shopPars.id++; 
     	}); 
 	};
 
