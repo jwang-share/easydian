@@ -2,15 +2,6 @@
 
 global.config = {
   LOG_LEVEL: "info",
-<<<<<<< HEAD
-  LISTEN_PORT: 8888
-}
-
-global._            = require 'underscore'
-global.Async        = require 'async'
-global.Step         = require 'step'
-global.logger       = new (require './logger')("easydian")
-=======
   LISTEN_PORT: 8888,
   DB_SHOPS_URL: "mongodb://127.0.0.1:27017/easydian",
   SHOPS_COLLECTION: "shops"
@@ -31,4 +22,3 @@ conn.on 'error', console.error.bind console, 'connection error:'
 conn.once 'open', ()->
    logger.info "success to open mongodb"
 
->>>>>>> master
