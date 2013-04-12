@@ -44,10 +44,10 @@ class Controller
     res.render 'index.ejs' 
 
   get_shops: (req, res) ->
-    category = req.params.category
-    start = req.params.start || 0
-    limit = req.params.limit || 0
-    fields = req.params.fields
+    category = req.param category
+    start = (req.param start) || 0
+    limit = (req.param limit) || 0
+    fields = req.param fields
     
     if @ca.validate_category category 
       @ss.get_shops category, fields, start, limit, (err, docs)=>
@@ -64,12 +64,12 @@ class Controller
 
   get_shop_info: (req, res) ->
     id = req.params.id
-    start = req.params.start
-    limit = req.params.limit
-    type = req.params.category
-    nf = req.params.news || 0
-    cf = req.params.comments || 0
-    fields = req.params.fields || 0
+    start = req.param start
+    limit = req.param limit
+    type = req.param category
+    nf = (req.param news) || 0
+    cf = (req.param comments) || 0
+    fields = (req.param fields) || 0
 
     if fields is 0 and news is 0 and comments is 0
       return  #don't do any response
@@ -181,9 +181,9 @@ class Controller
       res.json {"info":"failed"}
   
   validate_field: (req, res) ->
-    table = req.params.table #shop / user
-    field = req.params.field
-    value = req.params.value
+    table = req.param table #shop / user
+    field = req.param field
+    value = req.param value
     if table? and field? and value?
       result = @ca.validate_field table, field, value
       res.json result
@@ -192,7 +192,7 @@ class Controller
   
   update_goodbad_value: (req, res) ->
     id = req.params.id
-    category = req.params.category 
+    category = req.param category 
     type = req.params.type
     if @ca.validate_category category 
       num = @ss.update_badgood id, type
@@ -219,7 +219,8 @@ class Controller
   logout_user: (req, res) ->
 
   insert_comment: (req, res) ->
-    category = req.params.category
+    id = req.params.id
+    category = req.param category
     comment = req.body
     vca = @ca.validate_category category
     vco = @ca.validate_comment comment
@@ -234,10 +235,10 @@ class Controller
 
   get_comments: (req, res) ->
     id = req.params.id
-    category = req.params.category
-    start = req.params.start
-    limit = req.params.limit
-    level = req.params.level || -1
+    category = req.param category
+    start = req.param start
+    limit = req.param limit
+    level = (req.param level) || -1
     @cs.get_comments id, type, start, limit, level, (err,docs)->
       if err?
         res.json 404, {"error":"did not find any comment"}
@@ -246,9 +247,9 @@ class Controller
 
   get_news: (req, res) ->
     id = req.params.id
-    category = req.params.category
-    start = req.params.start
-    limit = req.params.limit
+    category = req.param category
+    start = req.param start
+    limit = req.param limit
     @ns.get_news_by_id id, type, start, limit, (err, docs)->
       if err?
         res.json 404, {"error":"did not find any news"}
