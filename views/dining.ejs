@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title><%= title %></title>
+	<title>Home | Dining</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>	
 	<!-- Grid styles for IE -->
@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="/stylesheets/smallslider.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="/stylesheets/flexslider.css" type="text/css" media="screen" />    
     <link rel="stylesheet" href="/stylesheets/responsive.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/stylesheets/tiptool.css" type="text/css" media="screen" />
     
     <!-- script
 	================================================== -->
@@ -26,7 +27,8 @@
     <script type="text/javascript" src="/jslib/custom.js"></script>    
 	<script type="text/javascript" src="/jslib/highcharts.js"></script>
 	<script type="text/javascript" src="/jslib/exporting.js"></script>
-	<script type="text/javascript" src="/jslib/shoptooltip.js"></script>
+	<script type="text/javascript" src="/jslib/can.jquery.js"></script>
+	<script type="text/javascript" src="/jslib/diningcustome.js"></script>
 	<!--[if lt IE 9]>
 		<script src="/jslib/html5.js"></script>
 	<![endif]-->
@@ -78,40 +80,10 @@
 						</div>				
 					</div><!--end:da-slider-->    	
 				</section><!--end:wrapper-->
-				<div class="wrapper" id="shopsBody">
-				<header id="breadcrumb">
-					<a href="index">Home</a>&nbsp;&raquo;&nbsp;<span class="current-page" href="shops">Easy Order</span>
-				</header>
-				<% for(id = 0; id < (shops.length >= 20 ? 20 : shops.length); id = id + 4)	{ %>
-					<section class="feature-services container" id="shopGroup<%= id %>" >
-						<article class="one-forth clearfix" id="<%= shops[id].id %>" >
-							<a class="wp-icon" href="<%= shops[id].shopwebsite %>" ><img src="images/icons/<%= shops[id].shoplogo %>" alt="<%= shops[id].shopwebsite %>" id="<%= shops[id].id %>"/></a>
-							<h3 class="entry-title"><a href="<%= shops[id].shopwebsite %>"><%= shops[id].shopname %></a></h3>
-						</article><!--end:one-forth-->
-						<% if((shops.length - id) > 1) { %>
-						<article class="one-forth one-column clearfix" id="<%= shops[id + 1].id %>" >
-							<a class="wp-icon" href="<%= shops[id + 1].shopwebsite %>" ><img src="images/icons/<%= shops[id].shoplogo %>" alt="<%= shops[id + 1].shopwebsite %>" id="<%= shops[id + 1].id %>"/></a>
-							<h3 class="entry-title"><a href="<%= shops[id + 1].shopwebsite %>"><%= shops[id + 1].shopname %></a></h3>
-						</article><!--end:one-forth-->
-						<% } 
-						if((shops.length - id) > 2) { %>
-						<article class="one-forth clearfix" id="<%= shops[id + 2].id %>" >
-							<a class="wp-icon" href="<%= shops[id + 2].shopwebsite %>" ><img src="images/icons/<%= shops[id].shoplogo %>" alt="<%= shops[id + 2].shopwebsite %>" id="<%= shops[id + 2].id %>"/></a>
-							<h3 class="entry-title"><a href="<%= shops[id + 2].shopwebsite %>"><%= shops[id + 2].shopname %></a></h3>
-						</article><!--end:one-forth-->
-						<% } 
-						if((shops.length - id) > 3) { %>
-						<article class="one-forth last clearfix" id="<%= shops[id + 3].id %>" >
-							<a class="wp-icon" href="<%= shops[id + 3].shopwebsite %>" ><img src="images/icons/<%= shops[id].shoplogo %>" alt="<%= shops[id + 3].shopwebsite %>" id="<%= shops[id + 3].id %>"/></a>
-							<h3 class="entry-title"><a href="<%= shops[id + 3].shopwebsite %>"><%= shops[id + 3].shopname %></a></h3>
-						</article><!--end:one-forth-->
-						<% } %>
-						<div class="clear"></div>
-					</section>
-					<% if((shops.length - id) <= 4) { %>
-					<br />
-					<% } %>
-				<% } %>	
+				<div class="wrapper" id="diningBody">
+					<header id="breadcrumb">
+						<a href="index">Home</a>&nbsp;&raquo;&nbsp;<span class="current-page" href="shops">Easy Order</span>
+					</header>
 				</div><!--end:wrapper-->
 			</div><!--end:outter-->
 		</div><!--bottom-bg-->

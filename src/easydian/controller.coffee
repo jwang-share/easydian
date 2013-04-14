@@ -31,32 +31,33 @@ class Controller
       {path: "/news/:id",       http_method: "get",   method: "get_news"},
       {path: "/news/:id",       http_method: "delete",method: "delete_news"},
 
+      {path: "/dining",               http_method: "get",   method: "dining_index" }
     ]
     @ss = new Shop_Schema()
-    @us = new Userinfo_Schema()
+    @us = {} #Userinfo_Schema()
     @ns = new News_Schema()
     @cs = new Comment_Schema()
     @ca = new Controller_Assisstant @ss, @us
     return
     
-  #show the shops
+  #show the index page
   index: (req, res) ->    
     res.render 'index.ejs' 
 
   get_shops: (req, res) ->
-    category = req.param category
-    start = (req.param start) || 0
-    limit = (req.param limit) || 0
-    fields = req.param fields
-    
+    category = req.param "category"
+    start = (req.param "start") || 0
+    limit = (req.param "limit") || 0
+    fields = req.param "fields"
     if @ca.validate_category category 
-      @ss.get_shops category, fields, start, limit, (err, docs)=>
+      @ss.get_shops category, fields, start, limit, (err, docs)->
         if not err?
           if docs?.length > 0
-            #console.log docs
-            res.json(docs)
-          else
-            res.json 404, {"error": "Did not find any shops"}
+            #res.render("dining/shopviewtmpl.ejs",{"shops": docs})
+            res.json docs
+          else        
+            #res.json 404, {"error": "Did not find any shops"}
+            res.json docs            
         else   
           res.json 400, {"error":err}
     else
@@ -265,8 +266,8 @@ class Controller
   #supports later  
   delete_news: (req, res) ->
 
-
-
-
+  #show the dining page  
+  dining_index: (req, res) ->
+    res.render "dining.ejs"
 
 module.exports = Controller

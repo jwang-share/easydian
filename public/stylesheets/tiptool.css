@@ -1,0 +1,48 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:100,400,700);
+
+.xxx {
+  font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    text-shadow: 0 -1px 0 #ffffff;
+}
+.tooltip {
+   position: absolute;
+   width: 800px;
+   height: 150px;
+   padding: 5px;
+   background: #333;
+    text-shadow: 0 -1px 0 #666;
+    color: #fff;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+    -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
+}
+.tooltip:before { 
+    content: "";
+    border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent; 
+  border-right:10px solid #333; 
+    display: block;
+    height: 0;
+    width: 0;
+    position: absolute;
+  top: 5px;
+  left: -10px;
+}
+.lix {
+   font-weight: bold;
+   width: 100px;
+   border: solid 1px #eee; 
+   margin: 5px;
+   padding: 5px;
+   cursor: pointer;
+   position: relative;
+}
+.lix:hover {
+    background: #999;
+    color: #fff;
+    text-shadow: 0 -1px 0 #666;
+}
