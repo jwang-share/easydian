@@ -6,6 +6,7 @@ jQuery(document).ready(function(){
 	    newsId: 0,  
 	    shopId: 0,
 	    timeId: 0,
+        chart: null,
 	    context: this   
     };
 
@@ -35,42 +36,52 @@ jQuery(document).ready(function(){
             if (!this.element.has(ev.target).length &&
             ev.target !== this.element[0] &&
             ev.target !== this.options.relativeTo[0]) {
-                this.element.remove();
+                shopPars.chart = null
+                this.element.remove()
             }
         },
         left: function () {
             var tipx = (this.options.relativeTo.offset().left * 2 + this.options.relativeTo.width()) / 2
             if (tipx > $(window).width() / 2) {
-                tipx = tipx - this.options.relativeTo.width()
+                tipx = tipx - 600
             }
             return tipx
         },
         top: function () {
             var tipy = (this.options.relativeTo.offset().top * 2 + this.options.relativeTo.height()) / 2
             if (($(window).height() - tipy) < (this.options.relativeTo.height() / 2)) {
-                tipy = tipy + this.options.relativeTo.height() / 2
+                tipy = tipy - this.options.relativeTo.height() / 2
             }
-            return tipy
         }
     })
 
-    // Listen and create a tooltip widget
-/*    $("li").bind("click", function () {
-        new Tooltip($("<div>"), {
-            relativeTo: $(this),
-            html: htmlbody
-        })
-    })
-*/
+    // Get dining shop information:
+    //   - options - ajax data field: 
+    //              {'category':'Dining','fields': 'shopwebsite shopname', 'start': 0, 'limit': 1}
+    getDiningShopsNextPage = function(options) {
+        $.get("/shops", options, function(data) { 
+            var html = can.view.render("tmpls/dining/diningviewtmpl.ejs", {"shops": data});
+            $('#diningBody').append(html);        
+            shopPars.pageId++; 
+        }); 
+    };
+
+    if (shopPars.pageId == 0) {
+        var options = {'category':'Dining','fields': 'shopwebsite shopname shoplogo', 'start': (shopPars.pageId * 20), 'limit': (shopPars.pageId + 1) * 20}
+        getDiningShopsNextPage(options);
+    }
+
 	$('section article img').live('mouseenter', function(e){ //mouseenter element
-		shopPars.context = this;
+		shopPars.context = this;        
 		shopPars.timeId = setTimeout(function(){
+            shopPars.shopId = $(shopPars.context).attr('id')
 			var htmlBody = '<div style="font-style:italic">Fetching Dining Shop information...</div>';
 			var toolTip = new Tooltip($("<div>"), {
 	            relativeTo: $(shopPars.context),
 	            html: htmlBody
         	});
-			$.get("/shop/"+shopPars.shopId, {'category':'Dining','fields': 'shopwebsite shopname', 'start': 0, 'limit': 10}, function(data) { 				
+            var options = {'category':'Dining', 'comments': 0, 'news': 0, 'fields': 'shopbadt shopgoodt ', 'start': 0, 'limit': 10}
+			$.get("/shop/"+shopPars.shopId, options, function(data) { 				
 				htmlBody = can.view.render("tmpls/dining/diningchartviewtmpl.ejs", {"shop": data});
 				toolTip.element.html(htmlBody)
 				creatDiningShopTipTool(data)
@@ -79,17 +90,6 @@ jQuery(document).ready(function(){
 	}).live('mouseleave', function(e){ //mouseleave element
 		clearTimeout(shopPars.timeId);
 	});
-
-	// Get dining shop information:
-    //   - options - ajax data field: 
-    //				{'category':'Dining','fields': 'shopwebsite shopname', 'start': 0, 'limit': 1}
-	getDiningShopsNextPage = function(options) {
-		$.get("/shops", options, function(data) { 
-			var html = can.view.render("tmpls/dining/diningviewtmpl.ejs", {"shops": data});
-        	$('#diningBody').append(html);        
-        	shopPars.pageId++; 
-    	}); 
-	};
 
     // Get dining shop information:
     //   - type - the info type of the shop: comment, news, both
@@ -122,16 +122,17 @@ jQuery(document).ready(function(){
 		}		
 	});
 
-	creatDiningShopTipTool = function(data) {
-        new Highcharts.Chart({
+	creatDiningShopTipTool = function(commentInfo) {
+        shopPars.chart = new Highcharts.Chart({
             chart: {
-                renderTo: 'dining-chart-tip-',
+                renderTo: 'dining-chart-tip-' + commentInfo._id,
                 type: 'line',
                 height: 150,
                 marginRight: 130,
                 marginBottom: 25
             },
             credits: {
+                enabled: false,
                 text: 'Detailed Comments >>',
                 href: '/diningcomment'
             },
@@ -167,7 +168,7 @@ jQuery(document).ready(function(){
             },
             series: [{
                 name: 'Good Comments',
-                data: [60, 70, 80, 90, 100, 110, 120]
+                data: [shopweekstats, 70, 80, 90, 100, 110, 120]
             }, {
                 name: 'Bad Comments',
                 data: [15, 25, 35, 45, 55, 65, 75]
