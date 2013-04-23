@@ -94,8 +94,6 @@ jQuery(function() {
 	jQuery('.flexslider').flexslider({
 	  slideshowSpeed: 5000,
 	  slideDirection: "vertical",
-	  prevText: "Up",
-	  nextText: "Down",
 	  animation: "slide",
 	  slideshow: true, 
 	  controlsContainer: ".flexslider"

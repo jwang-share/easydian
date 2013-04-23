@@ -386,11 +386,11 @@ Clear Floated Elements
 }
 /*** Main Menu ***/
 #main-menu {
-	float:right;
+	float:left;
 	margin-top:30px;
 }
 #main-menu #main-nav {
-	float:right;
+	float:left;
 	z-index:100;
 	position:relative;
 }
@@ -534,8 +534,8 @@ Clear Floated Elements
 
 .feature-services a.wp-icon {
     background: url("/images/icons/wp-icon-hover.png") no-repeat scroll 0 0 transparent;
-    height: 76px;
-	width:76px;
+    height: 200px;
+	width:200px;
 	display:inline-block;
 }
 .feature-services a.joomla-icon {
@@ -1645,43 +1645,6 @@ Clear Floated Elements
 	width:229px;
 }
 
-.ajaxtooltip {
-   position: absolute;
-   width: 500px;
-   height: 150px;
-   padding: 5px;
-    display: none;
-   background: #333;
-    text-shadow: 0 -1px 0 #666;
-    color: #fff;
-   -webkit-border-radius: 5px;
-   -moz-border-radius: 5px;
-   border-radius: 5px;
-    -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
-	-webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
-	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
-}
-.ajaxtooltip:before { 
-    content: "";
-    border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent; 
-	border-right:10px solid #333; 
-    display: block;
-    height: 0;
-    width: 0;
-    position: absolute;
-	top: 5px;
-	left: -10px;
-}
-.xajaxtooltip:after { 
-    content: "";
-    border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent; 
-	border-left:10px solid #333; 
-    display: block;
-    height: 0;
-    width: 0;
-    position: absolute;
-	top: 5px;
-	right: -10px;
-}
+.anchor-list > *{display:block}
+
+.anchor-list.secondary > *{line-height:36px}

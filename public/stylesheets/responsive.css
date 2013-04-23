@@ -760,7 +760,7 @@
 	}
 	/*** Menu ***/
 	#main-menu {
-		float: none;
+		float: left;
 		margin-top: 15px;
 		width: 100%;
 	}

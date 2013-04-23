@@ -11,7 +11,7 @@ global.Async        = require 'async'
 global.Step         = require 'step'
 global.logger       = new (require './logger')("easydian")
 
-global.ShopCategory = ["Canyin", "Banjia", "Zhuangxiu"]
+global.ShopCategory = ["Dining", "Banjia", "Zhuangxiu"]
 
 global.Mongoose = require "mongoose"
 global.Schema = Mongoose.Schema
@@ -21,3 +21,4 @@ global.conn = Mongoose.connection
 conn.on 'error', console.error.bind console, 'connection error:'
 conn.once 'open', ()->
    logger.info "success to open mongodb"
+

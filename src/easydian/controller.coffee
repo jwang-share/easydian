@@ -1,3 +1,4 @@
+
 Shop_Schema = require './model/shop_schema'
 Userinfo_Schema = require './model/userinfo_schema'
 News_Schema = require './model/news_schema'
@@ -30,59 +31,61 @@ class Controller
       {path: "/news/:id",       http_method: "get",   method: "get_news"},
       {path: "/news/:id",       http_method: "delete",method: "delete_news"},
 
+      {path: "/dining",               http_method: "get",   method: "dining_index" }
     ]
     @ss = new Shop_Schema()
-    @us = new Userinfo_Schema()
+    @us = {} #Userinfo_Schema()
     @ns = new News_Schema()
     @cs = new Comment_Schema()
     @ca = new Controller_Assisstant @ss, @us
     return
     
-  #show the shops
+  #show the index page
   index: (req, res) ->    
     res.render 'index.ejs' 
 
   get_shops: (req, res) ->
     category = req.param "category"
-    #category = req.params.category
     start = (req.param "start") || 0
     limit = (req.param "limit") || 0
     fields = req.param "fields"
-    logger.info "---------------------> "+fields
-    logger.info "---------------------> "+category
-
     if @ca.validate_category category 
-      @ss.get_shops category, fields, start, limit, (err, docs)=>
-        console.log docs
+      @ss.get_shops category, fields, start, limit, (err, docs)->
         if not err?
-          if docs?.length > 0           
-            res.json(docs)
-          else
-            res.json 404, {"error": "Did not find any shops"}
+          if docs?.length > 0
+            #res.render("dining/shopviewtmpl.ejs",{"shops": docs})
+            res.json docs
+          else        
+            #res.json 404, {"error": "Did not find any shops"}
+            res.json docs            
         else   
           res.json 400, {"error":err}
     else
       res.json 400, {"error":"Invalid category"}
 
   get_shop_info: (req, res) ->
-    id = req.params.id
-    start = req.params.start
-    limit = req.params.limit
-    type = req.params.category
-    nf = req.params.news || 0
-    cf = req.params.comments || 0
-    fields = req.params.fields || 0
+    res.json {
+      "_id": req.params.id
+    } 
 
-    if fields is 0 and news is 0 and comments is 0
-      return  #don't do any response
+    # id = req.params.id
+    # start = (req.param "start") || 0
+    # limit = (req.param "limit") || 1
+    # type = req.param "category"
+    # nf = (req.param "news") || 0
+    # cf = (req.param "comments") || 0
+    # fields = (req.param "fields") || 0
 
-    if fields isnt 0 
-      @ss.get_shop_by_id id, fields, (err, doc)=>
-        if err?
-          doc = ""
-        @send_shop_info res, doc, id, type, nf, cf, start, limit
-    else
-      @send_shop_info res, "", id, type, nf, cf, start, limit
+    # if fields is 0 and nf is 0 and cf is 0
+    #   return  #don't do any response
+
+    # if fields isnt 0 
+    #   @ss.get_shop_by_id id, fields, (err, doc)=>
+    #     if err?
+    #       doc = ""
+    #     @send_shop_info res, doc, id, type, nf, cf, start, limit
+    # else
+    #   @send_shop_info res, "", id, type, nf, cf, start, limit
         
   send_shop_info: (res, fieldinfo, id, type, news_t, comm_t, start, limit) ->
     news = ""
@@ -183,9 +186,9 @@ class Controller
       res.json {"info":"failed"}
   
   validate_field: (req, res) ->
-    table = req.params.table #shop / user
-    field = req.params.field
-    value = req.params.value
+    table = req.param table #shop / user
+    field = req.param field
+    value = req.param value
     if table? and field? and value?
       result = @ca.validate_field table, field, value
       res.json result
@@ -194,7 +197,7 @@ class Controller
   
   update_goodbad_value: (req, res) ->
     id = req.params.id
-    category = req.params.category 
+    category = req.param category 
     type = req.params.type
     if @ca.validate_category category 
       num = @ss.update_badgood id, type
@@ -221,7 +224,8 @@ class Controller
   logout_user: (req, res) ->
 
   insert_comment: (req, res) ->
-    category = req.params.category
+    id = req.params.id
+    category = req.param category
     comment = req.body
     vca = @ca.validate_category category
     vco = @ca.validate_comment comment
@@ -236,10 +240,10 @@ class Controller
 
   get_comments: (req, res) ->
     id = req.params.id
-    category = req.params.category
-    start = req.params.start
-    limit = req.params.limit
-    level = req.params.level || -1
+    category = req.param category
+    start = req.param start
+    limit = req.param limit
+    level = (req.param level) || -1
     @cs.get_comments id, type, start, limit, level, (err,docs)->
       if err?
         res.json 404, {"error":"did not find any comment"}
@@ -248,9 +252,9 @@ class Controller
 
   get_news: (req, res) ->
     id = req.params.id
-    category = req.params.category
-    start = req.params.start
-    limit = req.params.limit
+    category = req.param category
+    start = req.param start
+    limit = req.param limit
     @ns.get_news_by_id id, type, start, limit, (err, docs)->
       if err?
         res.json 404, {"error":"did not find any news"}
@@ -266,8 +270,8 @@ class Controller
   #supports later  
   delete_news: (req, res) ->
 
-
-
-
+  #show the dining page  
+  dining_index: (req, res) ->
+    res.render "dining.ejs"
 
 module.exports = Controller

@@ -1,0 +1,61 @@
+/*@import url(http://fonts.googleapis.com/css?family=Lato:100,400,700);*/
+.tooltip {
+  position: absolute;
+  width: 600px;
+  height: 150px;
+  padding: 1px;
+  background: #ffffff;
+  text-shadow: 0 -1px 0 #666;
+  color: #fff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
+}
+.tooltip:beforex { 
+  content: "";
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent; 
+  border-right:10px solid #8e8e8e; 
+  display: block;
+  height: 0;
+  width: 0;
+  position: absolute;
+  top: 5px;
+  left: -10px;
+}
+.tooltip:afterx { 
+  content: "";
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent; 
+  border-left:10px solid #8e8e8e; 
+  display: block;
+  height: 0;
+  width: 0;
+  position: absolute;
+  top: 5px;
+  left: 600px;
+}
+
+/*** diningtestimonials ***/
+.diningtestimonials {
+  background-color:#ffffff;
+  padding:1px 1px 1px 1px;
+  margin-top:1px;
+  margin-left:-30px;
+  position:relative;
+}
+.diningtestimonials ul li p {
+  color:#666666;
+  border-left:1px solid #eaeaea;
+  padding-left:1px;
+}
+.diningtestimonials ul li span {
+  display:block;
+  margin-top:1px;
+  color:#222222;
+  font-size:13px;
+  padding-left:1px;
+}

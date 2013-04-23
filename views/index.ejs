@@ -10,7 +10,7 @@
 	<![endif]-->
 	<link rel="stylesheet" href="/stylesheets/reset.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="/stylesheets/style.css" type="text/css" media="screen" />    
-	<link rel="stylesheet" href="/stylesheets/smallslider.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="/stylesheets/slider.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="/stylesheets/flexslider.css" type="text/css" media="screen" />    
     <link rel="stylesheet" href="/stylesheets/responsive.css" type="text/css" media="all" />
     
@@ -24,24 +24,44 @@
 	<script type="text/javascript" src="/jslib/jquery.carouFredSel-5.6.2.js"></script>	
 	<script type="text/javascript" src="/jslib/kendo.all.min.js"></script> 
     <script type="text/javascript" src="/jslib/custom.js"></script>    
-	<script type="text/javascript" src="/jslib/highcharts.js"></script>
-	<script type="text/javascript" src="/jslib/exporting.js"></script>
-	<script type="text/javascript" src="/jslib/shoptooltip.js"></script>
 	<!--[if lt IE 9]>
 		<script src="/jslib/html5.js"></script>
 	<![endif]-->
-
 <body id="home-page">
 	<header id="header">
 		<div id="header-outer">
 			<div class="wrapper clearfix">
-				<div id="logo-image">
+				<div id="logo-image">			
 					<a href="index"><img src="/images/slider/logo.png" alt="logo" /></a>
-				</div><!--end:logo-image-->		       
+				</div><!--end:logo-image-->	
+				<nav id="main-menu" class="clearfix">	
+					<ul class="clearfix" id="main-nav">	
+						<li>
+							<a href="index"><img src="/images/slider/logo.png" alt="logo" /></a>		
+							<ul>
+						    	<li>
+						    		<a href="index">Home</a>
+						    	</li>
+
+						    </ul>
+						</li>
+				    </ul><!--end:main-nav-->	
+				</nav><!--end:main-menu-->
+       
 				<nav id="main-menu" class="clearfix">			
 					<ul class="clearfix" id="main-nav">				
 						<li class="current-menu-item">
 							<a href="index">Easy Order</a>
+														<ul>
+						    	<li>
+						    		<a href="index">Home</a>
+						    								    								<ul>
+						    	<li>
+						    		<a href="index">Home</a>
+						    	</li>
+						    </ul>
+						    	</li>
+						    </ul>
 						</li>
 						<li>
 							<a href="moves">Easy Move</a>
@@ -54,35 +74,38 @@
 			</div><!--end:wrapper-->
 		</div><!--header-outer-->
 	</header>
-	<div id="main-content">
-		<div id="bottom-bg">	
-			<div class="outter">
-				<section class="wrapper slider-container">
-					<div id="da-slider" class="da-slider">					
-						<div class="da-slide">
-							<div class="da-img"><img src="/images/slider/slide-2.jpg" alt="" /></div>
-							<h1>
-								<a href="#">What is Lorem Ipsum?</a>
-							</h1>
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
-						</div>
-						<div class="da-slide">
-							<div class="da-img"><img src="/images/slider/slide-4.jpg" alt="" /></div>
-							<h1>
-								<a href="#">What is Lorem Ipsum?</a>
-							</h1>
-							<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-						</div>				
-					</div><!--end:da-slider-->    	
-				</section><!--end:wrapper-->
-				<div class="wrapper" id="shopsBody">
-				<header id="breadcrumb">
-					<a href="index">Home</a>&nbsp;&raquo;&nbsp;<span class="current-page" href="shops">Easy Order</span>
-				</header>
-				</div><!--end:wrapper-->
-			</div><!--end:outter-->
-		</div><!--bottom-bg-->
-	</div><!--end:main-content-->     
+<div id="main-content">
+	<div id="bottom-bg">	
+		<div class="outter">
+			<section class="wrapper slider-container">
+				<div id="da-slider" class="da-slider">					
+					<div class="da-slide">
+						<div class="da-img"><img src="/images/slider/slide-2.jpg" alt="" /></div>
+						<h1>
+							<a href="shops">What is Lorem Ipsum?</a>
+							<span>Lorem ipsum dolor sit amet</span>
+						</h1>
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+						<a href="shops" class="da-link big-button"><span>Learn more</span></a>
+					</div>
+					<div class="da-slide">
+						<div class="da-img"><img src="/images/slider/slide-4.jpg" alt="" /></div>
+						<h1>
+							<a href="moves">What is Lorem Ipsum?</a>
+							<span>Lorem ipsum dolor sit amet</span>
+						</h1>
+						<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+						<a href="moves" class="da-link big-button"><span>Learn more</span></a>
+					</div>				
+					<nav class="da-arrows">
+						<span class="da-arrows-prev"></span>
+						<span class="da-arrows-next"></span>
+					</nav>
+				</div><!--end:da-slider-->    	
+			</section><!--end:wrapper-->
+		</div><!--end:outter-->
+	</div><!--bottom-bg-->
+</div><!--end:main-content-->      
 	<div id="page-botom">
 		<div class="outter">
 			<div class="wrapper">

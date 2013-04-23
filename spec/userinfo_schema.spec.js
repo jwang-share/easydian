@@ -1,7 +1,7 @@
 var Userinfo_Schema = require("../lib/easydian/model/userinfo_schema")
 require('../lib/easydian/config')
 
-describe("Userinfo Schema",function(){
+xdescribe("Userinfo Schema",function(){
   var us, doc, addrinfo, addrinfo1, phoneinfo;
   var ExistID = "5150170e1541c17b0c000005";
   us = new Userinfo_Schema();

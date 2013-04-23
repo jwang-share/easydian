@@ -1,10 +1,12 @@
+
+
 class Controller_Assisstant
   constructor: (ss,us)->
     @ss = ss
     @us = us
 
   validate_category: (category) ->
-    return true if category in ShopCategory
+    return true if category in ShopCategory 
     return false
 
   validate_username: (name) ->
@@ -21,7 +23,7 @@ class Controller_Assisstant
     return true if comment.shopid? and comment.comment?
     return false
 
-  validate_shop: (shop) ->
+  validate_shop: (shop) ->	
     if shop.shopname? and shop.shoptype? and shop.shoplogo?
       if @validate_username shop.shopname
         return true
@@ -59,7 +61,7 @@ class Controller_Assisstant
               return {validation:"success", "description":"Cong! This name is valid"}
           else
             return {validation:"failed", "description":"We can not verify this Field"}
-      else
+      else 
         return {validation:"failed", "description":"We can not verify this Table"}
 
 
