@@ -17,5 +17,6 @@ b = BB()
 b.foo2()
 
 """
+1
 object BB calling...
 """

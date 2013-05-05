@@ -12,13 +12,16 @@ import BaiduEngine
 
 def main():
     parser = BaiduParser(BaiduEngine())
-    while(True):
-        result = parser.send_request()
-        #save to DB
-        #time.sleep(60)
-        break
-        
-    
-    
+    while True:
+        result = parser.send_requests()
+        while True:
+            try:
+                docs = result.next()
+            except:
+                break
+            else:
+                #save to db
+                pass
+           
 if __name__ == "__main__":
     main()

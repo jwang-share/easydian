@@ -9,16 +9,25 @@ class IParser:
         self.encoding = "utf-8"
         
     #override this function to cover your request
-    def get_encoding(self,content):
+    def get_encoding(self,result):
         return "utf-8"
         
     def send_request(self):
-        res = self.engine.send_requests()
+        result = self.engine.send_requests()
+        result.encoding = self.get_encoding(result)
         #handler yield here
-        res.encoding = self.get_encoding(res)
-        return self.parse_data(res.content)
+        while True:
+            try:
+                keyname,content = result.next()
+            except StopIteration: # StopIteration
+                break
+            except:
+                continue
+            else:
+                yield self.handle_data(keyname, content)
+                  
     
-    def parse_data(self,content):      
+    def handle_data(self,keyname,content):      
         raise NotImplementedError
         
     

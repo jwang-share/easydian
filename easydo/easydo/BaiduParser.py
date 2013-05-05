@@ -8,7 +8,7 @@ class BaiduParser(IParser):
         self.docs = []
         pass
     
-    def parse_data(self,content):
+    def handle_data(self,keyname,content):
         soup =  BeautifulSoup(content)
         flag = "result"
         results = soup.find_all(class_ = flag)
