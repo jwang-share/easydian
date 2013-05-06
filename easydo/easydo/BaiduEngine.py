@@ -1,6 +1,6 @@
 
 
-import IEngine
+from IEngine import IEngine
 import requests
 
 """

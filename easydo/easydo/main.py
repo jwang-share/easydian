@@ -6,22 +6,30 @@
 ! author: jwang
 """
 
-import BaiduParser
-import BaiduEngine
-#import time
+from BaiduEngine import BaiduEngine
+from BaiduParser import BaiduParser
+import simplejson as json
+#import PipeLine
+import time
+
 
 def main():
-    parser = BaiduParser(BaiduEngine())
+    engine = BaiduEngine()
+    parser = BaiduParser(engine)
     while True:
-        result = parser.send_requests()
+        result = parser.send_request()
         while True:
             try:
-                docs = result.next()
+                print "coming 1..."
+                keyname,docs = result.next()
+                print "coming 2..."
             except:
                 break
             else:
+                print keyname
+                print json.dumps(docs,indent=4,ensure_ascii=False)
+                break
                 #save to db
-                pass
-           
+                
 if __name__ == "__main__":
     main()

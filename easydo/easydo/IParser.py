@@ -3,7 +3,7 @@
 """
 ! Author: jwang
 """
-class IParser:
+class IParser(object):
     def __init__(self,engine):
         self.engine = engine
         self.encoding = "utf-8"

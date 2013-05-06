@@ -1,6 +1,5 @@
-import IParser
+from IParser import IParser
 from bs4 import BeautifulSoup
-#import simplejson as json
 
 class BaiduParser(IParser):
     def __init__(self,engine):
@@ -19,5 +18,5 @@ class BaiduParser(IParser):
             item["url"] = links.a['href']
             self.docs.append(item)
         #json.dumps(docs,indent=4,ensure_ascii=False)
-        return self.docs
+        return keyname,self.docs
             

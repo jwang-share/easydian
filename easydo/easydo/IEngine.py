@@ -5,7 +5,7 @@
 """
 import simplejson as json
 
-class IEngine:
+class IEngine(object):
     def __init__(self): 
         self.resultnum = 20
         self.timeout = 5
