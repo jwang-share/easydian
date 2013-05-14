@@ -10,8 +10,7 @@ from BaiduEngine import BaiduEngine
 from BaiduParser import BaiduParser
 from ConfigParser import ConfigParser
 import simplejson as json
-
-#import PipeLine
+from PipeLine import PipeLine
 import time
 
 
@@ -19,7 +18,8 @@ def main():
     engine = BaiduEngine()
     parser = BaiduParser(engine)
     result = parser.send_requests()
-    
+    db =  connectdb()
+    pl = PipeLine.instance()
     while True:
         try:
             print "coming 1..."
@@ -29,6 +29,8 @@ def main():
             break
         else:   
             #print json.dumps(docs,indent=4,ensure_ascii=False)
+            #pl.clean_context()
+            #pl.save_to_db()
             time.sleep(5)
             continue
                 #save to db
@@ -51,5 +53,5 @@ def connectdb():
 
                 
 if __name__ == "__main__":
-    connectdb()
+   
     main()
