@@ -6,7 +6,6 @@ import pymongo
 !this class is used to write content to DB, MongoDB
 """
 
-
 class PipeLine(object):
 	@classmethod
 	def instance(cls):
@@ -15,8 +14,23 @@ class PipeLine(object):
 		return cls._instance
     		
 	def save_to_db(self,db,colname,content):
-		pass
-	def delete_db_item(self,db,colname,name):
-		pass
+		try:
+			col = db[colname]
+			col.insert(content)
+		except Exception, e:
+			print e
+			return False
+		else:
+			return True
+
+	def clean_context(self,db,colname):
+		try:
+			db.[colname].remove()
+		except Exception, e:
+			print e
+			return False
+		else:
+			return True
+		
 
 

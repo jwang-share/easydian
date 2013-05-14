@@ -10,7 +10,7 @@ from BaiduEngine import BaiduEngine
 from BaiduParser import BaiduParser
 from ConfigParser import ConfigParser
 import simplejson as json
-import pymongo
+
 #import PipeLine
 import time
 
@@ -38,7 +38,7 @@ def get_db_path():
     with open(path,"rw") as cfgfile:
         config.readfp(cfgfile)
         dburl = config.get("mongodb","address")
-        port = config.get("mongodb","dbport")
+        port = config.get("mongodb","port")
         dbname = config.get("mongodb","dbname")
         return dburl,port,dbname
     
@@ -46,6 +46,8 @@ def connectdb():
     dburl,port,dbname = get_db_path()
     conn = pymongo.Connection(dburl,port)
     return conn[dbname]
+
+
 
                 
 if __name__ == "__main__":
