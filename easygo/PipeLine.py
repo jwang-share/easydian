@@ -1,17 +1,14 @@
 
-import pymongo
 
 """
 ! Author: jwang
 !this class is used to write content to DB, MongoDB
 """
+import time
 
 class PipeLine(object):
-	@classmethod
-	def instance(cls):
-		if not hasattr(cls,"_instance"):
-			cls._instance = cls()
-		return cls._instance
+	def __init__(self):
+		pass
     		
 	def save_to_db(self,db,colname,content):
 		try:
@@ -25,12 +22,23 @@ class PipeLine(object):
 
 	def clean_context(self,db,colname):
 		try:
-			db.[colname].remove()
+			db[colname].remove()
 		except Exception, e:
 			print e
 			return False
 		else:
 			return True
+
+	def rewrite_db_context(self,db,colname,content):
+		ret = self.clean_context(db,colname)
+		if not ret:
+			return False
+		time.sleep(3)
+		ret = self.save_to_db(db,colname,content)
+		if not ret:
+			return False
+		return True
+			
 		
 
 

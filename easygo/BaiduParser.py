@@ -5,13 +5,13 @@ import simplejson as json
 class BaiduParser(IParser):
     def __init__(self,engine):
         super(BaiduParser,self).__init__(engine)
-        self.docs = []
         pass
     
     def handle_data(self,content):
         soup =  BeautifulSoup(content)
         flag = "result"
-        results = soup.find_all(class_ = flag)      
+        results = soup.find_all(class_ = flag) 
+        self.docs = []     
         for links in results:
             item = {}
             item["title"] = links.h3.get_text()
