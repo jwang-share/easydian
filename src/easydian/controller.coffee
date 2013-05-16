@@ -64,28 +64,32 @@ class Controller
       res.json 400, {"error":"Invalid category"}
 
   get_shop_info: (req, res) ->
-    res.json {
-      "_id": req.params.id
-    } 
+    id = req.params.id
+    start = (req.param "start") || 0
+    limit = (req.param "limit") || 1
+    type = req.param "category"
+    nf = (req.param "news") || 0
+    cf = (req.param "comments") || 0
+    fields = (req.param "fields") || 0
+    
+    logger.info ">>>>>>>>>>>>>id: " + id
+    logger.info ">>>>>>>>>>>>>start: " + start
+    logger.info ">>>>>>>>>>>>>limit: " + limit
+    logger.info ">>>>>>>>>>>>>type: " + type
+    logger.info ">>>>>>>>>>>>>nf: " + nf
+    logger.info ">>>>>>>>>>>>>cf: " + cf
+    logger.info ">>>>>>>>>>>>>fields: " + fields
 
-    # id = req.params.id
-    # start = (req.param "start") || 0
-    # limit = (req.param "limit") || 1
-    # type = req.param "category"
-    # nf = (req.param "news") || 0
-    # cf = (req.param "comments") || 0
-    # fields = (req.param "fields") || 0
+    if fields is 0 and nf is 0 and cf is 0
+      return  #don't do any response
 
-    # if fields is 0 and nf is 0 and cf is 0
-    #   return  #don't do any response
-
-    # if fields isnt 0 
-    #   @ss.get_shop_by_id id, fields, (err, doc)=>
-    #     if err?
-    #       doc = ""
-    #     @send_shop_info res, doc, id, type, nf, cf, start, limit
-    # else
-    #   @send_shop_info res, "", id, type, nf, cf, start, limit
+    if fields isnt 0 
+      @ss.get_shop_by_id id, fields, (err, doc)=>
+        if err?
+          doc = ""
+        @send_shop_info res, doc, id, type, nf, cf, start, limit
+    else
+      @send_shop_info res, "", id, type, nf, cf, start, limit
         
   send_shop_info: (res, fieldinfo, id, type, news_t, comm_t, start, limit) ->
     news = ""
@@ -101,10 +105,12 @@ class Controller
       @cs.get_comments id, type, start, limit, -1, (err,docs)=>
         if not err?
           comments = docs
+          logger.info ">>>>>>>>>>>>>comments: " + comments
           if news_t isnt 0
             @ns.get_news_by_id id, type, start, limit, (err, docs)->
               if not err?
                 news = docs
+                logger.info ">>>>>>>>>>>>>news: " + news
                 res.json {
                   "news": news,
                   "comments": comments,
@@ -127,6 +133,7 @@ class Controller
             @ns.get_news_by_id id, type, start, limit, (err, docs)=>
               if not err?
                 news = docs
+                logger.info ">>>>>>>>>>>>>news: " + news
                 res.json {
                   "news": news,
                   "comments": comments,
@@ -148,6 +155,7 @@ class Controller
       @ns.get_news_by_id id, type, start, limit, (err, docs)->
         if not err?
           news = docs
+          logger.info ">>>>>>>>>>>>>news: " + news
           res.json {
             "news": news,
             "comments": comments,
