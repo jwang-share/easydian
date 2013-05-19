@@ -15,3 +15,6 @@
     sudo apt-get install apache2 php5 php-pear php5-dev
     put rockmongo to /var/www/
     restart apache2 : sudo service apache2 restart
+
+#new module should be added
+    use redis to store something useful. It's not a good idea to get info from mongodb for each shop and each time
