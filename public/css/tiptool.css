@@ -4,7 +4,7 @@
   width: 600px;
   height: 150px;
   padding: 1px;
-  background: #ffffff;
+  background: #8e8e8e;
   text-shadow: 0 -1px 0 #666;
   color: #fff;
   -webkit-border-radius: 5px;
@@ -37,25 +37,4 @@
   position: absolute;
   top: 5px;
   left: 600px;
-}
-
-/*** diningtestimonials ***/
-.diningtestimonials {
-  background-color:#ffffff;
-  padding:1px 1px 1px 1px;
-  margin-top:1px;
-  margin-left:-30px;
-  position:relative;
-}
-.diningtestimonials ul li p {
-  color:#666666;
-  border-left:1px solid #eaeaea;
-  padding-left:1px;
-}
-.diningtestimonials ul li span {
-  display:block;
-  margin-top:1px;
-  color:#222222;
-  font-size:13px;
-  padding-left:1px;
 }

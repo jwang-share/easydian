@@ -52,7 +52,6 @@ jQuery(document).ready(function(){
             if (($(window).height() - tipy) < (this.options.relativeTo.height() / 2)) {
                 tipy = tipy - this.options.relativeTo.height() / 2
             }
-            return tipy
         }
     })
 
@@ -82,16 +81,14 @@ jQuery(document).ready(function(){
 	            html: htmlBody
         	});
             var options = {'category':'Dining', 'comments': 0, 'news': 0, 'fields': 'shopbadt shopgoodt ', 'start': 0, 'limit': 10}
-			$.get("/shop/"+shopPars.shopId, options, function(data) { 			
-                htmlBody = can.view.render("tmpls/dining/diningchartviewtmpl.ejs", {"shop": data})
-				toolTip.element.html(htmlBody)                
-                htmlBody = can.view.render("tmpls/dining/diningevaluatetmpl.ejs", {})
-				creatDiningShopTipTool(data, htmlBody)
-                startFlexSlider()
+			$.get("/shop/"+shopPars.shopId, options, function(data) { 				
+				htmlBody = can.view.render("tmpls/dining/diningchartviewtmpl.ejs", {"shop": data});
+				toolTip.element.html(htmlBody)
+				creatDiningShopTipTool(data)
 	    	}); 		
 		}, 200);
 	}).live('mouseleave', function(e){ //mouseleave element
-		clearTimeout(shopPars.timeId)
+		clearTimeout(shopPars.timeId);
 	});
 
     // Get dining shop information:
@@ -125,34 +122,23 @@ jQuery(document).ready(function(){
 		}		
 	});
 
-    startFlexSlider = function () {
-        $('.flexslider').flexslider({
-            slideshowSpeed: 2000,
-            slideDirection: "vertical",
-            animation: "slide",
-            slideshow: true, 
-            controlsContainer: ".flexslider-container"
-        })
-    }
-	creatDiningShopTipTool = function(commentInfo, htmlBody) {
+	creatDiningShopTipTool = function(commentInfo) {
         shopPars.chart = new Highcharts.Chart({
             chart: {
                 renderTo: 'dining-chart-tip-' + commentInfo._id,
                 type: 'line',
                 height: 150,
-                marginTop: 28,
-                marginRight: 0,
+                marginRight: 130,
                 marginBottom: 25
             },
             credits: {
-                enabled: false
+                enabled: false,
+                text: 'Detailed Comments >>',
+                href: '/diningcomment'
             },
             title: {
-                useHTML: true,
-                text: htmlBody,
-                align: 'right',
-                x: -70,
-                y: 6
+                text: 'Good/Bad Comments',
+                x: -20 //center
             },
             xAxis: {
                 categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat',
@@ -160,7 +146,7 @@ jQuery(document).ready(function(){
             },
             yAxis: {
                 title: {
-                    text: ''
+                    text: 'Comments'
                 },
                 plotLines: [{
                     value: 0,
@@ -174,11 +160,15 @@ jQuery(document).ready(function(){
                 }
             },
             legend: {
-                enabled: false
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                y: 50,
+                borderWidth: 0
             },
             series: [{
                 name: 'Good Comments',
-                data: [30, 70, 80, 90, 100, 110, 120]
+                data: [shopweekstats, 70, 80, 90, 100, 110, 120]
             }, {
                 name: 'Bad Comments',
                 data: [15, 25, 35, 45, 55, 65, 75]

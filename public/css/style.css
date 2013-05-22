@@ -386,11 +386,11 @@ Clear Floated Elements
 }
 /*** Main Menu ***/
 #main-menu {
-	float:left;
+	float:right;
 	margin-top:30px;
 }
 #main-menu #main-nav {
-	float:left;
+	float:right;
 	z-index:100;
 	position:relative;
 }
