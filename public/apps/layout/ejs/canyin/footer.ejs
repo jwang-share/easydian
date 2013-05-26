@@ -1,64 +1,48 @@
-<div id="page-botom">
-  <div class="outter">
-    <div class="wrapper">
-      <div id="footer-sidebar">
-        <div class="one-forth">
-          <aside class="widget">
-            <h3 class="widget-title">About Us</h3>
-            <div class="text-widget">
-              <p>Easydian is a tool site to save your time and money to order the dinner and move your house.</p>
-            </div><!--end:text-widget-->
-          </aside><!--end:widget-->
-        </div><!--one-forth-->
-        <div class="one-forth"> 
-          <aside class="widget">
-            <h3 class="widget-title">Contact Us</h3>
-            <div class="text-widget">
-              <p>Here you can get the <a href="contact">contact</a> information of us and leave a <a href="contact">comment</a> for us.</p>
-            </div><!--end:text-widget-->
-          </aside><!--end:widget-->
-        </div><!--one-forth-->
-        <div class="one-forth"> 
-          <aside class=" widget">
-            <h3 class="widget-title">Help/FAQ</h3>
-            <div class="newsletter">
-              <p>Here you can get <a href="contact">help</a> from us.</p> 
-            </div><!--end:newsletter-->
-          </aside><!--end:widget-->
-        </div><!--one-forth-->      
-        <div class="one-forth last">  
-          <aside class=" widget">
-            <h3 class="widget-title">Follow us</h3>
-            <ul class="social-links clearfix">
-              <li class="gplus-icon">
-                <a target="_blank" title="Google+" href="#">
-                  <img src="/images/icons/gplus-icon.png" alt="" />Google+                        
-                </a>
-              </li>
-              <li class="facebook-icon">
-                <a target="_blank" title="Facebook" class="facebook" href="#">
-                  <img src="/images/icons/facebook-icon.png" alt="" />Facebook
-                </a>
-              </li>
-              <li class="twitter-icon">
-                <a target="_blank" title="Twitter" class="twitter" href="#">
-                  <img src="/images/icons/twitter-icon.png" alt="" />Twitter                        
-                </a>
-              </li>
-              <li class="rss-icon">
-                <a target="_blank" title="RSS" href="#">
-                  <img src="/images/icons/rss-icon.png" alt="" />RSS                        
-                </a>
-              </li>
-            </ul><!--end:social-links-->  
-          </aside><!--end:widget-->
-        </div><!--one-forth-->
-        <div class="clear"></div>         
-      </div><!--end:footer-sidebar-->
-    </div><!--end:wrapper-->
-  </div><!--end:outter-->
-  <footer id="footer" class="wrapper clearfix">
-    <p id="copyright">Copyright &copy; <%= (new Date()).getFullYear()%> EasyDian. All Rights Reserved</p>            
-    <a id="scroll-to-top" href="#top">Back to top</a>
-  </footer>
-</div><!--page-bottom-->
+<div class="wrap">
+  <div class="container">
+    <div class="row">
+      <div class="span3">
+        <h2 class="title">Latest tweets</h2>
+        <div class="tweet_block"></div>                       
+      </div>
+      <div class="span3">
+        <h2 class="title">Get in touch!</h2>
+        <form action="#" method="post">
+          <input class="span3" type="text" name="name" id="name" value="Name" onFocus="if (this.value == 'Name') this.value = '';" onBlur="if (this.value == '') this.value = 'Name';" />
+          <input class="span3" type="text" name="email" id="email" value="Email" onFocus="if (this.value == 'Email') this.value = '';" onBlur="if (this.value == '') this.value = 'Email';" />
+          <textarea name="message" id="message" class="span3" onFocus="if (this.value == 'Message') this.value = '';" onBlur="if (this.value == '') this.value = 'Message';" >Message</textarea>
+          <div class="clear"></div>
+          <input type="reset" class="btn dark_btn" value="Clear form" />
+          <input type="submit" class="btn send_btn" value="Send!" />
+          <div class="clear"></div>
+        </form>
+      </div> 
+      <div class="span3">
+        <h2 class="title">Testimonials</h2>
+          <ul>
+            <li>
+              <span class="testimonials_arrow"></span>Orci nisi, luctus vitae imperdiet a, iquam vel urna. Pellentesque tincidunt laoreet est, in tristique sapien consequat a purus at ullamcorper pulvinar, massa libero magna.
+              <div class="clear"></div>
+              <div class="author">Anna Smith, Company inc.</div>
+            </li>
+            <li>
+              <span class="testimonials_arrow"></span>Luctus vitae imperdiet a, iquamorci nisi lorem. Pellentesque tincidunt laoreet est, in tristique sapien consequat a purus at ullam pulvinar, massa libero consequat egestas mas.
+              <div class="clear"></div>
+              <div class="author">John Doe, Company inc.</div>
+            </li>
+          </ul>                     
+      </div>
+      <div class="span3">
+        <h2 class="title">flickr photostream</h2>
+        <div class="flickrs">
+          <div class="FlickrImages">
+            <ul></ul>
+            <div class="clear"></div>
+          </div>
+        </div> 
+      </div>          
+    </div>
+  </div> 
+  <div class="footer_bottom">
+  </div>           
+</div>
