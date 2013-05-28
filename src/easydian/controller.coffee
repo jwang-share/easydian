@@ -9,7 +9,7 @@ class Controller
   constructor: () ->
     # get, post, delete, put
     @routes = [
-      {path: "/",               http_method: "get",   method: "index" },
+      {path: "/",               http_method: "get",   method: "home" },
       {path: "/index",          http_method: "get",   method: "index" },
       {path: "/shops",          http_method: "get",   method: "get_shops" },
       {path: "/shop/:id",       http_method: "get",   method: "get_shop_info"},
@@ -31,7 +31,7 @@ class Controller
       {path: "/news/:id",       http_method: "get",   method: "get_news"},
       {path: "/news/:id",       http_method: "delete",method: "delete_news"},
 
-      {path: "/dining",               http_method: "get",   method: "dining_index" }
+      {path: "/dining",         http_method: "get",   method: "dining_index" }
     ]
     @ss = new Shop_Schema()
     @us = {} #Userinfo_Schema()
@@ -39,7 +39,11 @@ class Controller
     @cs = new Comment_Schema()
     @ca = new Controller_Assisstant @ss, @us
     return
-    
+
+  #show the home page
+  home: (req, res) ->    
+    res.render 'home.ejs' 
+
   #show the index page
   index: (req, res) ->    
     res.render 'index.ejs' 
