@@ -9,7 +9,7 @@ class Controller
   constructor: () ->
     # get, post, delete, put
     @routes = [
-      {path: "/",               http_method: "get",   method: "home" },
+      {path: "/",               http_method: "get",   method: "index" },
       {path: "/index",          http_method: "get",   method: "index" },
       {path: "/shops",          http_method: "get",   method: "get_shops" },
       {path: "/shop/:id",       http_method: "get",   method: "get_shop_info"},
@@ -39,10 +39,6 @@ class Controller
     @cs = new Comment_Schema()
     @ca = new Controller_Assisstant @ss, @us
     return
-
-  #show the home page
-  home: (req, res) ->    
-    res.render 'home.ejs' 
 
   #show the index page
   index: (req, res) ->    

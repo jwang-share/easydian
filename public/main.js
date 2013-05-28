@@ -7,11 +7,10 @@ steal(
 )
 .then(
     'can_control', 'can_fixture', 'jquery-color',
-    'bootstrap', 'cookie', 'lang_json',
+    'bootstrap', 'cookie', 'lang_json', 'camera',
     'jquery-validation', 'bootstrap', 'superfish',
     'jquery-mobile', 'jquery-easing', 'prettify',
-    'sorting', 'jquery-isotope', 'jquery-tweet', 
-    'myscript'
+    'sorting', 'jquery-isotope', 'jquery-tweet'
 )
 .packages('/apps/layout/layout.js')
 .then('/apps/routing/routing.js')
@@ -40,6 +39,7 @@ steal(
 })
 .then(
     '/css/css.css',
+    '/css/camera.css',
     '/css/bootstrap.css',
     '/css/bootstrap-responsive.css',
     '/css/theme.css',
