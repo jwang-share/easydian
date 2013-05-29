@@ -9,7 +9,6 @@ can.Control('Apps.RoutingCtrl', {
             this.handle_route(data);
         },
         ':widget/:sub route': function( data ) {
-            alert('data: ' + data)
             this.handle_route(data);
         },
         handle_route: function(data){
@@ -22,7 +21,7 @@ can.Control('Apps.RoutingCtrl', {
                         new Apps.CanyinCtrl(document.body);
                     });
                 } else {
-                    window.location = '';
+                    //window.location = '';
                 }
             } else {
                 steal('/apps/layout/layout.js', function() {
