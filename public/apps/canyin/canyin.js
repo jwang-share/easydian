@@ -15,14 +15,19 @@ steal(
             var ejs_dir = '/apps/canyin/ejs/';
             this.element.html(can.view(ejs_dir + 'template.ejs'));
             $('.header').html(can.view(ejs_dir  + 'header.ejs'));
-            $('.page_container').html(can.view(ejs_dir  + 'container.ejs'));
+            var $page_contaiter = $('.page_container');
+            $page_contaiter.append(can.view(ejs_dir  + 'slider.ejs'));
+            $page_contaiter.append(can.view(ejs_dir  + 'container.ejs'));
             $('#footer').html(can.view(ejs_dir  + 'footer.ejs'));  
 
             $(document).ready(function(){   
+                //Slider
+                $('#camera_wrap_1').camera({height: '20%'});   
+
                 //build dropdown
                 $("<select />").appendTo("nav#main_menu div");
                 
-                // Create default option "Go to..."
+                // Create default option "Go to..."s
                 $("<option />", {
                    "selected": "selected",
                    "value"   : "",
@@ -69,26 +74,27 @@ steal(
                     }
                     else $(this).attr('src',ifr_source+'?'+wmode);
                 });      
-                
-                //Slider
-                $('#camera_wrap_1').camera();   
 
                 //PrettyPhoto
-                $("a[rel^='prettyPhoto']").prettyPhoto();
+                $("a[rel^='prettyPhoto']").prettyPhoto({default_width: 400, default_heigh: 250});
                 
                 //Image hover
-                $(".hover_img").live('mouseover',function(){
+                var $hover_img = $(".hover_img")
+                $hover_img.live('mouseover',function(){
                         var info=$(this).find("img");
                         info.stop().animate({opacity:0.2},300);
                         $(".preloader").css({'background':'none'});
                     }
                 );
-                $(".hover_img").live('mouseout',function(){
+                $hover_img.live('mouseout',function(){
                         var info=$(this).find("img");
                         info.stop().animate({opacity:1},300);
                         $(".preloader").css({'background':'none'});
                     }
                 );
+
+                //Tooltip
+                $('.follow_us a').tooltip(); 
 
                 //Flickr Integration
                 $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?id=36334875@N04&lang=en-us&format=json&jsoncallback=?", function(data){
@@ -99,9 +105,6 @@ steal(
                         }
                     });         
                 });  
-
-                //Tooltip
-                $('.follow_us a').tooltip(); 
             });           
         },
         get_current_user: function(current_user) {

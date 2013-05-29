@@ -12,7 +12,10 @@ can.Control('Apps.LayoutCtrl', {
         $('.page_container').html(can.view(ejs_dir  + 'slider.ejs'));
         $('#footer').html(can.view(ejs_dir  + 'footer.ejs'));  
 
-        $(document).ready(function(){   
+        $(document).ready(function(){  
+            //Slider
+            $('#camera_wrap_1').camera({height: '20%'});   
+
             //build dropdown
             $("<select />").appendTo("nav#main_menu div");
             
@@ -68,7 +71,7 @@ can.Control('Apps.LayoutCtrl', {
             $('.follow_us a').tooltip();
             
             //Slider
-            $('#camera_wrap_1').camera();   
+            //$('#camera_wrap_1').camera();   
 
             //Flickr Integration
             $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?id=36334875@N04&lang=en-us&format=json&jsoncallback=?", function(data){
