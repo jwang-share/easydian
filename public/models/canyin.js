@@ -1,31 +1,31 @@
 can.Model("Models.Canyin", {
     findAll: 'GET     /canyin/shops',
-    findOne: 'GET     /canyin/shop/{id}',
-    create : 'POST    /canyin/shop',
-    update : 'PUT     /canyin/shop/{id}',
-    destroy: 'DELETE  /canyin/shop/{id}'
+    findOne: 'GET     /canyin/shops/{id}',
+    create : 'POST    /canyin/shops',
+    update : 'PUT     /canyin/shops/{id}',
+    destroy: 'DELETE  /canyin/shops/{id}'
     visit: function(id) {
         return can.ajax({
-            url:  '/canyin/shop/' + id + '/visit',
+            url:  '/canyin/shops/' + id + '/visit',
             type: 'put'
         });
     },
     add_comment_bad: function(id) {
         return can.ajax({
-            url:  '/canyin/shop/' + id + '/bad',
+            url:  '/canyin/shops/' + id + '/bad',
             type: 'put'
         });
     },
     add_comment_good: function(id) {
         return can.ajax({
-            url:  '/canyin/shop/' + id + '/good',
+            url:  '/canyin/shops/' + id + '/good',
             type: 'put'
         });
     },
     comments: function(id, params) {
         var self = this;
         return can.ajax({
-            url:  '/canyin/shop/' + id + '/comments',
+            url:  '/canyin/shops/' + id + '/comments',
             type: 'get',
             dataType: 'json',
             data: params
@@ -34,7 +34,7 @@ can.Model("Models.Canyin", {
     add_comment: function(id, data) {
         var self = this;
         return can.ajax({
-            url:  '/canyin/shop/' + id + '/comment',
+            url:  '/canyin/shops/' + id + '/comment',
             type: 'post',
             dataType: 'json',
             data: data
@@ -43,7 +43,7 @@ can.Model("Models.Canyin", {
     update_comment: function(id, data) {
         var self = this;
         return can.ajax({
-            url:  '/canyin/shop/' + id + '/comment',
+            url:  '/canyin/shops/' + id + '/comment',
             type: 'put',
             dataType: 'json',
             data: data
@@ -52,7 +52,7 @@ can.Model("Models.Canyin", {
     delete_comment: function(id, data) {
         var self = this;
         return can.ajax({
-            url:  '/canyin/shop/' + id + '/comment',
+            url:  '/canyin/shops/' + id + '/comment',
             type: 'delete',
             dataType: 'json',
             data: data
@@ -61,7 +61,7 @@ can.Model("Models.Canyin", {
     news: function(id, params) {
         var self = this;
         return can.ajax({
-            url:  '/canyin/shop/' + id + '/news',
+            url:  '/canyin/shops/' + id + '/news',
             type: 'get',
             dataType: 'json',
             data: params
@@ -70,7 +70,7 @@ can.Model("Models.Canyin", {
 }, {
     init : function() {
         var self = this;
-        self.attr('test', Apps.canyinData.test);
+        self.attr('data', Apps.canyinData);
         //TODO get from server
         // $.ajax({
         // url : "/test",

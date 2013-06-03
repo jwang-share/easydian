@@ -2,69 +2,63 @@
  * This is fixture for test without Canyin Restful API.
  */
 Apps.canyinData = {};
-Apps.canyinData.time = 0;
-
-Apps.canyinData.test = {
-    "name" : 'Canyin Fake Data',
-    "global" : {
-
-    },
-    'load' : {
-    }
-};
-
+alert("xyz");
 var random = function(min, max) {
     return Math.ceil(Math.random() * (max - min) + min);
 };
 
 can.fixture('GET /canyin/shops', function() {
-    return Apps.canyinData.test;
+    return [{'_id': random(10000000, 999999), 'description': 'Description', 'style': 'chinese-style', 'shopwebsite': 'www.edian.com', 'shopname': 'Ken De Ji', 'shoplogo': '/images/portfolio/' + random(1, 9) + '.jpg'},
+    {'_id': random(10000000, 999999), 'description': 'Description', 'style': 'western-style','shopwebsite': 'www.edian.com', 'shopname': 'Ken De Ji', 'shoplogo': '/images/portfolio/' + random(1, 9) + '.jpg'},
+    {'_id': random(10000000, 999999), 'description': 'Description', 'style': 'chinese-style','shopwebsite': 'www.edian.com', 'shopname': 'Ken De Ji', 'shoplogo': '/images/portfolio/' + random(1, 9) + '.jpg'},
+    {'_id': random(10000000, 999999), 'description': 'Description', 'style': 'western-style','shopwebsite': 'www.edian.com', 'shopname': 'Ken De Ji', 'shoplogo': '/images/portfolio/' + random(1, 9) + '.jpg'},
+    {'_id': random(10000000, 999999), 'description': 'Description', 'style': 'western-style','shopwebsite': 'www.edian.com', 'shopname': 'Ken De Ji', 'shoplogo': '/images/portfolio/' + random(1, 9) + '.jpg'}];
 });
 
-can.fixture('GET /canyin/shop/{id}', function() {
-    return Apps.canyinData.test;
+can.fixture('GET /canyin/shops/{id}', function() {
+    return {'_id': random(10000000, 999999), 'shopbadt': [20, 70, 80, 90, 100, 110, 120], 'shopgoodt': [15, 25, 35, 45, 55, 65, 75]};
 });
 
-can.fixture('POST /canyin/shop', function() {
+can.fixture('POST /canyin/shops', function() {
     return 'OK';
 });
 
-can.fixture('PUT /canyin/shop/{id}', function() {
+can.fixture('PUT /canyin/shops/{id}', function() {
     return 'OK';
 });
 
-can.fixture('DELETE /canyin/shop/{id}', function() {
+can.fixture('DELETE /canyin/shops/{id}', function() {
     return 'OK';
 });
 
-can.fixture('PUT /canyin/shop/{id}/visit', function() {
+can.fixture('PUT /canyin/shops/{id}/visit', function() {
     return 'OK';
 });
 
-can.fixture('PUT /canyin/shop/{id}/bad', function() {
+can.fixture('PUT /canyin/shops/{id}/bad', function() {
     return 'OK';
 });
 
-can.fixture('PUT /canyin/shop/{id}/good', function() {
+can.fixture('PUT /canyin/shops/{id}/good', function() {
     return 'OK';
 });
 
-can.fixture('GET /canyin/shop/{id}/comments', function() {
+can.fixture('GET /canyin/shops/{id}/comments', function() {
     return 'OK';
 });
 
-can.fixture('PUT /canyin/shop/{id}/comment', function() {
+can.fixture('PUT /canyin/shops/{id}/comment', function() {
     return 'OK';
 });
 
-can.fixture('POST /canyin/shop/{id}/comment', function() {
+can.fixture('POST /canyin/shops/{id}/comment', function() {
     return 'OK';
 });
 
-can.fixture('DELETE /canyin/shop/{id}/comment', function() {
+can.fixture('DELETE /canyin/shops/{id}/comment', function() {
     return 'OK';
 });
 
-can.fixture('GET /canyin/shop/{id}/news', function() {
-    return Apps.canyinData.test;
+can.fixture('GET /canyin/shops/{id}/news', function() {
+    return 'OK';
 });

@@ -1,7 +1,9 @@
 steal(
     '/css/prettyPhoto.css',
     'jquery-prettyPhoto',
-    'jquery-preloader'
+    'jquery-preloader',
+    '/models/canyin.js',
+    '/models/canyin_fixture.js'
 )
 .then(function() {
     can.Control('Apps.CanyinCtrl', {
@@ -14,10 +16,14 @@ steal(
         init: function(element, options) {
             var ejs_dir = '/apps/canyin/ejs/';
             this.element.html(can.view(ejs_dir + 'template.ejs'));
-            $('.header').html(can.view(ejs_dir  + 'header.ejs'));
-            var $page_contaiter = $('.page_container');
+            $('#header').html(can.view(ejs_dir  + 'header.ejs'));
+            var $page_contaiter = $('#page_container');
             $page_contaiter.append(can.view(ejs_dir  + 'slider.ejs'));
-            $page_contaiter.append(can.view(ejs_dir  + 'container.ejs'));
+            Models.Canyin.findAll({}, function(data){
+                alert(data);
+                $page_contaiter.append(can.view(ejs_dir  + 'container.ejs'), {'canyin_shops': data});
+            });
+            
             $('#footer').html(can.view(ejs_dir  + 'footer.ejs'));  
 
             $(document).ready(function(){   
