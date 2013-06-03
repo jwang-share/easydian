@@ -3,7 +3,7 @@ can.Model("Models.Canyin", {
     findOne: 'GET     /canyin/shops/{id}',
     create : 'POST    /canyin/shops',
     update : 'PUT     /canyin/shops/{id}',
-    destroy: 'DELETE  /canyin/shops/{id}'
+    destroy: 'DELETE  /canyin/shops/{id}',
     visit: function(id) {
         return can.ajax({
             url:  '/canyin/shops/' + id + '/visit',

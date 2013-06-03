@@ -20,8 +20,7 @@ steal(
             var $page_contaiter = $('#page_container');
             $page_contaiter.append(can.view(ejs_dir  + 'slider.ejs'));
             Models.Canyin.findAll({}, function(data){
-                alert(data);
-                $page_contaiter.append(can.view(ejs_dir  + 'container.ejs'), {'canyin_shops': data});
+                $page_contaiter.append(can.view(ejs_dir  + 'container.ejs', {'canyin_shops': data}));
             });
             
             $('#footer').html(can.view(ejs_dir  + 'footer.ejs'));  

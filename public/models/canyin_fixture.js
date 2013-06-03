@@ -2,7 +2,7 @@
  * This is fixture for test without Canyin Restful API.
  */
 Apps.canyinData = {};
-alert("xyz");
+
 var random = function(min, max) {
     return Math.ceil(Math.random() * (max - min) + min);
 };
