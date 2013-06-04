@@ -66,7 +66,23 @@ can.Model("Models.Canyin", {
             dataType: 'json',
             data: params
         });
-    }          
+    }, 
+    ads: function() {
+        var self = this;
+        return can.ajax({
+            url:  '/canyin/ads',
+            type: 'get',
+            dataType: 'json'
+        });
+    }, 
+    promotion: function() {
+        var self = this;
+        return can.ajax({
+            url:  '/canyin/promotion',
+            type: 'get',
+            dataType: 'json'
+        });
+    }           
 }, {
     init : function() {
         var self = this;

@@ -12,9 +12,10 @@
             <!-- portfolio_block -->
             <div class="projects">
             <% for(var i=0; i<canyin_shops.length; i++){ %>                                 
-                <div id='<%= canyin_shops[i]._id %>' class="span3 element chinese-style" data-category="chinese-style">
-                    <div class="hover_img">                        
-                        <span class="portfolio_zoom"><a href="#inline_canyin_chart_view" rel="prettyPhoto"><img src="<%= canyin_shops[i].shoplogo %>" alt="" /></a></span>
+                <div id='<%= canyin_shops[i]._id %>' class="span3 element <%= canyin_shops[i].style %>" data-category="<%= canyin_shops[i].style %>">
+                    <div class="hover_img"> 
+                        <img src="<%= canyin_shops[i].shoplogo %>" alt="" />                       
+                        <span class="portfolio_zoom"><a href="#inline_canyin_chart_view" rel="prettyPhoto"></a></span>
                         <span class="portfolio_link"><a href="single_portfolio.html">View item</a></span>
                     </div> 
                     <div class="item_description">

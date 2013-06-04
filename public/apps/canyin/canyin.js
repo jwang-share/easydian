@@ -18,9 +18,33 @@ steal(
             this.element.html(can.view(ejs_dir + 'template.ejs'));
             $('#header').html(can.view(ejs_dir  + 'header.ejs'));
             var $page_contaiter = $('#page_container');
+            //can.when(
+                //Models.Canyin.ads();
+            //).then(function(){
             $page_contaiter.append(can.view(ejs_dir  + 'slider.ejs'));
-            Models.Canyin.findAll({}, function(data){
-                $page_contaiter.append(can.view(ejs_dir  + 'container.ejs', {'canyin_shops': data}));
+            //});
+            can.when(
+                Models.Canyin.findAll({}, function(data){
+                    $page_contaiter.append(can.view(ejs_dir  + 'container.ejs', {'canyin_shops': data}));
+                })
+            ).then(function(){
+                //PrettyPhoto
+                $("a[rel^='prettyPhoto']").prettyPhoto({theme:'light_rounded', default_width: 400, default_heigh: 250});
+                
+                //Image hover
+                var $hover_img = $(".hover_img")
+                $hover_img.live('mouseover',function(){
+                        var info=$(this).find("img");
+                        info.stop().animate({opacity:0.2},300);
+                        $(".preloader").css({'background':'none'});
+                    }
+                );
+                $hover_img.live('mouseout',function(){
+                        var info=$(this).find("img");
+                        info.stop().animate({opacity:1},300);
+                        $(".preloader").css({'background':'none'});
+                    }
+                );
             });
             
             $('#footer').html(can.view(ejs_dir  + 'footer.ejs'));  
@@ -79,24 +103,6 @@ steal(
                     }
                     else $(this).attr('src',ifr_source+'?'+wmode);
                 });      
-
-                //PrettyPhoto
-                $("a[rel^='prettyPhoto']").prettyPhoto({default_width: 400, default_heigh: 250});
-                
-                //Image hover
-                var $hover_img = $(".hover_img")
-                $hover_img.live('mouseover',function(){
-                        var info=$(this).find("img");
-                        info.stop().animate({opacity:0.2},300);
-                        $(".preloader").css({'background':'none'});
-                    }
-                );
-                $hover_img.live('mouseout',function(){
-                        var info=$(this).find("img");
-                        info.stop().animate({opacity:1},300);
-                        $(".preloader").css({'background':'none'});
-                    }
-                );
 
                 //Tooltip
                 $('.follow_us a').tooltip(); 
