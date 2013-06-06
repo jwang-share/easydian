@@ -22,13 +22,14 @@ can.Model("Models.Canyin", {
             type: 'put'
         });
     },
-    comments: function(id, params) {
+    comments: function(id, params, success) {
         var self = this;
         return can.ajax({
             url:  '/canyin/shops/' + id + '/comments',
             type: 'get',
             dataType: 'json',
-            data: params
+            data: params,
+            success: success
         });
     }, 
     add_comment: function(id, data) {
@@ -67,12 +68,13 @@ can.Model("Models.Canyin", {
             data: params
         });
     }, 
-    ads: function() {
+    ads: function(success) {
         var self = this;
         return can.ajax({
             url:  '/canyin/ads',
             type: 'get',
-            dataType: 'json'
+            dataType: 'json',
+            success: success
         });
     }, 
     promotion: function() {

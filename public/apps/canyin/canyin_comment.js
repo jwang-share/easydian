@@ -1,13 +1,10 @@
 steal(
-    '/css/prettyPhoto.css',
-    'jquery-prettyPhoto',
-    'jquery-preloader',
     '/models/canyin.js',
     '/models/canyin_fixture.js'
 )
 .then(function() {
-    can.Control('Apps.CanyinCtrl', {
-        pluginName: 'canyin',
+    can.Control('Apps.CanyinCommentCtrl', {
+        pluginName: 'canyincomment',
         defaults: {
             current_user: null
         }
@@ -18,36 +15,12 @@ steal(
             this.element.html(can.view(ejs_dir + 'template.ejs'));
             $('#header').html(can.view(ejs_dir  + 'header.ejs'));
             var $page_contaiter = $('#page_container');
+            $page_contaiter.append(can.view(ejs_dir  + 'breadcrumb.ejs', {'page': 'Comments'}));
             can.when(
-                Models.Canyin.ads(function(data){
-                    $page_contaiter.append(can.view(ejs_dir  + 'slider.ejs', {'ads': data}));
+                Models.Canyin.comments({id: 123456}, {}, function(data){
+                    $page_contaiter.append(can.view(ejs_dir  + 'comment.ejs', {'comments': data}));
                 })
             ).then(function(){
-                //Slider
-                $('#camera_wrap_1').camera({height: '20%'}); 
-            });
-            can.when(
-                Models.Canyin.findAll({}, function(data){
-                    $page_contaiter.append(can.view(ejs_dir  + 'container.ejs', {'shops': data}));
-                })
-            ).then(function(){
-                //PrettyPhoto
-                $("a[rel^='prettyPhoto']").prettyPhoto({theme:'light_rounded', default_width: 400, default_heigh: 250});
-                
-                //Image hover
-                var $hover_img = $(".hover_img")
-                $hover_img.live('mouseover',function(){
-                        var info=$(this).find("img");
-                        info.stop().animate({opacity:0.2},300);
-                        $(".preloader").css({'background':'none'});
-                    }
-                );
-                $hover_img.live('mouseout',function(){
-                        var info=$(this).find("img");
-                        info.stop().animate({opacity:1},300);
-                        $(".preloader").css({'background':'none'});
-                    }
-                );
             });
             
             $('#footer').html(can.view(ejs_dir  + 'footer.ejs'));  

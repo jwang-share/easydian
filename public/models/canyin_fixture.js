@@ -58,7 +58,7 @@ can.fixture('PUT /canyin/shops/{id}/good', function() {
 });
 
 can.fixture('GET /canyin/shops/{id}/comments', function() {
-    return 'OK';
+    return {'_id': random(10000000, 999999)};
 });
 
 can.fixture('PUT /canyin/shops/{id}/comment', function() {

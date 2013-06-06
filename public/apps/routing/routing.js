@@ -16,12 +16,16 @@ can.Control('Apps.RoutingCtrl', {
             var sub    = data['sub'];
             app_state.attr('route', {'widget': widget, 'sub': sub});
             if(widget) {
-                if(widget === 'canyin') {
+                if(widget === 'canyin' && sub === undefined) {
+                    alert(sub);
                     steal('/apps/canyin/canyin.js', function() {
                         new Apps.CanyinCtrl(document.body);
                     });
-                } else {
-                    //window.location = '';
+                } else if(widget === 'canyin' && sub === 'comment')  {
+                    alert(sub);
+                    steal('/apps/canyin/canyin_comment.js', function() {
+                        new Apps.CanyinCommentCtrl(document.body);
+                    });
                 }
             } else {
                 steal('/apps/layout/layout.js', function() {
