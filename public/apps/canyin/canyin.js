@@ -32,13 +32,18 @@ steal(
                 })
             ).then(function(){
                 //PrettyPhoto
-                $("a[rel^='prettyPhoto']").prettyPhoto({theme:'light_rounded', default_width: 400, default_heigh: 250});
+                create_chart_view = function() {
+                    
+                };
+                $("a[rel^='prettyPhoto']").prettyPhoto({theme:'light_rounded', default_width: 400, default_heigh: 250,
+                    changepicturecallback: create_chart_view});
                 
                 //Image hover
                 var $hover_img = $(".hover_img")
-                $hover_img.live('mouseover',function(){
+                $hover_img.live('mouseover',function(){                        
                         var info=$(this).find("img");
                         info.stop().animate({opacity:0.2},300);
+                        Models.Canyin.id = info.attr('id');                        
                         $(".preloader").css({'background':'none'});
                     }
                 );

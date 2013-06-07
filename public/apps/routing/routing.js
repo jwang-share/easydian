@@ -17,7 +17,6 @@ can.Control('Apps.RoutingCtrl', {
             app_state.attr('route', {'widget': widget, 'sub': sub});
             if(widget) {
                 if(widget === 'canyin' && sub === undefined) {
-                    alert(sub);
                     steal('/apps/canyin/canyin.js', function() {
                         new Apps.CanyinCtrl(document.body);
                     });
