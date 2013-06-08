@@ -3,13 +3,16 @@ steal(
     'jquery-prettyPhoto',
     'jquery-preloader',
     '/models/canyin.js',
-    '/models/canyin_fixture.js'
+    '/models/canyin_fixture.js',
+    'easy-utils',
+    'high-charts'
 )
 .then(function() {
     can.Control('Apps.CanyinCtrl', {
         pluginName: 'canyin',
         defaults: {
-            current_user: null
+            current_user: null,
+            current_chart: null
         }
     },
     {
@@ -31,12 +34,64 @@ steal(
                     $page_contaiter.append(can.view(ejs_dir  + 'container.ejs', {'shops': data}));
                 })
             ).then(function(){
-                //PrettyPhoto
+                //High Charts
                 create_chart_view = function() {
-                    
+                    Apps.CanyinCtrl.defaults.current_chart = new Highcharts.Chart({
+                        chart: {
+                            renderTo: 'canyin_chart_view',
+                            type: 'line'
+                        },
+                        credits: {
+                            enabled: false,
+                            text: 'Detailed Comments >>',
+                            href: '#canyin/comment'
+                        },
+                        title: {
+                            text: 'Good/Bad Comments',
+                            x: -20 //center
+                        },
+                        xAxis: {
+                            categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Comments'
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            formatter: function () {
+                                return 'Week: ' + this.x + '<br/>' + this.series.name  + ': ' + this.y
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            y: 50,
+                            borderWidth: 0
+                        },
+                        series: [{
+                            name: 'Good Comments',
+                            data: [60, 70, 80, 90, 100, 110, 120]
+                        }, {
+                            name: 'Bad Comments',
+                            data: [15, 25, 35, 45, 55, 65, 75]
+                        }]
+                    });                
                 };
+                clear_chart_view = function() {
+                    Apps.CanyinCtrl.defaults.current_chart = null;
+                    easytUtils.clean_element('canyin_chart_view', 'before');
+                };
+
+                //PrettyPhoto
                 $("a[rel^='prettyPhoto']").prettyPhoto({theme:'light_rounded', default_width: 400, default_heigh: 250,
-                    changepicturecallback: create_chart_view});
+                    beforeinlineclonecallback: create_chart_view, allow_resize: false, callback: clear_chart_view});
                 
                 //Image hover
                 var $hover_img = $(".hover_img")
