@@ -29,7 +29,8 @@ steal.config({
             "sorting/sorting.js"              : "sorting",
             "superfish/superfish.js"          : "superfish",
             "prettify/prettify.js"            : "prettify",
-            "easy-utils/easy-utils.js"        : "easy-utils"
+            "easy-utils/easy-utils.js"        : "easy-utils",
+            "header-footer/header-footer.js"  : "header-footer"
         }
     },
     paths: {
@@ -60,6 +61,7 @@ steal.config({
         "sorting"           : "/lib/sorting.js",
         "superfish"         : "/lib/superfish.js",
         "prettify"          : "/lib/prettify/prettify.js",        
-        "easy-utils"        : "/lib/utils/easyutils.js"
+        "easy-utils"        : "/lib/utils/easyutils.js",
+        "header-footer"     : "/lib/header-footer.js"
     }
 });
