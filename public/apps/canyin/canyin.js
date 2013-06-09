@@ -1,12 +1,13 @@
 steal(
+    'highcharts',
     '/css/prettyPhoto.css',
     'jquery-prettyPhoto',
     'jquery-preloader',
     '/models/canyin.js',
     '/models/canyin_fixture.js',
-    'easy-utils',
-    'high-charts'
+    'easy-utils'
 )
+.then('highcharts-exp')
 .then(function() {
     can.Control('Apps.CanyinCtrl', {
         pluginName: 'canyin',
@@ -36,63 +37,91 @@ steal(
             ).then(function(){
                 //High Charts
                 create_chart_view = function() {
-                    Apps.CanyinCtrl.defaults.current_chart = new Highcharts.Chart({
+                    $('#canyin_chart_view').highcharts({
                         chart: {
-                            renderTo: 'canyin_chart_view',
-                            type: 'line'
-                        },
-                        credits: {
-                            enabled: false,
-                            text: 'Detailed Comments >>',
-                            href: '#canyin/comment'
+                            type  : 'spline',
+                            height: 200,
+                            width : 500
                         },
                         title: {
-                            text: 'Good/Bad Comments',
-                            x: -20 //center
+                            text: 'Monthly Average Temperature'
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        subtitle: {
+                            text: 'Source: WorldClimate.com'
                         },
                         xAxis: {
-                            categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                                'Jul']
                         },
                         yAxis: {
                             title: {
-                                text: 'Comments'
+                                text: 'Temperature'
                             },
-                            plotLines: [{
-                                value: 0,
-                                width: 1,
-                                color: '#808080'
-                            }]
-                        },
-                        tooltip: {
-                            formatter: function () {
-                                return 'Week: ' + this.x + '<br/>' + this.series.name  + ': ' + this.y
+                            labels: {
+                                formatter: function() {
+                                    return this.value +'°'
+                                }
                             }
                         },
-                        legend: {
-                            layout: 'vertical',
-                            align: 'right',
-                            verticalAlign: 'top',
-                            y: 50,
-                            borderWidth: 0
+                        tooltip: {
+                            crosshairs: true,
+                            shared: true
+                        },
+                        plotOptions: {
+                            spline: {
+                                marker: {
+                                    radius: 4,
+                                    lineColor: '#666666',
+                                    lineWidth: 1
+                                }
+                            }
                         },
                         series: [{
-                            name: 'Good Comments',
-                            data: [60, 70, 80, 90, 100, 110, 120]
+                            name: 'Tokyo',
+                            marker: {
+                                symbol: 'square'
+                            },
+                            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, {
+                                y: 26.5,
+                                marker: {
+                                    symbol: 'url(http://www.highcharts.com/demo/gfx/sun.png)'
+                                }
+                            }]
+                
                         }, {
-                            name: 'Bad Comments',
-                            data: [15, 25, 35, 45, 55, 65, 75]
+                            name: 'London',
+                            marker: {
+                                symbol: 'diamond'
+                            },
+                            data: [{
+                                y: 3.9,
+                                marker: {
+                                    symbol: 'url(http://www.highcharts.com/demo/gfx/snow.png)'
+                                }
+                            }, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0]
                         }]
-                    });                
+                    });               
                 };
                 clear_chart_view = function() {
                     Apps.CanyinCtrl.defaults.current_chart = null;
-                    easytUtils.clean_element('canyin_chart_view', 'before');
+                    easyUtils.recover_element($('#inline_canyin_chart_view'), 'canyin_chart_view', 'before');
                 };
-
+                remove_chart_view = function() {
+                    $('#inline_canyin_chart_view').empty();
+                    create_chart_view();
+                    //alert($('#canyin_chart_view').html())
+                };
+                set_chart_view = function(){
+                    $('#canyin_chart_view').css({'height':'200px', 'width':'500px'});
+                };
                 //PrettyPhoto
-                $("a[rel^='prettyPhoto']").prettyPhoto({theme:'light_rounded', default_width: 400, default_heigh: 250,
-                    beforeinlineclonecallback: create_chart_view, allow_resize: false, callback: clear_chart_view});
-                
+                $("a[rel^='prettyPhoto']").prettyPhoto({theme:'light_rounded', social_tools: '',                    
+                    beforeinlineclonecallback: set_chart_view, 
+                    changepicturecallback: remove_chart_view,  
+                    callback: clear_chart_view});                
                 //Image hover
                 var $hover_img = $(".hover_img")
                 $hover_img.live('mouseover',function(){                        

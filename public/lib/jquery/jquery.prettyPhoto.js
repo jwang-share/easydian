@@ -33,6 +33,7 @@
 			keyboard_shortcuts: true, /* Set to false if you open forms inside prettyPhoto */
 			changepicturecallback: function(){}, /* Called everytime an item is shown/changed */
 			callback: function(){}, /* Called when prettyPhoto is closed */
+			beforeinlineclonecallback: function(){}, /* Called everytime before clone inline content */
 			ie6_fallback: true,
 			markup: '<div class="pp_pic_holder"> \
 						<div class="ppt">&nbsp;</div> \
@@ -178,6 +179,7 @@
 		* @param description {String,Array} The description to be displayed with the picture, can also be an array containing all the descriptions.
 		*/
 		$.prettyPhoto.open = function(event) {
+			pp_settings.beforeinlineclonecallback();
 			if(typeof settings == "undefined"){ // Means it's an API call, need to manually get the settings and set the variables
 				settings = pp_settings;
 				pp_images = $.makeArray(arguments[0]);
@@ -350,9 +352,9 @@
 						toInject = settings.custom_markup;
 					break;
 				
-					case 'inline':
+					case 'inline':						
 						// to get the item height clone it, apply default width, wrap it in the prettyPhoto containers , then delete
-						myClone = $(pp_images[set_position]).clone().append('<br clear="all" />').css({'width':settings.default_width}).wrapInner('<div id="pp_full_res"><div class="pp_inline"></div></div>').appendTo($('body')).show();
+						myClone = $(pp_images[set_position]).clone().append('<br clear="all" />').css({'width':settings.default_width}).wrapInner('<div id="pp_full_res"><div class="pp_inline"></div></div>').appendTo($('body')).show();										
 						doresize = false; // Make sure the dimensions are not resized.
 						pp_dimensions = _fitToViewport($(myClone).width(),$(myClone).height());
 						doresize = true; // Reset the dimensions

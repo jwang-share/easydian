@@ -15,6 +15,8 @@ steal.config({
             "jquery-color/jquery-color.js"              : "jquery-color",                      
             "canjs/canjs.js"                            : "canjs",
             "bootstrap/bootstrap.js"                    : "bootstrap",
+            "highcharts-exp/highcharts-exp.js": "highcharts-exp",
+            "highcharts/highcharts.js"        : "highcharts",
             "interaction/interaction.js"      : "interaction",
             "cookie/cookie.js"                : "cookie",
             "form_params/form_params.js"      : "form_params",
@@ -23,7 +25,6 @@ steal.config({
             "can_control/can_control.js"      : "can_control",
             "can_fixture/can_fixture.js"      : "can_fixture",
             "can_super/can_super.js"          : "can_super",
-            "high-charts/high-charts.js"      : "high-charts",
             "camera/camera.js"                : "camera",
             "sorting/sorting.js"              : "sorting",
             "superfish/superfish.js"          : "superfish",
@@ -53,11 +54,12 @@ steal.config({
         "can_control"       : "/lib/can.control.plugin.js",
         "can_fixture"       : "/lib/can.fixture.js",
         "can_super"         : "lib/can.construct.super.js",
-        "high-charts"       : "/lib/chart/highcharts.js",
+        "highcharts"        : "/lib/highcharts/highcharts.js",
+        "highcharts-exp"    : "/lib/highcharts/exporting.js",
         "camera"            : "/lib/camera.js",
         "sorting"           : "/lib/sorting.js",
         "superfish"         : "/lib/superfish.js",
-        "prettify"          : "/lib/prettify/prettify.js",
+        "prettify"          : "/lib/prettify/prettify.js",        
         "easy-utils"        : "/lib/utils/easyutils.js"
     }
 });
