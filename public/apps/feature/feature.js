@@ -1,8 +1,4 @@
 steal(
-    'highcharts',
-    '/css/prettyPhoto.css',
-    'jquery-prettyPhoto',
-    'jquery-preloader', 
     'header-footer'
 )
 .then('highcharts-exp')
@@ -20,22 +16,22 @@ steal(
             this.element.html(can.view(layout_ejs_dir + 'template.ejs'));
             $('#header').html(can.view(layout_ejs_dir  + 'header.ejs'));
 
-            var $page_contaiter = $('#page_container');
+            var $page_container = $('#page_container');
             if(options.feature == 'scaffolding') {
-                $page_contaiter.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'feature', type: 'Feature', 'page': 'Scaffolding'}));
-                $page_contaiter.append(can.view(feature_ejs_dir  + 'scaffolding.ejs'));
+                $page_container.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'feature', type: 'Feature', 'page': 'Scaffolding'}));
+                $page_container.append(can.view(feature_ejs_dir  + 'scaffolding.ejs'));
             }
             else if(options.feature == 'shortcodes'){
-                $page_contaiter.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'feature', type: 'Feature', 'page': 'Short Codes'}));
-                $page_contaiter.append(can.view(feature_ejs_dir  + 'shortcodes.ejs'));
+                $page_container.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'feature', type: 'Feature', 'page': 'Short Codes'}));
+                $page_container.append(can.view(feature_ejs_dir  + 'shortcodes.ejs'));
             }
             else if(options.feature == 'tables'){
-                $page_contaiter.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'feature', type: 'Feature', 'page': 'Tables'}));
-                $page_contaiter.append(can.view(feature_ejs_dir  + 'tables.ejs', {'shops': data}));
+                $page_container.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'feature', type: 'Feature', 'page': 'Tables'}));
+                $page_container.append(can.view(feature_ejs_dir  + 'tables.ejs'));
             }
             else {
-                $page_contaiter.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'feature', type: 'Feature', 'page': 'Typography'}));
-                $page_contaiter.append(can.view(feature_ejs_dir  + 'typography.ejs'));
+                $page_container.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'feature', type: 'Feature', 'page': 'Typography'}));
+                $page_container.append(can.view(feature_ejs_dir  + 'typography.ejs'));
             }
             
             $('#footer').html(can.view(layout_ejs_dir  + 'footer.ejs'));              
