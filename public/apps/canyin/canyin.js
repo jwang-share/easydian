@@ -3,9 +3,10 @@ steal(
     '/css/prettyPhoto.css',
     'jquery-prettyPhoto',
     'jquery-preloader',
+    'header-footer',
     '/models/canyin.js',
-    '/models/canyin_fixture.js', 
-    'header-footer'
+    'superfish',
+    '/models/canyin_fixture.js'
 )
 .then('highcharts-exp')
 .then(function() {
@@ -23,24 +24,20 @@ steal(
             var self = this;
             var canyin_ejs_dir = '/apps/canyin/ejs/';
             var layout_ejs_dir = '/apps/layout/ejs/';
-            this.element.html(can.view(layout_ejs_dir + 'template.ejs'));
 
-            $('#header').html(can.view(layout_ejs_dir  + 'header.ejs'));
-
-            var $page_container = $('#page_container');
-            if(options.canyin == undefined) {
+            if(options.page === undefined) {
                 can.when(
                     Models.Canyin.ads(function(data){
-                        $page_container.append(can.view(layout_ejs_dir  + 'slider.ejs', {'ads': data}));
+                        element.append(can.view(layout_ejs_dir  + 'slider.ejs', {'ads': data}));
                     })
                 ).then(function(){
                     //Slider
-                    $('#camera_wrap_1').camera({height: '20%'}); 
+                    $('#camera_wrap_1').camera({height: '15%'}); 
                 });
 
                 can.when(
                     Models.Canyin.findAll({}, function(data){
-                        $page_container.append(can.view(canyin_ejs_dir  + 'container.ejs', {'shops': data}));
+                        element.append(can.view(canyin_ejs_dir  + 'container.ejs', {'shops': data}));
                     })
                 ).then(function(){
                     var tool_bar = '<div class="twitter"><a href="#praise" class="btn" data-count="none"><img src="images/glyphicons/png/glyphicons_343_thumbs_up.png" alt="" /></a><a href="#collect" class="btn" data-count="none"><img src="images/glyphicons/png/glyphicons_049_star.png" alt="" /></a><a href="#criticize" class="btn" data-count="none"><img src="images/glyphicons/png/glyphicons_344_thumbs_down.png" alt="" /></a></div>';
@@ -58,20 +55,22 @@ steal(
                         callback: function() {
                             Apps.CanyinCtrl.defaults.current_chart = null;
                             easyUtils.recover_element($('#inline_canyin_chart_view'), 'canyin_chart_view');                        
-                        }});                
+                        }});
+
+                    element.append('<script type="text/javascript" src="/lib/sorting.js"></script>');                
                 });
             }
             else {
-                $page_container.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'canyin', type: 'Canyin', 'page': 'Comments'}));
+                element.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'canyin', type: 'Canyin', 'page': 'Comments'}));
                 can.when(
                     Models.Canyin.comments({id: 123456}, {}, function(data){
-                        $page_container.append(can.view(canyin_ejs_dir  + 'comment.ejs', {'comments': data}));
+                        element.append(can.view(canyin_ejs_dir  + 'comment.ejs', {'comments': data}));
                     })
                 ).then(function(){
                 });
             }
 
-            $('#footer').html(can.view(layout_ejs_dir  + 'footer.ejs'));           
+            //$('#footer').html(can.view(layout_ejs_dir  + 'footer.ejs'));             
         },
         '.hover_img mouseover': function(element) {
             var info=element.find("img");
@@ -86,15 +85,14 @@ steal(
         },
         //High Charts
         create_spline_view: function(data) {
-            alert(data.shopbadt[0]);
             locate_marker = function(arr, flag) {
                 var i, low = 0, up = 0, max = arr[0], min = arr[0];
                 for(i = 1; i < arr.length; i++) {
                     if (arr[up] < arr[i]) {
-                       up++;
+                       up = i;
                     }
                     if (arr[low] > arr[i]) {
-                       low++;
+                       low = i;
                     }                    
                 }
                 arr[up] = {
@@ -140,7 +138,7 @@ steal(
                     },
                     labels: {
                         formatter: function() {
-                            return this.value +'°'
+                            return this.value
                         }
                     }
                 },
