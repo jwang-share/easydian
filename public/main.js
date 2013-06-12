@@ -8,9 +8,8 @@ steal(
 .then(
     'can_control', 'can_fixture', 'jquery-color',
     'bootstrap', 'cookie', 'lang_json', 'camera',
-    'jquery-validation', 'bootstrap', 
-    'jquery-mobile', 'jquery-easing', 'prettify',
-    'jquery-isotope', 'jquery-tweet', 
+    'jquery-validation', 'jquery-tweet', 
+    'jquery-mobile', 'jquery-easing', 'prettify',    
     'easy-utils'
 )
 .then('/apps/routing/routing.js')

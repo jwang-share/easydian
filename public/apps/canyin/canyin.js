@@ -1,19 +1,16 @@
 steal(
-    'highcharts',
-    '/css/prettyPhoto.css',
-    'jquery-prettyPhoto',
     'jquery-preloader',
+    'superfish',
     'header-footer',
     '/models/canyin.js',
-    'superfish',
     '/models/canyin_fixture.js'
 )
-.then('highcharts-exp')
 .then(function() {
     can.Control('Apps.CanyinCtrl', {
         pluginName: 'canyin',
         defaults: {
             current_user: null,
+            current_user_id: null,
             current_chart: null,
             current_canyin_id: null,
             current_comment_id: null
@@ -40,37 +37,61 @@ steal(
                         element.append(can.view(canyin_ejs_dir  + 'container.ejs', {'shops': data}));
                     })
                 ).then(function(){
-                    var tool_bar = '<div class="twitter"><a href="#praise" class="btn" data-count="none"><img src="images/glyphicons/png/glyphicons_343_thumbs_up.png" alt="" /></a><a href="#collect" class="btn" data-count="none"><img src="images/glyphicons/png/glyphicons_049_star.png" alt="" /></a><a href="#criticize" class="btn" data-count="none"><img src="images/glyphicons/png/glyphicons_344_thumbs_down.png" alt="" /></a></div>';
-                    //PrettyPhoto
-                    $("a[rel^='prettyPhoto']").prettyPhoto({theme:'light_rounded', social_tools: tool_bar,                    
-                        beforeinlineclonecallback: function(){
-                            $('#canyin_chart_view').css({'height':'200px', 'width':'500px'});
-                        }, 
-                        changepicturecallback: function() {
-                            $('#inline_canyin_chart_view').empty();
-                            Models.Canyin.findOne({id: Apps.CanyinCtrl.defaults.current_canyin_id}, function(data){
-                                self.create_spline_view(data);
-                            });                                
-                        },  
-                        callback: function() {
-                            Apps.CanyinCtrl.defaults.current_chart = null;
-                            easyUtils.recover_element($('#inline_canyin_chart_view'), 'canyin_chart_view');                        
-                        }});
-
-                    element.append('<script type="text/javascript" src="/lib/sorting.js"></script>');                
+                    steal('jquery-isotope','sorting','jquery-prettyPhoto').then(function(){
+                        var tool_bar = '<div class="twitter"><a href="#canyin/praise" class="btn" data-count="none"><img src="images/glyphicons/png/glyphicons_343_thumbs_up.png" alt="" /></a><a href="#canyin/collect" class="btn" data-count="none"><img src="images/glyphicons/png/glyphicons_049_star.png" alt="" /></a><a href="#canyin/criticize" class="btn" data-count="none"><img src="images/glyphicons/png/glyphicons_344_thumbs_down.png" alt="" /></a></div>';
+                        //PrettyPhoto
+                        $("a[rel^='prettyPhoto']").prettyPhoto({theme:'light_rounded', social_tools: tool_bar,                    
+                            beforeinlineclonecallback: function(){
+                                $('#canyin_chart_view').css({'height':'200px', 'width':'500px'});
+                            }, 
+                            changepicturecallback: function() {
+                                $('#inline_canyin_chart_view').empty();
+                                Models.Canyin.findOne({id: Apps.CanyinCtrl.defaults.current_canyin_id}, function(data){
+                                    self.create_spline_view(data);
+                                });                                
+                            },  
+                            callback: function() {
+                                Apps.CanyinCtrl.defaults.current_chart = null;
+                                easyUtils.recover_element($('#inline_canyin_chart_view'), 'canyin_chart_view');                        
+                            }
+                        });
+                    }).then('/css/prettyPhoto.css');                    
                 });
             }
-            else {
-                element.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'canyin', type: 'Canyin', 'page': 'Comments'}));
+            else if(options.page === 'comments') {
+                if($('div').hasClass('pp_pic_holder'))
+                    $.prettyPhoto.close();
+                element.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'canyin', type: 'Canyin', 'page': 'Comments'}));                
                 can.when(
-                    Models.Canyin.comments({id: 123456}, {}, function(data){
-                        element.append(can.view(canyin_ejs_dir  + 'comment.ejs', {'comments': data}));
+                    Models.CanyinComment.findAll({id: 123456}, function(data){
+                        element.append(can.view(canyin_ejs_dir  + 'comment.ejs'));
+                        $('#post').append(can.view(canyin_ejs_dir  + 'post.ejs', {'data': data}));
+                        $('#sidebar').append(can.view(canyin_ejs_dir  + 'sidebar.ejs', {'data': data}));
                     })
                 ).then(function(){
                 });
             }
-
-            //$('#footer').html(can.view(layout_ejs_dir  + 'footer.ejs'));             
+            else if(options.page === 'praise') {
+                can.when(
+                    Models.CanyinComment.praise(Apps.CanyinCtrl.defaults.current_canyin_id, function(data){
+                    })
+                ).then(function(){
+                });
+            } 
+            else if(options.page === 'collect') {
+                can.when(
+                    Models.User.collect(current_user_id, {'canyin': Apps.CanyinCtrl.defaults.current_canyin_id}, function(data){                        
+                    })
+                ).then(function(){
+                });
+            }   
+            else if(options.page === 'criticize') {
+                can.when(
+                    Models.CanyinComment.criticize(Apps.CanyinCtrl.defaults.current_canyin_id, function(data){
+                    })
+                ).then(function(){
+                });
+            }                                                                                             
         },
         '.hover_img mouseover': function(element) {
             var info=element.find("img");
@@ -110,65 +131,67 @@ steal(
                 return arr;
             };
 
-            Apps.CanyinCtrl.defaults.current_chart = new Highcharts.Chart({
-                chart: {
-                    renderTo: 'canyin_chart_view',
-                    type  : 'spline',
-                    height: 200,
-                    width : 500
-                },
-                credits: {
-                    enabled: true,
-                    text: 'More... >>',
-                    href: '#canyin/comment'
-                },                            
-                title: {
-                    text: 'Weekly Comments Record'
-                },
-                legend: {
-                    enabled: false
-                },
-                xAxis: {
-                    categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sta',
-                        'Sun']
-                },
-                yAxis: {
+            steal('highcharts').then('highcharts-exp').then(function(){
+                Apps.CanyinCtrl.defaults.current_chart = new Highcharts.Chart({
+                    chart: {
+                        renderTo: 'canyin_chart_view',
+                        type  : 'spline',
+                        height: 200,
+                        width : 500
+                    },
+                    credits: {
+                        enabled: true,
+                        text: 'More... >>',
+                        href: '#canyin/comments'
+                    },                            
                     title: {
-                        text: 'Comments'
+                        text: 'Weekly Comments Record'
                     },
-                    labels: {
-                        formatter: function() {
-                            return this.value
+                    legend: {
+                        enabled: false
+                    },
+                    xAxis: {
+                        categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sta',
+                            'Sun']
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Comments'
+                        },
+                        labels: {
+                            formatter: function() {
+                                return this.value
+                            }
                         }
-                    }
-                },
-                tooltip: {
-                    crosshairs: true,
-                    shared: true
-                },
-                plotOptions: {
-                    spline: {
+                    },
+                    tooltip: {
+                        crosshairs: true,
+                        shared: true
+                    },
+                    plotOptions: {
+                        spline: {
+                            marker: {
+                                radius: 4,
+                                lineColor: '#666666',
+                                lineWidth: 1
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Praise',
                         marker: {
-                            radius: 4,
-                            lineColor: '#666666',
-                            lineWidth: 1
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Praise',
-                    marker: {
-                        symbol: 'square'
-                    },
-                    data: locate_marker(data.shopgoodt, true)
-        
-                }, {
-                    name: 'Criticize',
-                    marker: {
-                        symbol: 'diamond'
-                    },
-                    data: locate_marker(data.shopbadt, false)
-                }]
+                            symbol: 'square'
+                        },
+                        data: locate_marker(data.shopgoodt, true)
+            
+                    }, {
+                        name: 'Criticize',
+                        marker: {
+                            symbol: 'diamond'
+                        },
+                        data: locate_marker(data.shopbadt, false)
+                    }]
+                });
             });               
         },      
         get_current_user: function(current_user) {
