@@ -37,6 +37,14 @@
         $('#footer').html(can.view(layout_ejs_dir  + 'footer.ejs')); 
     }
 
+    easyUtils.set_current_menu = function(selector, sub) {
+        $('.menu_wrap li').removeClass('current');
+        $('#' + selector).addClass('current');
+
+        if(sub)
+            $('#' + sub).addClass('current');
+    }
+
     easyUtils.set_account_hover = function() {
         $('#account_menu').hover(function() {
             $(this).animate({

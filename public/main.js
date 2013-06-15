@@ -7,7 +7,7 @@ steal(
 )
 .then(
     'can_control', 'can_fixture', 'jquery-color',
-    'bootstrap', 'cookie', 'lang_json', 'camera',
+    'bootstrap', 'cookie', 'lang_json',
     'jquery-validation', 'jquery-tweet', 
     'jquery-mobile', 'jquery-easing', 'prettify',    
     'easy-utils'
