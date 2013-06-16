@@ -58,11 +58,11 @@ can.fixture('PUT /canyin/shop/{id}/good', function() {
 });
 
 can.fixture('GET /canyin/shop/{id}/comments', function() {
-    return [{'_id': random(10000000, 999999), 'shopid': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'},
-        {'_id': random(10000000, 999999), 'shopid': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'},
-        {'_id': random(10000000, 999999), 'shopid': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'},
-        {'_id': random(10000000, 999999), 'shopid': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'},
-        {'_id': random(10000000, 999999), 'shopid': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'}];
+    return [{'_id': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'},
+        {'_id': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'},
+        {'_id': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'},
+        {'_id': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'},
+        {'_id': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'}];
 });
 
 can.fixture('PUT /canyin/shop/{id}/comment', function() {

@@ -5,6 +5,7 @@ can.Control('Apps.CanyinCtrl', {
         current_user_id: null,
         current_chart: null,
         current_canyin_id: null,
+        current_shoplogo: null,
         current_comment_id: null
     }
 },
@@ -13,6 +14,7 @@ can.Control('Apps.CanyinCtrl', {
         var self = this;
         var canyin_ejs_dir = '/apps/canyin/ejs/';
         var layout_ejs_dir = '/apps/layout/ejs/';
+        easyUtils.set_title('Canyin');
 
         if(options.page === undefined) {
             can.when(
@@ -57,6 +59,8 @@ can.Control('Apps.CanyinCtrl', {
             });
         }
         else if(options.page === 'comments') {
+            easyUtils.set_title('Canyin-Comments');
+
             if($('div').hasClass('pp_pic_holder'))
                 $.prettyPhoto.close();
 
@@ -64,7 +68,7 @@ can.Control('Apps.CanyinCtrl', {
             can.when(
                 Models.CanyinComment.findAll({id: Apps.CanyinCtrl.defaults.current_canyin_id}, function(data){
                     element.append(can.view(canyin_ejs_dir  + 'comment.ejs'));
-                    $('#post').append(can.view(canyin_ejs_dir  + 'post.ejs', {'data': data}));
+                    $('#post').append(can.view(canyin_ejs_dir  + 'post.ejs', {'data': data, 'shoplogo': Apps.CanyinCtrl.defaults.current_shoplogo}));
                     $('#sidebar').append(can.view(canyin_ejs_dir  + 'sidebar.ejs', {'data': data}));
                 })
             ).then(function(){
@@ -97,7 +101,8 @@ can.Control('Apps.CanyinCtrl', {
     '.hover_img mouseover': function(element) {
         var info=element.find("img");
         info.stop().animate({opacity:0.2},300);
-        Apps.CanyinCtrl.defaults.current_canyin_id = info.attr('id');                     
+        Apps.CanyinCtrl.defaults.current_canyin_id = info.attr('id');  
+        Apps.CanyinCtrl.defaults.current_shoplogo = info.attr('src');                   
         $(".preloader").css({'background':'none'});
     },
     '.hover_img mouseout': function(element) {
