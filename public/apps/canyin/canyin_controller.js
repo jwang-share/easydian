@@ -4,8 +4,6 @@ can.Control('Apps.CanyinCtrl', {
         current_user: null,
         current_user_id: null,
         current_chart: null,
-        current_canyin_id: null,
-        current_shoplogo: null,
         current_comment_id: null
     }
 },
@@ -45,7 +43,7 @@ can.Control('Apps.CanyinCtrl', {
                         }, 
                         changepicturecallback: function() {
                             $('#inline_canyin_chart_view').empty();
-                            Models.Canyin.findOne({id: Apps.CanyinCtrl.defaults.current_canyin_id}, function(data){
+                            Models.Canyin.findOne({id: $.cookie("canyin_shop_id")}, function(data){
                                 self.create_spline_view(data);
                             });                                
                         },  
@@ -66,9 +64,9 @@ can.Control('Apps.CanyinCtrl', {
 
             element.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'canyin', type: 'Canyin', 'page': 'Comments'}));                
             can.when(
-                Models.CanyinComment.findAll({id: Apps.CanyinCtrl.defaults.current_canyin_id}, function(data){
+                Models.CanyinComment.findAll({id: $.cookie("canyin_shop_id")}, function(data){
                     element.append(can.view(canyin_ejs_dir  + 'comment.ejs'));
-                    $('#post').append(can.view(canyin_ejs_dir  + 'post.ejs', {'data': data, 'shoplogo': Apps.CanyinCtrl.defaults.current_shoplogo}));
+                    $('#post').append(can.view(canyin_ejs_dir  + 'post.ejs', {'data': data}));
                     $('#sidebar').append(can.view(canyin_ejs_dir  + 'sidebar.ejs', {'data': data}));
                 })
             ).then(function(){
@@ -76,21 +74,21 @@ can.Control('Apps.CanyinCtrl', {
         }
         else if(options.page === 'praise') {
             can.when(
-                Models.CanyinComment.praise(Apps.CanyinCtrl.defaults.current_canyin_id, function(data){
+                Models.CanyinComment.praise($.cookie("canyin_shop_id"), function(data){
                 })
             ).then(function(){
             });
         } 
         else if(options.page === 'collect') {
             can.when(
-                Models.User.collect(current_user_id, {'canyin': Apps.CanyinCtrl.defaults.current_canyin_id}, function(data){                        
+                Models.User.collect(current_user_id, {'canyin': $.cookie("canyin_shop_id")}, function(data){                        
                 })
             ).then(function(){
             });
         }   
         else if(options.page === 'criticize') {
             can.when(
-                Models.CanyinComment.criticize(Apps.CanyinCtrl.defaults.current_canyin_id, function(data){
+                Models.CanyinComment.criticize($.cookie("canyin_shop_id"), function(data){
                 })
             ).then(function(){
             });
@@ -101,8 +99,8 @@ can.Control('Apps.CanyinCtrl', {
     '.hover_img mouseover': function(element) {
         var info=element.find("img");
         info.stop().animate({opacity:0.2},300);
-        Apps.CanyinCtrl.defaults.current_canyin_id = info.attr('id');  
-        Apps.CanyinCtrl.defaults.current_shoplogo = info.attr('src');                   
+        $.cookie("canyin_shop_id", info.attr('id'));
+        $.cookie("canyin_shop_logo", info.attr('src'));                 
         $(".preloader").css({'background':'none'});
     },
     '.hover_img mouseout': function(element) {
