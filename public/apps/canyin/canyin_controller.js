@@ -66,10 +66,24 @@ can.Control('Apps.CanyinCtrl', {
             can.when(
                 Models.CanyinComment.findAll({id: $.cookie("canyin_shop_id")}, function(data){
                     element.append(can.view(canyin_ejs_dir  + 'comment.ejs'));
-                    $('#post').append(can.view(canyin_ejs_dir  + 'post.ejs', {'data': data}));
+                    $('#post').append(can.view(canyin_ejs_dir  + 'post.ejs'));
+                    $('#post_comments').append(can.view(canyin_ejs_dir  + 'post_comment.ejs', {'data': data}));
                     $('#sidebar').append(can.view(canyin_ejs_dir  + 'sidebar.ejs', {'data': data}));
                 })
             ).then(function(){
+                $('li').each(function(index){
+                    if(typeof($(this).attr("data-inline-ids")) != "undefined") {
+                        var inline_ids = ($(this).attr("data-inline-ids")).split("|");
+                        for (var i = 0; i < inline_ids.length; i++) {    
+                            can.when(                        
+                                Models.CanyinComment.findOne({id: $.cookie("canyin_shop_id"), comment_id: inline_ids[i]}, function(data){
+                                    $('#' + $(this).attr("id")).append(can.view(canyin_ejs_dir  + 'post_inline_comment.ejs', {'data': data}));
+                                })
+                            ).then(function(){
+                            });
+                        }
+                    }
+                })
             });
         }
         else if(options.page === 'praise') {

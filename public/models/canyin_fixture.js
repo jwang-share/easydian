@@ -58,11 +58,24 @@ can.fixture('PUT /canyin/shop/{id}/good', function() {
 });
 
 can.fixture('GET /canyin/shop/{id}/comments', function() {
-    return [{'_id': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'},
-        {'_id': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'},
-        {'_id': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'},
-        {'_id': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'},
-        {'_id': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013'}];
+    return [{'_id': 111111, 'username': 'Adam White', 'comment': 'I like this site, has inline comments', 'createtime': '25 Apr 2013', 'inline': false, 'reply_id': '22222'},
+        {'_id': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013', 'inline': false, 'reply_id': ''},
+        {'_id': random(10000000, 999999), 'username': 'Tom Sawyer', 'comment': 'I like this site', 'createtime': '25 Apr 2013', 'inline': false, 'reply_id': ''},
+        {'_id': 33333, 'username': 'Tom Sawyer', 'comment': 'I like this site, has inline comments', 'createtime': '25 Apr 2013', 'inline': false, 'reply_id': '44444'},
+        {'_id': random(10000000, 999999), 'username': 'Adam White', 'comment': 'I like this site', 'createtime': '25 Apr 2013', 'inline': false, 'reply_id': ''}];
+});
+
+can.fixture('GET /canyin/shop/{id}/comment', function() {
+    alert('dkfdjkfjd');
+    return [{'_id': 111111, 'username': 'Adam White', 'comment': 'I like this site, has inline comments', 'createtime': '25 Apr 2013', 'inline': false, 'reply_id': '22222'},
+        {'_id': random(10000000, 999999), 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013', 'inline': false, 'reply_id': ''},
+        {'_id': random(10000000, 999999), 'username': 'Tom Sawyer', 'comment': 'I like this site', 'createtime': '25 Apr 2013', 'inline': false, 'reply_id': ''},
+        {'_id': 33333, 'username': 'Tom Sawyer', 'comment': 'I like this site, has inline comments', 'createtime': '25 Apr 2013', 'inline': false, 'reply_id': '44444'},
+        {'_id': random(10000000, 999999), 'username': 'Adam White', 'comment': 'I like this site', 'createtime': '25 Apr 2013', 'inline': false, 'reply_id': ''}];
+});
+
+can.fixture('GET /canyin/shop/{id}/comment/{comment_id}', function() {
+    return {'_id': 22222, 'username': 'Guest', 'comment': 'I like this site', 'createtime': '25 Apr 2013', 'inline': true, 'reply_id': ''};
 });
 
 can.fixture('PUT /canyin/shop/{id}/comment', function() {

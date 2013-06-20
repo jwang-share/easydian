@@ -55,6 +55,7 @@ can.Model("Models.Canyin", {
 
 can.Model("Models.CanyinComment", {
     findAll: 'GET     /canyin/shop/{id}/comments',
+    findOne: 'GET     /canyin/shop/{id}/comment/{comment_id}',
     create : 'POST    /canyin/shop/{id}/comment',
     update : 'PUT     /canyin/shop/{id}/comment',
     destroy: 'DELETE  /canyin/shop/{id}/comment',
@@ -71,8 +72,7 @@ can.Model("Models.CanyinComment", {
             type: 'put',
             success: success
         });
-    },   
-
+    }
 }, {
         init : function() {
         var self = this;

@@ -1,0 +1,14 @@
+<% for(var i = 0; i < data.length; i++){ %>  
+<li id="<%= data[i]._id %>" data-inline-ids="<%= data[i].reply_id %>">
+    <div class="avatar"><a href="#"><img src="images/avatar/avatar.jpg" width="68" height="68" alt="" /></a></div>
+    <div class="comment_right">
+        <div class="comment_right">
+            <div class="comment_info">
+                Posted by <a href="#user"><%= data[i].username %></a> <span>|</span> <%= data[i].createtime %> <span>|</span> <a href="#canyin/update">Edit</a><span>|</span> <a href="#canyin/destroy">Delete</a><span>|</span> <a href="#canyin/create">Reply</a> 
+            </div>
+            <%= data[i].comment %>
+        </div>   
+    </div>
+    <div class="clear"></div>
+</li> 
+<% } %>
