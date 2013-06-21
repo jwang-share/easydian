@@ -1,0 +1,16 @@
+<% for(var i = 0; i < this.length; i++){ 
+    if(this[i].inline) continue;
+%>  
+<li id="<%= this[i]._id %>" >
+    <div class="avatar"><a href="#"><img src="images/avatar/avatar.jpg" width="68" height="68" alt="" /></a></div>
+    <div class="comment_right">
+        <div class="comment_right">
+            <div class="comment_info">
+                Posted by <a href="#user"><%= this[i].username %></a> <span>|</span> <%= this[i].createtime %> <span>|</span> <a href="#canyin_comment/update">Edit</a><span>|</span> <a href="#canyin_comment/destroy">Delete</a><span>|</span> <a href="#canyin_comment/create">Reply</a> 
+            </div>
+            <%= this[i].comment %>
+        </div>   
+    </div>
+    <div class="clear"></div>
+</li> 
+<% } %>

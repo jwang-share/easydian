@@ -2,7 +2,6 @@ can.Control('Apps.CanyinCtrl', {
     pluginName: 'canyin',
     defaults: {
         current_user: null,
-        current_user_id: null,
         current_chart: null,
         current_comment_id: null
     }
@@ -56,53 +55,23 @@ can.Control('Apps.CanyinCtrl', {
                 });                                 
             });
         }
-        else if(options.page === 'comments') {
-            easyUtils.set_title('Canyin-Comments');
-
-            if($('div').hasClass('pp_pic_holder'))
-                $.prettyPhoto.close();
-
-            element.append(can.view(layout_ejs_dir  + 'breadcrumb.ejs', {hash: 'canyin', type: 'Canyin', 'page': 'Comments'}));                
-            can.when(
-                Models.CanyinComment.findAll({id: $.cookie("canyin_shop_id")}, function(data){
-                    element.append(can.view(canyin_ejs_dir  + 'comment.ejs'));
-                    $('#post').append(can.view(canyin_ejs_dir  + 'post.ejs'));
-                    $('#post_comments').append(can.view(canyin_ejs_dir  + 'post_comment.ejs', {'data': data}));
-                    $('#sidebar').append(can.view(canyin_ejs_dir  + 'sidebar.ejs', {'data': data}));
-                })
-            ).then(function(){
-                $('li').each(function(index){
-                    if(typeof($(this).attr("data-inline-ids")) != "undefined") {
-                        var inline_ids = ($(this).attr("data-inline-ids")).split("|");
-                        for (var i = 0; i < inline_ids.length; i++) {    
-                            can.when(                        
-                                Models.CanyinComment.findOne({id: $.cookie("canyin_shop_id"), comment_id: inline_ids[i]}, function(data){
-                                    $('#' + $(this).attr("id")).append(can.view(canyin_ejs_dir  + 'post_inline_comment.ejs', {'data': data}));
-                                })
-                            ).then(function(){
-                            });
-                        }
-                    }
-                })
-            });
-        }
         else if(options.page === 'praise') {
             can.when(
-                Models.CanyinComment.praise($.cookie("canyin_shop_id"), function(data){
+                Models.Canyin.praise($.cookie("canyin_shop_id"), function(data){
                 })
             ).then(function(){
             });
         } 
         else if(options.page === 'collect') {
             can.when(
-                Models.User.collect(current_user_id, {'canyin': $.cookie("canyin_shop_id")}, function(data){                        
+                Models.User.collect({'canyin': $.cookie("canyin_shop_id")}, function(data){                        
                 })
             ).then(function(){
             });
         }   
         else if(options.page === 'criticize') {
             can.when(
-                Models.CanyinComment.criticize($.cookie("canyin_shop_id"), function(data){
+                Models.Canyin.criticize($.cookie("canyin_shop_id"), function(data){
                 })
             ).then(function(){
             });
@@ -160,7 +129,7 @@ can.Control('Apps.CanyinCtrl', {
                 credits: {
                     enabled: true,
                     text: 'More... >>',
-                    href: '#canyin/comments'
+                    href: '#canyin_comment'
                 },                            
                 title: {
                     text: 'Weekly Comments Record'
