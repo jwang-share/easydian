@@ -1,6 +1,7 @@
 
+shop_controller = require './shop_controller'
 
-class canyin_controller extends base_controller
+class canyin_controller extends shop_controller
   constructor: () -> super("canyin")
 
   get_route:() ->
@@ -20,3 +21,5 @@ class canyin_controller extends base_controller
       {path:"/canyin/shop/:id/news",     http_method: "get",    method:"get_news"}
     ]
     return route
+
+module.exports = canyin_controller

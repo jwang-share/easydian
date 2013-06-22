@@ -22,6 +22,7 @@ class Shop_Schema
       shopname : {type:String, default:'fullname'},
       shopalias : {type:Array, default: ['short name']},
       shoptype : {type:String, default:'Dining'},
+      shopnote: {type:String,default:"what do"}
       shopvisit : {type:Number, default:1000},
       shoppriority : {type: Number, default:1000},
       shopwebsite: {type:String, default: 'fullurl'},

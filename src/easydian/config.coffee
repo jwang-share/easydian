@@ -29,11 +29,7 @@ Comment_Schema = require './model/comment_schema'
 Controller_Assisstant = require './controller_assisstant'
 
 global.GShop = new Shop_Schema()
-global.GUser = Userinfo_Schema()
+global.GUser = new Userinfo_Schema()
 global.GNews = new News_Schema()
 global.GComment = new Comment_Schema()
-global.GAssisstant = new Controller_Assisstant Shop, User
-
-
-
-
+global.GAssisstant = new Controller_Assisstant GShop, GUser

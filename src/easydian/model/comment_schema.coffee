@@ -3,7 +3,8 @@ class Comment_Schema
   constructor: () ->
     @comm_schema = new Schema({
       shopid : {type:String, default:'shopid'}, 
-      level: {type:Number,default: 4}
+      username:{type:String, default:'user1'},
+      level: {type:Number,default: 4},
       comment: {type:String, default:'context'},
       createtime: {type:Date, default: Date.now}
     })

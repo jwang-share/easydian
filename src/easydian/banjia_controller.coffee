@@ -1,6 +1,7 @@
 
+shop_controller = require './shop_controller'
 
-class banjia_contrller extends shop_controller
+class banjia_controller extends shop_controller
   constructor: () -> super("banjia")
   get_route:() ->
     route = [
@@ -19,3 +20,8 @@ class banjia_contrller extends shop_controller
       {path:"/banjia/shop/:id/news",     http_method: "get",    method:"get_news"}
     ]
     return route
+
+
+
+
+module.exports = banjia_controller

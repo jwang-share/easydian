@@ -1,4 +1,5 @@
 
+shop_controller = require './shop_controller'
 
 class zhuangxiu_controller extends shop_controller
   constructor: () -> super("zhuangxiu")
@@ -19,3 +20,5 @@ class zhuangxiu_controller extends shop_controller
       {path:"/zxiu/shop/:id/news",     http_method: "get",    method:"get_news"}
     ]
     return route
+
+module.exports = zhuangxiu_controller

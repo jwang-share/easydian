@@ -2,12 +2,12 @@
 
 express         = require 'express'
 querystring     = require 'querystring'
-Controller  = require('./controller')
+Controller      = require('./controller')
 
 class Server
   constructor: () ->
     @app = express()
-    @controller = new Controller()
+    @controllers = new Controller()
     @configure(@app)
 
   configure: (app) ->
@@ -22,21 +22,21 @@ class Server
       app.set('view engine', 'ejs')
       return
 
-    # routes
+    #routes...
     self = this
-    for api in @controller.routes
-      do (api) ->
-        fn_handler = (req, res) -> 
-          try
-            self.controller[api.method](req, res)
-          catch error
-            res.json(error)
-        app[api.http_method](api.path, fn_handler)
-        logger.info("route: #{api.http_method.toUpperCase()} #{api.path} => #{api.method}")
-
-    return # configure.
-
-  
+    for ctrler in @controllers.get_all_controllers()
+      console.log "-----------------------------"
+      do (ctrler) ->
+        for api in ctrler.get_route()
+          do (api) ->
+            fn_handler = (req, res) ->
+              try
+                ctrler[api.method](req,res)
+              catch error
+                res.json(error)
+            app[api.http_method](api.path, fn_handler)
+            logger.info("route: #{api.http_method.toUpperCase()} #{api.path} => #{api.method}")
+            return #configure
 
   start: (port=config.LISTEN_PORT) ->
     @app.listen(port)

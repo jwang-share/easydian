@@ -1,8 +1,8 @@
 
 
-class base_controller
+class shop_controller
   constructor: (@shop_kls) ->
-  	
+    return
   get_shops: (req,res) ->
     start = (req.param "start") || 0
     limit = (req.param "limit") || 0
@@ -32,32 +32,32 @@ class base_controller
 
     GShop.get_shop_by_id id, fields, (err, docs)->
       if err?
-      	fe_f = true 
+        fe_f = true 
         _fileds = ""
       else
         _fileds = docs
       #comment should use the same machanism  with news
       GComment.get_comments id, 0, com_num, -1, (err,docs)->
-      	if err?
-      	  ce_f = true
-      	  _comments = ""
-      	 else
-      	   _comments = docs
-      	GNews.get_news_by_id id, 0, news_num, (err, docs)->
-      	  if err?
-      	  	ne_f = true
-      	    _news = ""
-      	  else
-      	    _news = docs
+        if err?
+          ce_f = true
+          _comments = ""
+         else
+           _comments = docs
+        GNews.get_news_by_id id, 0, news_num, (err, docs)->
+          if err?
+            ne_f = true
+            _news = ""
+          else
+          _news = docs
 
-      	  if (ne_f || ce_f || fe_f) is false
-      	  	res.json 400, {"error":"query is failed"}
-      	  else
-      	    res.json {
-      	  	  "news": _news,
-      	  	  "fields": _fileds,
-      	  	  "comments":_comments
-      	    }
+          if (ne_f || ce_f || fe_f) is false
+            res.json 400, {"error":"query is failed"}
+          else
+            res.json {
+              "news": _news,
+              "fields": _fileds,
+              "comments":_comments
+            }
 
   update_visit_num: (req,res) ->
     id = req.params.id
@@ -68,7 +68,7 @@ class base_controller
       res.json 400, {"error": "failed to update visit number"}
 
   insert_shop: (req,res) ->
-  	shopinfo = req.body
+    shopinfo = req.body
     if GAssisstant.validate_shop shopinfo
       if GShop.insert_shop shopinfo
         res.json {"insert":"success"}
@@ -102,9 +102,7 @@ class base_controller
   get_news:(req,res)->
 
 
-
-
-
+module.exports = shop_controller
 
 
 
