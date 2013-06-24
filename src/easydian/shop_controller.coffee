@@ -3,6 +3,7 @@
 class shop_controller
   constructor: (@shop_kls) ->
     return
+
   get_shops: (req,res) ->
     start = (req.param "start") || 0
     limit = (req.param "limit") || 0
@@ -22,8 +23,8 @@ class shop_controller
     com_num = (req.param "comments") || 0 #first n
     fields = (req.param "fields") || 0
  
-    #should not be all zero, or no response, even a warning info
-    return if (news_flag is 0) and (com_flag is 0) and (fi_flag is 0)
+    #should not be all zero, or no response, even not a warning info
+    return if (news_num is 0) and (com_num is 0) and (fields is 0)
     
     self = this
     fe_f = false
@@ -50,7 +51,7 @@ class shop_controller
           else
           _news = docs
 
-          if (ne_f || ce_f || fe_f) is false
+          if (ne_f or ce_f or fe_f) is false
             res.json 400, {"error":"query is failed"}
           else
             res.json {
@@ -80,26 +81,62 @@ class shop_controller
   #maybe just use a flag should be ok
   delete_shop: (req,res) ->
     id = req.params.id
-    if @ss.remove_shop_by_id id
+    if GShop.remove_shop_by_id id
       res.json {"info":"success"}
     else
       res.json {"info":"failed"}
 
-  update_shop:(req,res) ->
+  update_shop:(req,res) -> return
 
   update_bad_value: (req,res) ->
+    id = req.params.id
+    num = GShop.update_badgood id, "bad"
+    if num is -1
+      res.json 400, {"error": "failed to update"}
+    else
+      res.json {"value", num}
 
   update_good_value: (req,res) ->
+    id = req.params.id
+    num = GShop.update_badgood id, "good"
+    if num is -1
+      res.json 400, {"error": "failed to update"}
+    else
+      res.json {"value", num}
 
   get_comments: (req,res) ->
+    id = req.params.id
+    start = req.param start
+    limit = req.param limit
+    level = (req.param level) || -1
+    GComment.get_comments id, @shop_kls, start, limit, level, (err,docs)->
+      if err?
+        res.json 404, {"error":"did not find any comment"}
+      else
+        res.json docs
 
   insert_comment:(req,res)->
+    id = req.params.id
+    comment = req.body
+    GComment.insert_comment comment, @shop_kls, (err) ->
+      if not err?
+        res.json {insert: "success"}
+      else
+        res.json 400, {insert: "failed"}
 
-  delete_comment:(req,res)->
+  delete_comment:(req,res)-> return
 
-  update_comment:(req,res)->
+  update_comment:(req,res)-> return
 
   get_news:(req,res)->
+    id = req.params.id
+    start = req.param start
+    limit = req.param limit
+    GNews.get_news_by_id id, @shop_kls, start, limit, (err, docs)->
+      if err?
+        res.json 404, {"error":"did not find any news"}
+      else
+        res.json docs
 
 
 module.exports = shop_controller
