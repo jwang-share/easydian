@@ -10,7 +10,7 @@ global.config = {
 global.Async        = require 'async'
 global.Step         = require 'step'
 global.logger       = new (require './logger')("easydian")
-global.ShopCategory = ["Dining", "Banjia", "Zhuangxiu"]
+global.ShopCategory = ["canyin", "banjia", "zhuangxiu"]
 
 global.Mongoose = require "mongoose"
 global.Schema = Mongoose.Schema
@@ -22,6 +22,7 @@ conn.once 'open', ()->
    logger.info "success to open mongodb"
 
 #db detail
+###
 Shop_Schema = require './model/shop_schema'
 Userinfo_Schema = require './model/userinfo_schema'
 News_Schema = require './model/news_schema'
@@ -33,3 +34,4 @@ global.GUser = new Userinfo_Schema()
 global.GNews = new News_Schema()
 global.GComment = new Comment_Schema()
 global.GAssisstant = new Controller_Assisstant GShop, GUser
+###

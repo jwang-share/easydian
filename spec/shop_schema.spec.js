@@ -8,14 +8,11 @@ describe("shop schema",function(){
   var ExistID = '514b0e2c8b4309c20a000001';
   sd = new Shop_Schema();
   doc = {
-    shopname : '肯德基（KFC）',
-    shopalias : ['肯德基','KFC','肯塔基州炸鸡'],
-    shopstyle: ["快餐","西式"]
-    shoptype : 'canyin',
-    shopnote:"肯德基全球总部设在美国肯塔基州的路易斯维尔市，是世界上最大的鸡肉餐饮连锁店，1952年由创始人山德士先生（Colonel Harland Sanders）创建，全球最大的餐饮集团百胜餐饮集团拥有该品牌。
-              肯德基自1987年在北京前门开出中国第一家餐厅到现在，来到中国已经第26年了。肯德基在中国的26年，是“立足中国、融入生活”的26年，是“为中国而改变，全力打造‘新快餐’”的26年。
-              26年来，肯德基一直都在努力探索，把最贴心的服务回馈给广大中国消费者。截至2012年12月底，肯德基在中国800多个城市和乡镇拥有了超过4200家餐厅，遍及中国大陆除西藏以外的所有省、市、自治区，
-              是中国规模最大、发展最快的快餐连锁企业。"
+    shopname : '肯德基（KFC)',
+    shopalias : [],
+    shopstyle: [],
+    shoptype: 'canyin',
+    shopnote:'肯德基全球总部设在美国肯塔基州的路易斯维尔市，是世界上最大的鸡肉餐饮连锁店，1952年由创始人山德士先生（Colonel Harland Sanders）创建，全球最大的餐饮集团百胜餐饮集团拥有该品牌。肯德基自1987年在北京前门开出中国第一家餐厅到现在，来到中国已经第26年了。肯德基在中国的26年，是“立足中国、融入生活”的26年，是“为中国而改变，全力打造‘新快餐’”的26年。26年来，肯德基一直都在努力探索，把最贴心的服务回馈给广大中国消费者。截至2012年12月底，肯德基在中国800多个城市和乡镇拥有了超过4200家餐厅，遍及中国大陆除西藏以外的所有省、市、自治区，是中国规模最大、发展最快的快餐连锁企业。',
     shopvisit : 1000,
     shoppriority : 1000,
     shopwebsite: 'http://www.4008823823.com.cn',
@@ -38,23 +35,29 @@ describe("shop schema",function(){
     shopbadt: 10,
     shopdaystats:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     shopmonthstats: [0,0,0,0,0,0,0,0,0,0,0,0],    
-    shoplogo: './images/default.jpg', 
-    shopcover: ['beijing','shanghai'],
+    shoplogo: './images/canyin/kfc_1.png', 
+    shopcover: [],
     shopaccount: 0, 
     shopcreatetime: Date.now,
     shopcommentsnum: 0
   };
 
-  doc.shopname = "Kentucky Fried Chicken";
-  doc.shopalias.push("KFC");
-  doc.shopwebsite = "http://www.kfc.com.cn/kfccda/index.aspx";
-  doc.shopphone.push("400-882-3823");
-  doc.shopweekstats[0][1] = 550;
-  doc.shopweekstats[1][1] = 550;
-  doc.shopmonthstats[1] = 1000;
-  doc.shoplogo = "./images/kfc_0.jpg";
+  doc.shopname = "饭统网";
+  doc.shopalias.push("饭统网");
+  //doc.shopalias.push("UTao");
+  doc.shopwebsite = "http://www.fantong.com/";
+  doc.shopnote = "领先的在线餐饮服务供应商饭统网隶属于北京锋讯在线信息技术有限公司2003年成立于北京，是中国第一家免费提供餐厅预订服务、免费提供餐饮优惠折扣服务的在线餐饮综合服务企业，致力于为中国亿万消费者提供优质餐饮预订服务，打造中国餐饮行业的时尚风向标。";
+  doc.shopphone.push("400-617-7177");
+  //doc.shopphone.push("http://www.mrpizza.com.cn/market.aspx");
+  //doc.shopweekstats[0][1] = 550;
+  //doc.shopweekstats[1][1] = 550;
+  //doc.shopmonthstats[1] = 1000;
+  doc.shoplogo = "./images/canyin/fantong_1.png";
   doc.shopcreatetime = new Date;
-  doc.shopcommentsnum = 10;
+  doc.shopcover.push("all");
+  //doc.shopcover.push("北京");
+  //doc.shopstyle.push("上海");
+  //doc.shopcommentsnum = 10;
 
   xit("constructor: can create an instance",function(){
     expect(typeof sd.shop_schema).toEqual("object");
@@ -67,7 +70,7 @@ describe("shop schema",function(){
       var callback = function(err,doc){
         thisid = doc._id;
         expect(thisid).toBeDefined();
-        sd.remove_shop_by_id(thisid);
+        //sd.remove_shop_by_id(thisid);
       };
        sd.insert_shop(doc,callback)
      });
