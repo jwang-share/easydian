@@ -4,6 +4,7 @@
 import sys
 from factory.supports import format
 from factory.supports.parser import parser
+from factory.supports import htmlstripper
 from weibocommon import weibocommon
 from rootcfg import HIS_ORIGIN_BLOG_PREFIX
 from rootcfg import BLOG_NUM_PER_BLOCK
@@ -38,13 +39,12 @@ class weibominiblogs(weibocommon):
 	def do_run(self,task):
 		item = task
 		uid = item[0]
-		lastestmid = uid[1]
-		url = self.__init_url(uid)
-		nxt_url = url
+		lastestmid = item[1]
+		nxt_url= self.__init_url(uid)
 		self.end_id = 0
 		index = 0
 		while True:
-			max_id = self.__get_one_block_content(nxt_url,lastestmid)
+			max_id = self.__get_one_block_content(nxt_url,uid,lastestmid)
 			if max_id < 1:
 					break
 			nxt_url = self.__get_next_url(nxt_url,self.end_id,max_id)
@@ -52,12 +52,7 @@ class weibominiblogs(weibocommon):
 			if index > MAX_PAGE_NUM_PER_USER:
 				break
 
-	def get_miniblogs(self,callback=None):
-		urls = self.__get_init_urls(self.uids)
-		self.__get_weibo_content()
-		pass
-
-	def __get_one_block_content(self,url,lastestmid):
+	def __get_one_block_content(self,url,uid,lastestmid):
 		ps = self.get_target(url)
 		if ps == -1:
 			return -1
@@ -74,6 +69,8 @@ class weibominiblogs(weibocommon):
 				continue
 			if lastestmid >= mid:
 				return 0 # no new miniblog
+
+			retv_i['uid'] = uid
 			if self.end_id == 0:
 				self.end_id = mid
 				retv_i['latest_mid'] = self.end_id
@@ -81,7 +78,7 @@ class weibominiblogs(weibocommon):
 			imgs = div.find_all("img",attrs={"class":"bigcursor"})
 			mbcontent =  htmlstripper.strip_tags(str(content_div)).decode('utf-8')
 
-			mds = parser.find_all("li",attrs={'action-type':'feed_list_media_vedio'})
+			mds = div.find_all("li",attrs={'action-type':'feed_list_media_vedio'})
 			mdconent = []
 			for md in mds:
 				data = md['action-data']

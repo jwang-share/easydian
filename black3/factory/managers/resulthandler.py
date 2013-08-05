@@ -5,7 +5,7 @@ import time
 import urllib2
 import os
 import sys
-from supports.memdb import memdb
+from factory.supports.memdb import memdb
 from rootcfg import RESULT_URL_PREFIX
 
 

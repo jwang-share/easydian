@@ -72,8 +72,14 @@ class weibominiblogmanager(weibomanager):
 			self.wm.stop_run()
 
 	def handle_result(self,results):
+		for item in results:
+			uid = item['uid']
+			self.push_result(uid,[item])
+			print item
+
+
 		pass
 
 	def get_task_name(self):
-		pass
+		return 'weibo_miniblogs'
 
