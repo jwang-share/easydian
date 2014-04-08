@@ -16,6 +16,7 @@ class Server
       app.use(express.bodyParser())
       app.use(express.methodOverride())
       app.use(app.router)
+      console.log "-----------------------------" + __dirname
       app.use(express.static(__dirname + '/../../public'))
       app.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
       app.set('views',__dirname + '/../../views')

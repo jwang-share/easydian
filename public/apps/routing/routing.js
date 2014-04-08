@@ -40,6 +40,12 @@ can.Control('Apps.RoutingCtrl', {
                         $('#page_container').empty();
                         new Apps.FeatureCtrl($('#page_container'), {page: sub});
                     });
+                }
+                else if(widget === 'login')  {
+                    steal('/apps/login/login.js', function() {
+                        $('#page_container').empty();
+                        new Apps.LoginCtrl($('#page_container'), {page: sub});
+                    });
                 } 
                 else {
                     //window.location = '';
