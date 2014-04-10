@@ -456,13 +456,11 @@ h2.upper {
 
 #footer {
 	background:#FFF;
-	padding-bottom:10px;
-	border-bottom:4px #313131 solid;
+	padding-top:44px;
+	border-top:4px #313131 solid;
 	color:#1e1e1e;
 	line-height:16px;	
 }
-#padding-top:44px;
-#border-top:4px #313131 solid;
 #footer a {
 	color:#d00b01;
 	font-style:italic;	
@@ -1015,7 +1013,6 @@ ul.recent_post div a:hover {color:#d00b01;
     padding: 10px;
     text-align: center;
 }
-
 
 
 
