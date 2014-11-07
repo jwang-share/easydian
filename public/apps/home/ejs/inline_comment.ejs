@@ -1,0 +1,21 @@
+<!--canyin slide comments-->
+<div class="wrap block">
+    <div class="container">
+        <h2 class="upper">latest comments</h2>
+        <div class="row news_block">
+            <div class="col-md-6">
+                <ul id="inline_comment" class="jcarousel-skin-tango">
+                <% for(var i = 0; i < this.length; i++){ %>
+                    <li>
+                        <div class="post_meta">
+                            Posted by <a href="#"><%= this[i].username %></a><%= "/" + this[i].createtime %>
+                        </div>
+                        <%= this[i].comment %><a href="#canyin_comment">...>>Read more...</a>
+                    </li> 
+                <% } %>                                                     
+                </ul>                         
+            </div>                
+        </div>                
+    </div>
+</div>        
+<!--//canyin slide comments-->

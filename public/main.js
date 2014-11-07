@@ -37,10 +37,6 @@ steal(
     new Apps.RoutingCtrl(document.body);  
 })
 .then(
-    '/css/css.css',
     '/css/bootstrap.css',
-    '/css/bootstrap-responsive.css',
-    '/css/theme.css',
-    '/css/docs.css',
-    '/lib/prettify/prettify.css'
+    '/css/main.css'
 )

@@ -30,7 +30,8 @@ steal.config({
             "superfish/superfish.js"          : "superfish",
             "prettify/prettify.js"            : "prettify",
             "easy-utils/easy-utils.js"        : "easy-utils",
-            "header-footer/header-footer.js"  : "header-footer"
+            "header-footer/header-footer.js"  : "header-footer",
+            "ie/ie8-responsive-file-warning.js"  : "ie8-responsive-file-warning"
         }
     },
     paths: {
