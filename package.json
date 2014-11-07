@@ -1,7 +1,7 @@
 {
   "name": "homemade",
   "version": "0.0.1",
-  "description": "Engine Home Made",
+  "description": "Home Made",
   "main": "index.js",
   "dependencies": {
     "coffee-script": "1.3.3",

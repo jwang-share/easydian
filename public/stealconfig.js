@@ -31,7 +31,8 @@ steal.config({
             "prettify/prettify.js"            : "prettify",
             "easy-utils/easy-utils.js"        : "easy-utils",
             "header-footer/header-footer.js"  : "header-footer",
-            "ie/ie8-responsive-file-warning.js"  : "ie8-responsive-file-warning"
+            "ie/ie8-responsive-file-warning.js"  : "ie8-responsive-file-warning",
+            "ie/docs.min.js" : "docs.min"
         }
     },
     paths: {
@@ -55,7 +56,7 @@ steal.config({
         "lang_json"         : "/lib/jquerypp/jquery.lang.json.js",
         "can_control"       : "/lib/can.control.plugin.js",
         "can_fixture"       : "/lib/can.fixture.js",
-        "can_super"         : "lib/can.construct.super.js",
+        "can_super"         : "/lib/can.construct.super.js",
         "highcharts"        : "/lib/highcharts/highcharts.js",
         "highcharts-exp"    : "/lib/highcharts/exporting.js",
         "camera"            : "/lib/camera.js",
@@ -63,6 +64,7 @@ steal.config({
         "superfish"         : "/lib/superfish.js",
         "prettify"          : "/lib/prettify/prettify.js",        
         "easy-utils"        : "/lib/utils/easyutils.js",
-        "header-footer"     : "/lib/header-footer.js"
+        "header-footer"     : "/lib/header-footer.js",
+        "docs.min"          : "/lib/ie/docs.min.js"
     }
 });
