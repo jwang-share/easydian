@@ -1,0 +1,14 @@
+<div class="row">
+    <% data.forEach(function (value, index) { %>
+    <div class="col-lg-4">
+        <img class="img-circle" src="<%= value.img %>"
+             alt="Generic placeholder image" style="width: 140px; height: 140px;">
+
+        <h2><%= value.header %></h2>
+
+        <p><%= value.description %></p>
+
+        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+    </div>
+    <% }); %>
+</div><!-- /.row -->

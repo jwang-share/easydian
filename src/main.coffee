@@ -1,7 +1,6 @@
-require './easydian/config'
+require './homemade/config'
 
 console.log "main...."
-console.log "easydian"
 
-Server = require './easydian/server'
+Server = require './homemade/server'
 new Server().start()
