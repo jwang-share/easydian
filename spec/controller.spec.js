@@ -1,5 +1,5 @@
-var Controller = require("../lib/easydian/controller")
-require('../lib/easydian/config')
+var Controller = require("../lib/homemade/controller")
+require('../lib/homemade/config')
 
 describe("Controller",function(){
   

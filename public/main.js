@@ -2,15 +2,11 @@ steal(
     'jquery'
 )
 .then(
-    'jquery-migrate',
     'canjs'
 )
 .then(
-    'can_control', 'can_fixture', 'jquery-color',
-    'bootstrap', 'cookie', 'lang_json',
-    'jquery-validation', 'jquery-mobile', 
-    'jquery-easing', 'prettify',    
-    'easy-utils'
+    'can_control', 'can_fixture',
+    'bootstrap', 'easy-utils'
 )
 .then('/apps/routing/routing.js')
 .then(function() {
@@ -34,7 +30,7 @@ steal(
     // create a route
     can.route( ':widget/:sub' );
     // create routing control
-    new Apps.RoutingCtrl(document.body);  
+    new Apps.RoutingCtrl(document.body);
 })
 .then(
     '/css/bootstrap.css',

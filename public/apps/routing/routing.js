@@ -15,22 +15,25 @@ can.Control('Apps.RoutingCtrl', {
             var widget = data['widget'];
             var sub = data['sub'];
             app_state.attr('route', {'widget': widget, 'sub': sub});
+            
+            var container = $('#container');
 
-            if (!($(document.body).length > 0)) {
+            if (!(container.length > 0)) {
                 easyUtils.reset_layout($(document.body));
+                container = $('#container')
             }
 
             if (widget) {
                 if (widget === 'dishes') {
                     steal('/apps/dishes/dishes.js', function () {
-                        //$('#page_container').empty();
-                        new Apps.DishesCtrl($(document.body));
+                        container.empty();
+                        new Apps.DishesCtrl(container);
                     });
                 }
                 else if (widget === 'login') {
                     steal('/apps/login/login.js', function () {
-                        //$('#page_container').empty();
-                        new Apps.LoginCtrl($(document.body));
+                        container.empty();
+                        new Apps.LoginCtrl(container);
                     });
                 }
                 else {
@@ -39,8 +42,8 @@ can.Control('Apps.RoutingCtrl', {
 
             } else {
                 steal('/apps/layout/layout.js', function () {
-                    //$('#page_container').empty();
-                    new Apps.LayoutCtrl($(document.body));
+                    container.empty();
+                    new Apps.LayoutCtrl(container);
                 });
             }
         }

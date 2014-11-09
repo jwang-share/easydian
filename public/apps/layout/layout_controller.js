@@ -8,7 +8,7 @@ can.Control('Apps.LayoutCtrl', {
     init: function(element, options) {
         var layout_ejs_dir = '/apps/layout/ejs/';
         can.when(
-            Models.Dishes.findAll(function(data){
+            Models.Dishes.findAll({}, function(data){
                 element.append(can.view(layout_ejs_dir  + 'slider.ejs', {'data': data}));
             })
         ).then(function(){

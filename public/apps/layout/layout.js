@@ -2,7 +2,7 @@ steal(
     'jquery-preloader',
     'superfish',
     'header-footer',
-    '/models/canyin.js',
-    '/models/canyin_fixture.js',
+    '/models/dishes.js',
+    '/models/fixtures/dishes_fixture.js',
     '/apps/layout/layout_controller.js'
 )

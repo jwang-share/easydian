@@ -1,5 +1,5 @@
-var Userinfo_Schema = require("../lib/easydian/model/userinfo_schema")
-require('../lib/easydian/config')
+var Userinfo_Schema = require("../lib/homemade/model/userinfo_schema")
+require('../lib/homemade/config')
 
 xdescribe("Userinfo Schema",function(){
   var us, doc, addrinfo, addrinfo1, phoneinfo;

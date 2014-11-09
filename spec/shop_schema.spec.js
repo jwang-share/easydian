@@ -1,5 +1,5 @@
-var Shop_Schema = require("../lib/easydian/model/shop_schema")
-require('../lib/easydian/config')
+var Shop_Schema = require("../lib/homemade/model/shop_schema")
+require('../lib/homemade/config')
 
 xdescribe("shop schema",function(){
   

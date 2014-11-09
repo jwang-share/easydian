@@ -7,7 +7,7 @@ can.Control('Apps.DishesCtrl', {
         //element.append(can.view('/apps/layout/ejs/container.ejs'));
         
         can.when(                
-            Models.Dishes.findAll(function(data){
+            Models.Dishes.findAll({}, function(data){
                 element.append(can.view('/apps/layout/ejs/recommendation.ejs', {'data': data}));
                 element.append(can.view('/apps/layout/ejs/shows.ejs', {'data': data}));
             })

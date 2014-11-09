@@ -43,8 +43,8 @@
     easyUtils.reset_layout = function(element) {
         var layout_ejs_dir = '/apps/layout/ejs/';
         element.html(can.view(layout_ejs_dir + 'template.ejs'));
-        $('#header').html(can.view(layout_ejs_dir  + 'header.ejs'));
-        $('#footer').html(can.view(layout_ejs_dir  + 'footer.ejs')); 
+        $('header').html(can.view(layout_ejs_dir  + 'header.ejs'));
+        $('footer').html(can.view(layout_ejs_dir  + 'footer.ejs'));
     }
 
     easyUtils.set_current_menu = function(selector, sub) {

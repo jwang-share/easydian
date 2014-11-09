@@ -1,5 +1,5 @@
-var Sys_Schema = require("../lib/easydian/model/sys_schema")
-require('../lib/easydian/config')
+var Sys_Schema = require("../lib/homemade/model/sys_schema")
+require('../lib/homemade/config')
 
 xdescribe("Sys Schema",function(){
   var ss, doc;

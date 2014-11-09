@@ -33,13 +33,32 @@ body {
   width: auto;
 }
 
+/* Layout */
+header {
+	padding:58px 0 21px 0;
+	background:#fff;
+	border-top:2px #d00b01 solid;
+}
+
+#container {
+	padding-bottom:40px;
+	background:#FFF;
+}
+
+footer {
+	background:#FFF;
+	padding-top:44px;
+	border-top:2px #313131 solid;
+	color:#1e1e1e;
+	line-height:16px;
+}
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
 /* Carousel base class */
 .carousel {
-  height: 500px;
+  height: 300px;
   margin-bottom: 60px;
 }
 /* Since positioning the image, we need to help out the caption */
@@ -49,7 +68,7 @@ body {
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 500px;
+  height: 300px;
   background-color: #777;
 }
 .carousel-inner > .item > img {
@@ -57,7 +76,7 @@ body {
   top: 0;
   left: 0;
   min-width: 100%;
-  height: 500px;
+  height: 300px;
 }
 
 
